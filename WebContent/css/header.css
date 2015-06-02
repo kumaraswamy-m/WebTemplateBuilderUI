@@ -1,0 +1,889 @@
+/** 
+ Common Header area.
+ **/
+.bluemix-global-header {
+    height: 50px;
+    width: 100%;    
+    color: white;
+    background-color: #26343F;
+    box-shadow: 0 0 5pt 1pt rgba(0, 0, 0, 0.3);
+    position: fixed;
+    font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+}
+
+.bluemix-global-header .bluemix-masthead,
+.bluemix-global-header span {
+    line-height: 50px;
+}
+
+@media screen and (max-width: 67.125em) {
+    .bluemix-global-header .bluemix-nav-unauthorized .bluemix-nav-list span {
+        line-height: inherit;
+    }
+}
+
+.bluemix-global-header ul {
+    padding: 0;
+}
+
+.bluemix-global-header ul li {
+    list-style: none;
+}
+
+.bluemix-global-header .bluemix-nav-list a {
+    display: inline;
+}
+
+.bluemix-global-header .bluemix-nav-list .bluemix-signup-link,
+.bluemix-global-header .bluemix-nav-list .bluemix-login-link {
+    padding: 5px 12px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+.bluemix-global-header .bluemix-nav-list .bluemix-signup-link {
+    border: 1px solid #00b299;
+}
+
+.bluemix-global-header .bluemix-nav-list .bluemix-login-link {
+    border: 1px solid #B3B3B3;
+}
+@media screen and (min-width: 67.125em) {
+    .bluemix-global-header .bluemix-nav-list .bluemix-login-link {
+        margin-top: 0;
+    }
+}
+
+.bluemix-global-header .bluemix-signup-link,
+.bluemix-global-header .bluemix-login-link {
+    transition-property: background-color, border-radius, color;
+}
+@media screen and (min-width: 67.125em) {
+    .bluemix-global-header .bluemix-signup-link,
+    .bluemix-global-header .bluemix-login-link {
+        margin: 0.25em;
+    }
+}
+
+.bluemix-global-header .bluemix-nav-list {
+    padding-left: 0;
+    margin-top: 0;
+    font-size: 0.85em;
+}
+
+.bluemix-global-header .bluemix-nav-list .bluemix-signup {
+    margin: 0 5px;
+}
+
+.bluemix-global-header .bluemix-nav-list .bluemix-login {
+    margin: 0 13px 0 5px;
+}
+
+.bluemix-global-header .bluemix-nav-list,
+.bluemix-global-header {
+    background-color: #26343F;
+    color: #FFFFFF;
+}
+
+.bluemix-global-header .bluemix-nav-menu-button,
+.bluemix-global-header .bluemix-nav-list-link {
+    color: #B3B3B3;
+    letter-spacing: 1px;
+}
+.bluemix-global-header .bluemix-nav-menu-button:hover,
+.bluemix-global-header .bluemix-nav-list-link:hover {
+    color: #FFFFFF;
+}
+
+.bluemix-global-header .bluemix-masthead {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    float: left;
+}
+
+.bluemix-global-header .bluemix-nav-menu-button {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.bluemix-global-header * {
+    box-sizing: border-box;
+}
+
+@-ms-viewport, @viewport {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
+.bluemix-global-header .bluemix-masthead {
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.bluemix-global-header a.bluemix-branding {
+    font-size: 0.875em;
+    color: #FFFFFF;
+}
+
+.bluemix-global-header .bluemix-logo {
+    vertical-align: bottom;
+}
+
+.bluemix-global-header .bluemix-nav-list-link {
+    text-transform: uppercase;
+}
+
+.bluemix-global-header .bluemix-nav-list .bluemix-signup-link {
+    color: #00B299;
+}
+
+.bluemix-global-header .bluemix-nav-list .bluemix-signup-link:hover {
+    color: #26343F;
+    background-color: #00B299;
+}
+
+.bluemix-global-header .bluemix-nav-list .bluemix-login-link {
+    color: #B3B3B3;
+}
+
+.bluemix-global-header .bluemix-nav-list .bluemix-login-link:hover {
+    background-color: #B3B3B3;
+    color: #26343F;
+}
+
+@media screen and (min-width: 67.125em) {
+    .bluemix-global-header .bluemix-nav-unauthorized {
+        margin: 0 0 0 auto;
+        width: auto;
+        position: inherit;
+        top: 0;
+        overflow: visible;
+    }
+}
+
+.bluemix-global-header .bluemix-nav-list a,
+.bluemix-global-header .bluemix-nav-menu-button,
+.bluemix-global-header .bluemix-nav-list-link,
+.bluemix-global-header a,
+.bluemix-global-header .bluemix-nav-unauthorized {
+    transition-timing-function: ease-out;
+    transition-duration: 0.2s;
+}
+
+.bluemix-global-header .bluemix-nav-list {
+    list-style-type: none;
+    margin-top: 0;
+    width: 100%;
+    height: 100%;
+}
+.bluemix-global-header .bluemix-nav-list li {
+    margin: 0;
+    height: 2em;
+    max-height: 50px;
+}
+
+@media all and (max-width: 67.124em) {
+    .bluemix-global-header .bluemix-nav-unauthorized .bluemix-nav-list li {
+        padding-left: 65px;
+    }
+    .bluemix-global-header .bluemix-nav-unauthorized .bluemix-nav-list .is-selected {
+        padding-left: 61px;
+    }
+}
+@media screen and (min-width: 67.125em) {
+    .bluemix-global-header .bluemix-nav-list {
+        padding: 0;
+        display: flex;
+    }
+    .bluemix-global-header .bluemix-nav-list li {
+        display: inline-block;
+        height: auto;
+        margin: 0 12px;
+    }
+}
+
+.bluemix-global-header .bluemix-nav-unauthorized .bluemix-nav-list {
+    padding: 1em 0 0.5em 0.75em;
+}
+@media screen and (min-width: 67.125em) {
+    .bluemix-global-header .bluemix-nav-unauthorized .bluemix-nav-list {
+        padding: 0;
+    }
+}
+
+.bluemix-global-header .bluemix-nav-authorized .bluemix-nav-list {
+    padding: 0;
+}
+
+.bluemix-global-header .bluemix-nav-list a,
+.bluemix-global-header .bluemix-nav-menu-button,
+.bluemix-global-header .bluemix-nav-list-link,
+.bluemix-global-header a {
+    text-decoration: none;
+    transition-property: color;
+}
+
+.bluemix-global-header .bluemix-nav-list a,
+.bluemix-global-header .bluemix-nav-menu-button,
+.bluemix-global-header .bluemix-nav-list-link {
+    color: #B3B3B3;
+    letter-spacing: 0.063em;
+    text-transform: uppercase;
+    font-size: 0.88235em;
+    margin: 0;
+}
+.bluemix-global-header .bluemix-nav-list a:hover,
+.bluemix-global-header .bluemix-nav-menu-button:hover,
+.bluemix-global-header .bluemix-nav-list-link:hover {
+    color: #FFFFFF;
+}
+
+.bluemix-global-header .bluemix-nav-list .is-selected {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    color: #FFFFFF;
+}
+@media screen and (min-width: 67.125em) {
+    .bluemix-global-header .bluemix-nav-list .is-selected {
+        border-bottom: 4px solid #00b299;
+    }
+}
+@media screen and (max-width: 67.125em) {
+    .bluemix-global-header .bluemix-nav-list .is-selected {
+        border-left: 4px solid #00b299;
+    }
+}
+
+@-o-viewport ,
+@-ms-viewport,
+@viewport {
+    touch-action: manipulation;
+    width: device-width;
+}
+
+.bluemix-global-header {
+    padding: 0;
+    height: 3.125em;
+    line-height: 1.75em;
+}
+
+.bluemix-global-header .bluemix-masthead {
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.bluemix-global-header .bluemix-branding {
+    margin: 0 0.75em 0 1.65em;
+}
+
+.bluemix-global-header .bluemix-product-title {
+    margin: 0;
+    font-weight: bold;
+}
+
+.bluemix-global-header .bluemix-logo {
+    display: none;
+}
+
+.bluemix-global-header .bluemix-nav-menu-button {
+    cursor: pointer;
+    margin-left: 12px;
+    margin-right: 8px;
+}
+
+.no-touch.bluemix-global-header .bluemix-nav-menu-button:hover {
+}
+
+.navStateOpen .bluemix-global-header .bluemix-nav-menu-button {
+    background-position: -64px -24px;
+}
+
+.bluemix-global-header .bluemix-nav-menu-button:focus {
+    outline: none;
+}
+
+@media screen and (min-width: 67.125em) {
+    .bluemix-global-header .bluemix-nav-menu-button {
+        display: none;
+    }
+
+    .bluemix-global-header .bluemix-masthead {
+        -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }
+
+    .bluemix-global-header .bluemix-nav-list {
+        margin: 0;
+    }
+
+    .bluemix-global-header .bluemix-logo {
+        display: inline-block;
+    }
+}
+.bluemix-global-header .bluemix-nav-unauthorized {
+    width: 300px;
+    height: 100%;
+    transition-property: left;
+    overflow: hidden;
+    position: inherit;
+    left: -300px;
+    top: 3em;
+    float: right;
+}
+@media screen and (min-width: 67.125em) {
+    .bluemix-global-header .bluemix-nav-unauthorized {
+        margin: 0 0 0 auto;
+        width: auto;
+        position: static;
+        top: 0;
+        overflow: visible;
+        -webkit-align-self: center;
+        -ms-flex-item-align: center;
+        align-self: center;
+    }
+}
+
+@media screen and (max-width: 67.125em) {
+    .navStateOpen .bluemix-global-header .bluemix-nav-unauthorized {
+        left: 0;
+        opacity: 0.9;
+        width: 300px;
+        height: 100%;
+    }
+
+    .navStateOpen .bluemix-global-header .bluemix-nav-unauthorized span {
+        line-height: inherit;
+    }
+}
+
+.bluemix-global-header .separator {
+    border-left: 1px solid rgba(122, 137, 145, 0.3);
+    display: inline-block;
+    padding-right: 15px;
+    height: 50px;
+    float: left;
+}
+
+.bluemix-global-header .bluemix-signup-login,
+.bluemix-global-header .bluemix-nav-authorized {
+    float: right;
+    height: 100%;
+}
+
+.bluemix-global-header .bluemix-signup-login li,
+.bluemix-global-header .bluemix-nav-authorized li {
+    margin: 0;
+    display: inline-block;
+}
+
+.bluemix-global-header .freeTrialCounter.hide,
+.bluemix-global-header .notification.hide,
+.bluemix-global-header .hide-if-expired.hide {
+    display: none;
+}
+
+.bluemix-global-header .bluemix-nav-authorized .freeTrialCounter,
+.bluemix-global-header .bluemix-nav-authorized .notification,
+.bluemix-global-header .bluemix-nav-authorized .profileSetting,
+.bluemix-global-header .bluemix-nav-authorized .orgLabel {
+    margin-right: 15px;
+    float: left;
+}
+
+.bluemix-global-header .bluemix-nav-list span {
+    margin: 0;
+}
+
+.bluemix-global-header .bluemix-nav-authorized img {
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+/*
+ * CSS for Region Selector, Free Trial, Notification, Profile Setting
+ */
+.bluemix-global-header .bluemix-nav-list .regionSelector {
+    letter-spacing: 0.063em;
+    line-height: inherit;
+    margin-right: 15px;
+    position: relative;
+    float: left;
+}
+
+.bluemix-global-header .regionSelectorTarget {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.bluemix-global-header .regionSelectorLabelSelector .arrow-icon {
+    -webkit-box-flex: 0 0 auto;
+    -moz-box-flex: 0 0 auto;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    -webkit-align-self: center;
+    -moz-align-self: center;
+    -ms-flex-item-align: center;
+    -ms-align-self: center;
+    align-self: center;
+    margin-left: 10px;
+}
+
+.bluemix-global-header .regionSelectorLabelSelector:hover .icon-arrow-single-grey.arrow-icon {
+    background-position: -70px -62px;
+}
+
+.bluemix-global-header .regionSelectorLabelSelector .icon-arrow-single-grey.arrow-icon {
+    margin-right: 2px;
+}
+
+.bluemix-global-header .regionSelectorLabelSelector:hover .icon-arrow-single-grey-down.arrow-icon {
+    background-position: -72px -56px;
+}
+
+.bluemix-global-header .regionSelectorLabelSelector .icon-arrow-single-grey-down.arrow-icon {
+    margin-right: 0;
+}
+
+.bluemix-global-header .regionSelectorLabelSelector {
+    cursor: pointer;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    -moz-justify-content: space-between;
+    -ms-flex-pack: justify;
+    -ms-justify-content: space-between;
+    justify-content: space-between;
+}
+
+.bluemix-global-header .regionSelectorLabelName {
+    display: inline-block;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #b3b3b3;
+    font-size: 12px;
+}
+
+.bluemix-global-header .regionSelectorLabelName:hover {
+    color: #FFFFFF;
+}
+
+.bluemix-global-header .regionSelectorLabel {
+    text-transform: uppercase;
+}
+
+.bluemix-global-header .regionSelectorName {
+    font-weight: 800;
+    padding-left: 3px;
+}
+
+.bluemix-global-header .region a {
+    color: #1B252D;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    font-size: inherit;
+}
+
+.bluemix-global-header .region a:hover {
+    color: #1B252D;
+}
+
+.bluemix-global-header .regionSelector .settings-menu {
+    border: 0;
+    box-shadow: 0 8pt 8pt 0 rgba(0, 0, 0, 0.5);
+    width: 250px;
+    right: -16px;
+    top: 50px;
+    font-size: 14px;
+}
+
+.bluemix-global-header .regionSelector .settings-menu ul li {
+    text-transform: none;
+    color: #1B252D;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    display: block;
+    letter-spacing: initial;
+    height: auto;
+}
+
+.bluemix-global-header .regionSelector .settings-menu ul li.isSelected {
+    border-left: 5px solid #00B299;
+    background-color: #F2F5F7;
+    font-weight: 800;
+}
+
+.bluemix-global-header .regionSelector .settings-menu ul:not(:first-child) li:not(.regionSelectorFooter):not(.isSelected):hover {
+    border-left: 5px solid #94A3AB;
+    background-color: #F2F5F7;
+}
+
+.bluemix-global-header .regionSelector .settings-menu ul:not(:first-child) li:not(.regionSelectorFooter) {
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.bluemix-global-header .regionSelector .settings-menu ul:first-child,
+.bluemix-global-header .regionSelector .settings-menu ul:not(:first-child) li:not(.regionSelectorFooter):last-child {
+    margin-bottom: 10px;
+}
+
+.bluemix-global-header .regionSelectorFooter a {
+    color: inherit;
+    letter-spacing: inherit;
+    text-transform: none;
+    font-size: inherit;
+}
+
+.bluemix-global-header .settings-menu ul li.regionSelectorFooter {
+    text-align: center;
+    padding-left: 0;
+    cursor: default;
+}
+
+.bluemix-global-header .settings-menu ul li.regionSelectorFooter a:hover {
+    color: #94A3AB;
+    text-decoration: underline;
+}
+
+.bluemix-global-header .freeTrialGray {
+    color: #94A3AB;
+}
+
+.bluemix-global-header .freeTrialBlue {
+    color:#00AED1;
+}
+
+.bluemix-global-header .freeTrialOrange {
+    color:#F19027;
+}
+
+.bluemix-global-header .freeTrialRed {
+    color:#F04D3A;
+}
+
+.bluemix-global-header .freeTrialButtonText {
+    border: solid 2px;
+    border-top: solid 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.bluemix-global-header .freeTrialPane,
+.bluemix-global-header .notificationPane {
+    outline: none;
+}
+
+.bluemix-global-header #free-trial-container,
+.bluemix-global-header #notification-container,
+.bluemix-global-header .profileSetting .settings-menu {
+    position: fixed;
+}
+
+.bluemix-global-header #free-trial-container,
+.bluemix-global-header #notification-container,
+.bluemix-global-header .profileSetting .info {
+    width: 350px;
+    background-color: #26343f;
+    z-index: 100;
+    right: 0;
+    top: 50px;
+    border: 0;
+    border-radius: 0 0 3px 3px;
+    outline: none;
+    font-weight: normal;
+    box-shadow: 0 8pt 8pt 0 rgba(0, 0, 0, 0.5);
+}
+
+.bluemix-global-header #free-trial-container span,
+.bluemix-global-header #notification-container span,
+.bluemix-global-header .profileSetting .info span {
+    line-height: inherit;
+}
+
+.bluemix-global-header #free-trial-container li,
+.bluemix-global-header #notification-container li,
+.bluemix-global-header .profileSetting .info li {
+    padding: 15px 20px;
+    display: list-item;
+    max-height: none;
+    height: auto;
+}
+
+.bluemix-global-header #free-trial-container li {
+    padding: 15px;
+}
+
+.bluemix-global-header .regionSelector .settings-menu:before,
+.bluemix-global-header #free-trial-container:before,
+.bluemix-global-header #notification-container:before,
+.bluemix-global-header .profileSetting .settings-menu:before {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 0 7px 7px;
+    border-color: rgb(26,36,45) transparent;
+    display: block;
+    width: 0;
+    z-index: 0;
+    top: -6px;
+    left: 225px;
+}
+
+.bluemix-global-header .regionSelector .settings-menu:before {
+    left: auto;
+    right: 13px;
+}
+
+.bluemix-global-header #notification-container:before,
+.bluemix-global-header .profileSetting .settings-menu:before {
+    left: 316px;
+}
+
+.bluemix-global-header #free-trial-container {
+    background-color: #0a2935;
+    width: 400px;
+    top: 50px;
+    right: 68px;
+}
+
+.bluemix-global-header #free-trial-container:before {
+    border-color: #0a2935 transparent;
+    left: 315px;
+}
+
+.bluemix-global-header #notification-container {
+    top: 50px;
+    right: 55px;
+}
+
+.bluemix-global-header .regionSelector .settings-menu ul li.dark,
+.bluemix-global-header #free-trial-container ul:first-child li.dark,
+.bluemix-global-header #notification-container ul:first-child li.dark,
+.bluemix-global-header .profileSetting .info li.dark {
+    background-color: rgb(26,36,45);
+    text-transform: uppercase;
+    border-color: rgb(26,36,45);
+    color: #b3b3b3;
+    margin-right: 0;
+    border-radius: 0;
+    font-size: 12px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-bottom: 7px;
+    line-height: 20px;
+    margin-bottom: 0;
+}
+
+.bluemix-global-header .regionSelector li.disabled,
+.bluemix-global-header #free-trial-container li.disabled,
+.bluemix-global-header #notification-container li.disabled,
+.bluemix-global-header .profileSetting li.disabled {
+    cursor: default;
+}
+
+.bluemix-global-header #free-trial-container .message,
+.bluemix-global-header .profileSetting .info .name {
+    margin-bottom: 5px;
+    color: #FFFFFF;
+    font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman", "HelveticaNeue-Roman", "Helvetica Neue Roman", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+    cursor: default;
+    line-height: 1.71429em;
+    font-size: 1.02942em;
+}
+
+.bluemix-global-header #free-trial-container .message {
+    font-family: "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosBold', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+    font-weight: bold;
+}
+
+.bluemix-global-header #free-trial-container .sub-message {
+    font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman", "HelveticaNeue-Roman", "Helvetica Neue Roman", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+    font-weight: normal;
+    font-size: 0.88236em;
+    line-height: 2em;
+}
+
+.bluemix-global-header #free-trial-container .links,
+.bluemix-global-header .profileSetting .info .logout {
+    font-size: 1.02942em;
+    color: #999999;
+}
+
+.bluemix-global-header .profileSetting .info .stcontact,
+.bluemix-global-header .profileSetting .info .chatContainer {
+	display: inline-block;
+	cursor: pointer;
+}
+.bluemix-global-header .profileSetting .info .chatContainer.hide {
+	display: none;
+}
+.bluemix-global-header .profileSetting .info .chatContainer  span.tooltip-content {
+	top: 133px;
+}
+
+.bluemix-global-header .profileSetting .info .logout .stcontact:hover {
+	color: #ffffff;
+}
+
+.bluemix-global-header #free-trial-container .links a {
+    cursor: pointer;
+}
+
+.bluemix-global-header #free-trial-container .links a,
+.bluemix-global-header .profileSetting .info .logout a {
+    font-size: 14px;
+    color: #999999;
+    text-transform: inherit;
+    letter-spacing: normal;
+    cursor: pointer;
+}
+
+.bluemix-global-header #free-trial-container .links a:hover,
+.bluemix-global-header .profileSetting .info .logout a:hover {
+    color: #FFFFFF;
+}
+
+.bluemix-global-header #free-trial-container .sub-message a {
+    text-transform: none;
+    color: #5aaafa;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 12px;
+    letter-spacing: inherit;
+    text-decoration: underline;
+}
+
+.bluemix-global-header #free-trial-container .upgrade-link {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.bluemix-global-header #free-trial-container .upgrade-link .upgrade-button {
+    color: #ffffff;
+    background-color: #00b299;
+    font-family: "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosBold', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 7px 13px;
+    vertical-align: middle;
+    white-space: nowrap;
+    display: inline-block;
+    line-height: 1.42858em;
+    letter-spacing: normal;
+}
+
+.bluemix-global-header #free-trial-container .upgrade-link .upgrade-button:hover {
+    background-color: #01cdb0;
+}
+
+.bluemix-global-header #notification-container ul > li:last-child {
+    border-bottom: none;
+}
+
+.bluemix-global-header #notification-container li.message {
+    color: #DFE6EB;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 300;
+}
+
+.bluemix-global-header #notification-container ul > li {
+    padding-top: 15px;
+    padding-left: 50px;
+    padding-bottom: 15px;
+    padding-right: 20px;
+    border-bottom: 1px solid #3B4B54;
+}
+
+.bluemix-global-header .profile-icon {
+    display: inline-block;
+    padding-top: 0;
+}
+
+.bluemix-global-header .regionSelector .settings-menu:after {
+    display: none;
+}
+
+.bluemix-global-header .regionSelectorIcon {
+    display: none;
+    margin-top: 13px;
+}
+
+.bluemix-global-header hr {
+    border-style: none none solid;
+    border-color: rgba(122, 137, 145, 0.3);
+}
+
+/** Narrow window support **/
+@media all and (max-width: 600px ){
+    .bluemix-global-header .regionSelector .regionSelectorIcon {
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .bluemix-global-header .regionSelector .settings-menu:before {
+        right: 22px;
+    }
+
+    .bluemix-global-header .regionSelector .regionSelectorLabelSelector {
+        display: none;
+    }
+
+    .bluemix-global-header .regionSelector .settings-menu {
+        width: 200px;
+    }
+}
+
+/* Change look and feel for webkit scrollbars */
+.bluemix-global-header .regionSelector .settings-menu > div::-webkit-scrollbar {
+    width: 20px;
+}
+ 
+.bluemix-global-header .regionSelector .settings-menu > div::-webkit-scrollbar-track,
+.bluemix-global-header .regionSelector .settings-menu > div::-webkit-scrollbar-track-piece {
+    border-radius: 0;
+    background: #ffffff;
+}
+
+.bluemix-global-header .regionSelector .settings-menu > div::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #dfe6eb;
+    border: 5px solid #ffffff;
+}
+
+/* Change look and feel for IE scrollbars */
+.bluemix-global-header .regionSelector .settings-menu > div {
+    scrollbar-3dlight-color:#dfe6eb;
+    scrollbar-arrow-color: #dfe6eb;
+    scrollbar-face-color: #dfe6eb;
+    scrollbar-darkshadow-color: #ffffff;
+    scrollbar-base-color: #ffffff;
+    scrollbar-track-color: #ffffff;
+    scrollbar-highlight-color: #ffffff;
+    scrollbar-shadow-color: #ffffff;
+}
+
+/*
+ * End CSS for Region Selector, Free Trial, Notification, Profile Setting 
+ */

@@ -1,0 +1,214 @@
+/* overrides */
+.nav>li>a {
+	padding: 2px 15px;
+}
+
+.nav .nav-divider {
+	background-color: #3b4b54;
+}
+
+.nav li.selected {
+	background-color: #202c36;
+}
+
+.nav li .unselected {
+	background-color: #94a3ab;
+}
+
+.nav li .default {
+	color: #00B299 !important;
+}
+
+.mouseIn {
+	background-color: #202c36;
+}
+
+.mouseOut {
+	background-color: #26343f;
+}
+
+/* .nav>li>a:focus {
+	background-color: #202c36;
+} */
+.nav .active-trial li {
+	background: #26343f;
+}
+
+.nav .active-trial li:hover {
+	background: #202c36;
+}
+
+#contentPage .goButton {
+	font-size: 14pt;
+	color: #ffffff;
+	background-color: #01b399;
+	font-family: Arial Bold;
+}
+
+#contentPage .titleContent {
+	padding: 30px 15px 5px 30px;
+}
+
+#contentPage .titleContent .row {
+	margin-top: 10px;
+}
+
+#contentPage .tab-content .row {
+	margin-top: 5px;
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+#contentPage .design-tabs {
+	padding-left: 30px;
+	padding-top: 10px;
+}
+
+#contentPage .design-tabs .nav-tabs {
+	border-bottom: none;
+}
+
+.nav-tabs>li.active>a:focus {
+	font-size: 14pt;
+	color: #152935;
+	background-color: #ffffff;
+	border: 0px none;
+	border-bottom: 3px solid #00b299;
+}
+
+.docUI a {
+	color: #94a3ab;
+}
+
+.nav>li>a:focus {
+	background-color: none;
+}
+
+.nav-tabs>li>a {
+	margin-right: 15px;
+	border: 0px none;
+	border-bottom: 3px solid #ecf0f2;
+}
+
+.nav-tabs>li.active>a {
+	border-bottom: 3px solid #00b299;
+}
+
+a:focus {
+	outline: none;
+}
+
+.btn-default {
+	background-color: #ffffff;
+	color: #8f9fa9;
+	font-family: Arial Regular;
+	font-size: 12pt;
+	height: 34px;
+	border: 1px solid #CCC;
+	border-radius: 4px;
+	text-transform: none;
+}
+
+.btn-default:focus {
+	background-color: #00b299;
+	color: #152935;
+}
+
+#contentPage .tab-content #preview-design {
+	margin-top: 33px;
+}
+
+#contentPage .tab-content #preview-design .text-area {
+	min-height: 100px;
+	max-height: 200px;
+}
+
+#contentPage .tab-content #preview-design .section-container {
+	border: 1px solid #CCC;
+	padding: 5px;
+	margin-bottom: 30px;
+}
+
+#contentPage .align-right {
+	padding-right: 2px;
+	width: 1%;
+}
+
+#contentPage .alignment {
+	width: 82%;
+}
+
+#contentPage .alignment-right {
+	padding-right: 2px;
+}
+
+#contentPage .alignment-left {
+	padding-left: 2px;
+}
+
+.tab-content #preview-design .section-container #display-on-hover {
+	padding-top: 58px;
+	max-height: 5px;
+	text-align: right;
+}
+
+#contentPage .scroll-content {
+	max-height: 430px;
+	overflow: auto;
+}
+
+.docUI #contentPage {
+	min-width: 1250px;
+	xwidth: 98%;
+}
+
+#contentPage .footer-bar {
+	text-align: right;
+	float: right;
+	padding-top: 10px;
+	padding-right: 20px;
+}
+
+#contentPage .footer-bar .btn-primary,#contentPage .footer-bar .btn-default
+	{
+	height: 35px;
+}
+
+#data-selection .wrapper {
+	padding: 10px;
+}
+
+#data-selection .wrapper .data-formats {
+	text-align: right;
+}
+
+#data-selection .selected-content {
+	border: 1px solid #00B299;
+}
+
+#data-selection .dataSelection-content {
+	padding-top: 10px;
+}
+#data-selection .navigation-tree{
+	border: 1px solid #00B299;
+	min-height : 450px;
+	overflow : auto;
+}
+#data-selection .navigation-tree .navigation-top-bar{
+	background-color : #3B4B54;
+	color :  #00B299;
+	text-align: center;
+	height : 30px;
+}
+#data-selection .table-header{
+	background-color : #ffffff;
+	background-image : none;
+	border-top : none !important;
+	border-bottom : none !important;
+}
+#data-selection .table-data{
+	border-bottom :  none !important;
+}
+#data-selection .table-header .header-label{
+	border-bottom : 3px solid #00b299 !important;
+}

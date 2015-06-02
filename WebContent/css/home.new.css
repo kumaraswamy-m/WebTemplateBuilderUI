@@ -1,0 +1,105 @@
+#docUIContainer {
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+}
+
+#topNavPane {
+	padding: 0px;
+	margin: 0px;
+	left: 0px;
+	top: 0px;
+	position: absolute;
+	width: 1768px;
+}
+
+#leftNavPane {
+	width: 275px;
+	left: 0px;
+	top: 51px;
+	position: absolute;
+	height: 700px;
+}
+
+#docUINav {
+	visibility: inherit;
+	overflow: hidden;
+	top: 0px;
+	height: 533px;
+}
+
+#div1 {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	transform: translate3d(0px, 0px, 0px);
+}
+
+#dojox_mobile_ListItem_0 {
+	display: block;
+}
+
+#scrollBarWrapper {
+	position: absolute;
+	overflow: hidden;
+	right: 2px;
+	width: 5px;
+	top: 4px;
+	height: 525px;
+}
+
+#scrollableFadeScrollBar {
+	opacity: 0;
+	position: absolute;
+	xbackground-color: rgb(96, 96, 96);
+	font-size: 1px;
+	z-index: 2147483647;
+	border-radius: 2px;
+	transform-origin: 0px 0px 0px;
+	width: 5px;
+	height: 486px;
+}
+
+svg {
+	position: absolute;
+	pointer-events: none;
+	opacity: 1;
+	z-index: 2147483647;
+	height: 525;
+	width: 5;
+}
+
+#leftNavPane_splitter {
+	left: 275px;
+	top: 51px;
+	position: absolute;
+	height: 533px;
+}
+
+#mainContentPane {
+	left: 275px;
+	top: 51px;
+	position: absolute;
+	xwidth: 1493px;
+	height: 533px;
+	background: white;
+}
+
+#mainStackContainer {
+	xwidth: 1493px;
+	height: 533px;
+}
+
+#mainPage {
+	left: 0px;
+	top: 0px;
+	xwidth: 1493px;
+	height: 533px;
+}
+
+#detailPage {
+	left: 0px;
+	top: 0px;
+	width: 1512px;
+	height: 533px;
+}

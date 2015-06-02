@@ -1,0 +1,269 @@
+.bluemix-global-header {
+    padding: 0px;
+    height: 3.125em;
+    line-height: 1.75em;
+}
+.bluemix-global-header .bluemix-nav-list, .bluemix-global-header {
+    background-color: #26343F;
+    color: #FFF;
+}
+.bluemix-global-header {
+    width: 100%;
+    color: #FFF;
+    background-color: #26343F;
+    box-shadow: 0px 0px 5pt 1pt rgba(0, 0, 0, 0.3);
+    position: fixed;
+    font-family: HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+}
+.bluemix-global-header .bluemix-masthead {
+    justify-content: flex-start;
+    align-items: center;
+}
+.bluemix-global-header .bluemix-masthead {
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+}
+.bluemix-global-header .bluemix-masthead {
+    display: flex;
+    float: left;
+}
+.bluemix-global-header .bluemix-masthead, .bluemix-global-header span {
+    line-height: 50px;
+}
+.bluemix-global-header .bluemix-nav-list, .bluemix-global-header {
+    color: #FFF;
+}
+.bluemix-global-header {
+    color: #FFF;
+    font-family: HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+}
+.bluemix-global-header .bluemix-logo {
+    vertical-align: bottom;
+}
+.bluemix-global-header .bluemix-nav-list a, .bluemix-global-header .bluemix-nav-menu-button, .bluemix-global-header .bluemix-nav-list-link, .bluemix-global-header a {
+    text-decoration: none;
+    transition-property: color;
+}
+.bluemix-global-header .bluemix-nav-menu-button {
+    cursor: pointer;
+    margin-left: 12px;
+    margin-right: 8px;
+}
+.bluemix-global-header .bluemix-nav-list a, .bluemix-global-header .bluemix-nav-menu-button, .bluemix-global-header .bluemix-nav-list-link {
+    color: #B3B3B3;
+    letter-spacing: 0.063em;
+    text-transform: uppercase;
+    font-size: 0.88235em;
+    margin: 0px;
+}
+.bluemix-global-header .bluemix-nav-list a, .bluemix-global-header .bluemix-nav-menu-button, .bluemix-global-header .bluemix-nav-list-link, .bluemix-global-header a {
+    text-decoration: none;
+    transition-property: color;
+}
+.bluemix-global-header .bluemix-nav-menu-button {
+    vertical-align: middle;
+    display: inline-block;
+}
+.bluemix-global-header .bluemix-nav-menu-button, .bluemix-global-header .bluemix-nav-list-link {
+    color: #B3B3B3;
+    letter-spacing: 1px;
+}
+.bluemix-global-header a.bluemix-branding {
+    font-size: 0.875em;
+    color: #FFF;
+}
+.bluemix-global-header .bluemix-branding {
+    margin: 0px 0.75em 0px 1.65em;
+}
+.bluemix-global-header .bluemix-nav-list a, .bluemix-global-header .bluemix-nav-menu-button, .bluemix-global-header .bluemix-nav-list-link, .bluemix-global-header a {
+    text-decoration: none;
+    transition-property: color;
+}
+.bluemix-global-header .bluemix-signup-login, .bluemix-global-header .bluemix-nav-authorized {
+    float: right;
+    height: 100%;
+}
+.bluemix-global-header .bluemix-nav-unauthorized {
+    margin: 0px 0px 0px auto;
+    width: auto;
+    position: static;
+    top: 0px;
+    overflow: visible;
+    align-self: center;
+}
+.bluemix-global-header .bluemix-nav-unauthorized {
+    width: 300px;
+    height: 100%;
+    transition-property: left;
+    overflow: hidden;
+    position: inherit;
+    left: -300px;
+    top: 3em;
+    float: right;
+}
+.bluemix-global-header .bluemix-nav-unauthorized {
+    margin: 0px 0px 0px auto;
+    width: auto;
+    position: inherit;
+    top: 0px;
+    overflow: visible;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+    display: block;
+}
+.bluemix-global-header .bluemix-nav-list {
+    margin: 0px;
+}
+.bluemix-global-header .bluemix-nav-list {
+    padding: 0px;
+    display: flex;
+}
+.bluemix-global-header .bluemix-nav-list {
+    list-style-type: none;
+    margin-top: 0px;
+    width: 100%;
+    height: 100%;
+}
+.bluemix-global-header .bluemix-nav-list, .bluemix-global-header {
+    background-color: #26343F;
+    color: #FFF;
+}
+.bluemix-global-header .bluemix-nav-list {
+    padding-left: 0px;
+    margin-top: 0px;
+    font-size: 0.85em;
+}
+.bluemix-global-header ul {
+    padding: 0px;
+}
+.bluemix-global-header * {
+    box-sizing: border-box;
+}
+.bluemix-global-header .bluemix-nav-list .bluemix-signup {
+    margin: 0px 5px;
+}
+.bluemix-global-header .bluemix-signup-login li, .bluemix-global-header .bluemix-nav-authorized li {
+    margin: 0px;
+    display: inline-block;
+}
+.bluemix-global-header .bluemix-nav-list li {
+    display: inline-block;
+    height: auto;
+    margin: 0px 12px;
+}
+.bluemix-global-header .bluemix-nav-list li {
+    margin: 0px;
+    height: 2em;
+    max-height: 50px;
+}
+.bluemix-global-header ul li {
+    list-style: none outside none;
+}
+.bluemix-global-header .bluemix-nav-list .bluemix-signup-link {
+    color: #00B299;
+}
+.bluemix-global-header .bluemix-nav-list .bluemix-signup-link {
+    border: 1px solid #00B299;
+}
+.bluemix-global-header .bluemix-nav-list .bluemix-signup-link, .bluemix-global-header .bluemix-nav-list .bluemix-login-link {
+    padding: 5px 12px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+.bluemix-global-header .bluemix-nav-list a, .bluemix-global-header .bluemix-nav-menu-button, .bluemix-global-header .bluemix-nav-list-link {
+    color: #B3B3B3;
+    letter-spacing: 0.063em;
+    text-transform: uppercase;
+    font-size: 0.88235em;
+    margin: 0px;
+}
+.bluemix-global-header .bluemix-nav-list a, .bluemix-global-header .bluemix-nav-menu-button, .bluemix-global-header .bluemix-nav-list-link, .bluemix-global-header a {
+    text-decoration: none;
+    transition-property: color;
+}
+.bluemix-global-header .bluemix-nav-list a {
+    display: inline;
+}
+.bluemix-global-header .bluemix-nav-list-link {
+    text-transform: uppercase;
+}
+.bluemix-global-header .bluemix-nav-menu-button, .bluemix-global-header .bluemix-nav-list-link {
+    color: #B3B3B3;
+    letter-spacing: 1px;
+}
+.bluemix-global-header .bluemix-signup-link, .bluemix-global-header .bluemix-login-link {
+    margin: 0.25em;
+}
+.bluemix-global-header .bluemix-signup-link, .bluemix-global-header .bluemix-login-link {
+    transition-property: background-color, border-radius, color;
+}
+.bluemix-global-header .bluemix-nav-list .bluemix-login {
+    margin: 0px 13px 0px 5px;
+}
+.bluemix-global-header .bluemix-signup-login li, .bluemix-global-header .bluemix-nav-authorized li {
+    margin: 0px;
+    display: inline-block;
+}
+.bluemix-global-header .bluemix-nav-list li {
+    display: inline-block;
+    height: auto;
+    margin: 0px 12px;
+}
+.bluemix-global-header .bluemix-nav-list li {
+    margin: 0px;
+    height: 2em;
+    max-height: 50px;
+}
+.bluemix-global-header ul li {
+    list-style: none outside none;
+}
+.bluemix-global-header .bluemix-nav-list .bluemix-login-link {
+    color: #B3B3B3;
+}
+.bluemix-global-header .bluemix-nav-list .bluemix-login-link {
+    margin-top: 0px;
+}
+.bluemix-global-header .bluemix-nav-list .bluemix-login-link {
+    border: 1px solid #B3B3B3;
+}
+.bluemix-global-header .bluemix-nav-list .bluemix-signup-link, .bluemix-global-header .bluemix-nav-list .bluemix-login-link {
+    padding: 5px 12px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+.bluemix-global-header .bluemix-nav-list a, .bluemix-global-header .bluemix-nav-menu-button, .bluemix-global-header .bluemix-nav-list-link {
+    color: #B3B3B3;
+    letter-spacing: 0.063em;
+    text-transform: uppercase;
+    font-size: 0.88235em;
+    margin: 0px;
+}
+.bluemix-global-header .bluemix-nav-list a, .bluemix-global-header .bluemix-nav-menu-button, .bluemix-global-header .bluemix-nav-list-link, .bluemix-global-header a {
+    text-decoration: none;
+    transition-property: color;
+}
+.bluemix-global-header .bluemix-nav-list a, .bluemix-global-header .bluemix-nav-menu-button, .bluemix-global-header .bluemix-nav-list-link, .bluemix-global-header a, .bluemix-global-header .bluemix-nav-unauthorized {
+    transition-timing-function: ease-out;
+    transition-duration: 0.2s;
+}
+.bluemix-global-header .bluemix-nav-list a {
+    display: inline;
+}
+.bluemix-global-header .bluemix-nav-list-link {
+    text-transform: uppercase;
+}
+.bluemix-global-header .bluemix-nav-menu-button, .bluemix-global-header .bluemix-nav-list-link {
+    color: #B3B3B3;
+    letter-spacing: 1px;
+}
+.bluemix-global-header .bluemix-signup-link, .bluemix-global-header .bluemix-login-link {
+    margin: 0.25em;
+}
+.bluemix-global-header .bluemix-signup-link, .bluemix-global-header .bluemix-login-link {
+    transition-property: background-color, border-radius, color;
+}
+.bluemix-global-header .bluemix-product-title {
+    margin: 0px;
+    font-weight: bold;
+}

@@ -1,0 +1,119 @@
+div[class*='-section'] .report-actions {
+	margin-top: 15px;
+	width: 100%;
+}
+
+/* div[class*='-section'] */ .all-reports {
+	margin-top: 5px;
+	width: 100%;
+	background-color: white;
+}
+
+/* div[class*='-section'] .report-actions th, div[class*='-section'] */ .all-reports thead th, div[class*='-section'] .all-reports tbody td {
+	padding: 5px;
+}
+
+/* div[class*='-section'] */ .all-reports tbody td {
+	border-bottom: 1px solid #CCC;
+}
+
+div[class*='-section'] .report-table-actions .pull-right label, div[class*='-section'] .advanced-search-well label {
+	margin: 0 0 0 10px;
+}
+
+div[class*='-section'] .advanced-search-well {
+	display: none;
+}
+
+div[class*='-section'] .category-row {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+div[class*='-section'] .category-row .caret-closed {
+	transform: rotate(-90deg);
+}
+
+/* div[class*='-section'] */ .all-reports .progress {
+	margin-bottom: 0px;
+	margin-right: 5px;
+}
+
+div[class*='-section'] .all-reports .action-refresh {
+	color: #FF9900;
+	position: relative;
+	top: -2px;
+	font-size: 16px;
+	padding: 0px;
+}
+
+div[class*='-section'] .all-reports .report-progress {
+	display: inline-block;
+	width: 80%
+}
+
+div[class*='-section'] .all-reports .report-progress .progress-bar-success {
+	background-color: #00A6A0;
+}
+
+/* div[class*='-section'] */ .all-reports .col-title {
+	width: 15%;
+}
+
+/* div[class*='-section'] */ .all-reports .col-tags {
+	width: 20%;
+}
+
+/* div[class*='-section'] */ .all-reports .col-description {
+	width: 15%;
+}
+
+/* div[class*='-section'] */ .all-reports .col-lastRun {
+	width: 20%;
+}
+
+/* div[class*='-section'] */ .all-reports .col-report-actions {
+	width: 15%;
+}
+
+div[class*='-section'] .all-reports .col-progress {
+	width: 20%;
+}
+
+.all-reports-section .all-reports .col-tags .ellipsis {
+	width: 150px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.schedule-modal input {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.schedule-modal .schedule-details .row {
+	margin-top: 15px;
+}
+
+.schedule-modal .schedule-loading {
+	margin-left: 10px;
+}
+
+.schedule-title, .schedule-description {
+	max-width: 20em;
+}
+
+.report-connections-modal .modal-body {
+	height: 250px;
+	overflow:auto;
+}
+
+.report-connections-modal img.ds-desc {
+    width: 45px;
+    height: 35px;
+    overflow: hidden;
+    zoom:0.5;
+    -moz-transform:scale(0.5);
+    -moz-transform-origin: 0 0;
+}
