@@ -66,10 +66,10 @@
 						<span>URL: &nbsp;</span>
 					</div>
 					<div class="col-xs-9  alignment-right">
-						<input type="text" class="form-control input-url" />
+						<input type="text" class="form-control input-url drop" />
 					</div>
 					<div class="col-xs-1 alignment-left">
-						<button class="input-xml-go" class="btn btn-primary form-control">&nbsp;&nbsp;&nbsp;Go&nbsp;&nbsp;&nbsp;</button>
+						<button class="input-xml-go btn btn-primary form-control goButton">&nbsp;&nbsp;&nbsp;GO&nbsp;&nbsp;&nbsp;</button>
 					</div>
 				</div>
 			</div>
@@ -90,6 +90,16 @@
 			<div class="tab-content col-xs-12">
 				<div role="tabpanel" class="tab-pane" id="preview-design"
 					data-type="preview">
+					<div class="insert-menu alignment-right">
+						<select name="type" class="upload-type form-control">
+							<option value="scripts">--Insert--</option>
+							<option value="templates">Table of contents</option>
+							<option value="stylesheets">Index</option>
+							<option value="templates">Cover page</option>
+							<option value="stylesheets">Header</option>
+							<option value="templates">Footer</option>
+						</select>
+					</div>
 					<div class="scroll-content">
 						<div class="row">
 							<div class="col-xs-2">
@@ -190,6 +200,7 @@
 										<th class="col-title table-header col-xs-3"><a href="#"><img
 												alt="edit" src="${contextPath}/graphics/edit.png"></a>
 											TOPIC</th>
+
 										<th class="col-description table-header col-xs-3"><a
 											href="#"><img alt="edit"
 												src="${contextPath}/graphics/edit.png"></a> PUBLICATION
@@ -223,6 +234,8 @@
 							</div>
 						</div>
 					</div>
+					<button class="btn btn-primary">SELECT</button>
+					<button class="btn btn-default">CANCEL</button>
 				</div>
 			</div>
 		</div>

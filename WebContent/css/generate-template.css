@@ -178,10 +178,10 @@ a:focus {
 	padding-top: 10px;
 	padding-right: 20px;
 }
-
-#contentPage .footer-bar .btn-primary,#contentPage .footer-bar .btn-default
+.btn-primary, .btn-default
 	{
-	height: 35px;
+	height: 34px;
+	border-radius: 4px;
 }
 
 #data-selection .wrapper {
@@ -202,6 +202,7 @@ a:focus {
 #data-selection .navigation-tree{
 	border: 1px solid #00B299;
 	min-height : 450px;
+	max-height : 450px;
 	overflow : auto;
 }
 #data-selection .navigation-tree .navigation-top-bar{
@@ -214,7 +215,7 @@ a:focus {
 	background-color : #ffffff;
 	background-image : none;
 	border-top : none !important;
-	border-bottom : none !important;
+	border-bottom :  none !important;
 }
 #data-selection .table-data{
 	border-bottom :  none !important;
@@ -222,3 +223,4 @@ a:focus {
 #data-selection .table-header .header-label{
 	border-bottom : 3px solid #00b299 !important;
 }
+#preview-
