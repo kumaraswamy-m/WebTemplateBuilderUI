@@ -1,4 +1,4 @@
-package com.ibm.rpe.web.template.ui;
+package com.ibm.rpe.web.template.ui.model;
 
 import java.util.ArrayList;
 import java.util.List;

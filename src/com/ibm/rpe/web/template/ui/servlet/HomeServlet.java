@@ -28,7 +28,6 @@ public class HomeServlet extends HttpServlet
 	private static final String JSP_HOME = JSP_ROOT + "/home.jsp"; //$NON-NLS-1$
 	private static final String HOME_PATH = "home"; //$NON-NLS-1$
 	
-	
 	private static final String ACTION_GENERATE_DOCUMENTS = "action=generate"; //$NON-NLS-1$
 
 	@Override
