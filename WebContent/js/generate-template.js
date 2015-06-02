@@ -168,7 +168,7 @@ require([ "i18n!nls/messages","jstree" ], function(messages,jstree) {
 	function handleSelectionTree(e) {
 		var urlInput = $genTemplatePage.find(".input-url").val();
 		$.ajax({
-			url : baseUrl + "/ReturnJson",
+			url : baseUrl + "/api/xmltojson/schema",
 			data : {url: urlInput},
 			method : 'GET',
 			success : function(result) {

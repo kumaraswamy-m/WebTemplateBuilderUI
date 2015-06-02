@@ -6,7 +6,7 @@
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp. 
  *******************************************************************************/
-package com.ibm.rpe.web.utils;
+package com.ibm.rpe.web.template.ui.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
