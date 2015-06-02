@@ -12,7 +12,7 @@
  * then initialize the page.
  */
 
-require([ "i18n!nls/messages" ], function(messages) {
+require([ "i18n!nls/messages","jstree" ], function(messages,jstree) {
 
 	_.templateSettings = {
 		interpolate : /<@=([\s\S]+?)@>/g,
@@ -128,9 +128,10 @@ require([ "i18n!nls/messages" ], function(messages) {
 	}
 
 	function attachHandlers() {
-		
 		$genTemplatePage.find(".tab").click(toggleUnderlineColor);
 		$genTemplatePage.find(".highlight").click(toggleColor);
+		
+		$genTemplatePage.find(".input-xml-go").click(handleSelectionTree);
 	}
 	function toggleColor(e){
 		e.preventDefault();
@@ -164,35 +165,48 @@ require([ "i18n!nls/messages" ], function(messages) {
 		});
 	}
 	
+	function handleSelectionTree(e) {
+		var urlInput = $genTemplatePage.find(".input-url").val();
+		$.ajax({
+			url : baseUrl + "/ReturnJson",
+			data : {url: urlInput},
+			method : 'GET',
+			success : function(result) {
+				alert(result);
+				populateTree(result);
+			}
+		});
+	}
+	
 	function populateTree(jsonTreeData) {
 		$('.data-selection-tree')
 		.jstree(
-		{
-			'plugins' : [ 'dnd' ],
-			"dnd" : {
-				drop_target : ".drop",
-				drop_check : function(data) {
-					return false;
-				},
-			},
-			'core' : {
-				'check_callback' : function(
-						operation, node,
-						node_parent,
-						node_position, more) {
-					if (operation === "move_node") {
-						return node_parent.original.type === "Parent"; //only allow dropping inside nodes of type 'Parent'
+				{
+					'plugins' : [ 'dnd' ],
+					"dnd" : {
+						drop_target : ".drop",
+						drop_check : function(data) {
+							return false;
+						},
+					},
+					'core' : {
+						'check_callback' : function(
+								operation, node,
+								node_parent,
+								node_position, more) {
+							if (operation === "move_node") {
+								return node_parent.original.type === "Parent"; //only allow dropping inside nodes of type 'Parent'
+							}
+							return true; //allow all other operations
+						},
+						'themes' : {
+							'dots' : false,
+							'icons' : false
+						},
+						'data' : jsonTreeData
+						// 'data' : ['Simple root node']
 					}
-					return true; //allow all other operations
-				},
-				'themes' : {
-					'dots' : false,
-					'icons' : false
-				},
-				'data' : jsonTreeData
-				// 'data' : ['Simple root node']
-			}
-		});
+				});
 	}
 
 	attachHandlers();

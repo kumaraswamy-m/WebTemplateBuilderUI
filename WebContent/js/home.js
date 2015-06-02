@@ -56,9 +56,8 @@ require(
 
 				var url = location.href.split("#")[0] + "?action=generate";
 				$("#generate-template-page").load(url, function() {
-					require.undef("jstree");
 					require.undef("generate-template");
-					require([ "generate-template", "jstree" ]);
+					require([ "generate-template" ]);
 				});
 			}
 

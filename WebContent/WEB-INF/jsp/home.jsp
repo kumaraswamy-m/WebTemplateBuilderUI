@@ -55,7 +55,6 @@
 
 	<script>
 		$(document).data("context_path", "${contextPath}");
-		$(document).data("connections_url", "${connections_url}");
 	</script>
 
 	<script type="text/javascript" src="${contextPath}/js/home.js"></script>

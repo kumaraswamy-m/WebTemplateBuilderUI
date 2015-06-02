@@ -49,6 +49,16 @@
 	padding: 30px 15px 5px 30px;
 }
 
+.selected {
+	border-bottom: 3px solid #00b299;
+	color: #152935;
+}
+
+.unselected {
+	border-bottom: 3px solid #ecf0f2;
+	color: #94a3ab;
+}
+
 #contentPage .titleContent .row {
 	margin-top: 10px;
 }

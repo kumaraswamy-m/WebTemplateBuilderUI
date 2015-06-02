@@ -42,72 +42,6 @@
 	<div class="mblView mblScrollableView" id="docUINav">
 		<div id="div1" class="mblScrollableViewContainer">
 			<ul class="nav nav-parent">
-				<!--li class="nav-divider"></li>
-				<li class="tree-item selected">
-					<a href="#"><span class="navLabel default">Default</span></a>
-				</li>
-				
-				<li class="nav-divider"></li>
-				<li>
-					<div class="tree-toggler">
-						<label class="nav-header"><span class="navLabel">EngineeringDocuments</span></label>
-						<div class="mblListItemRightIcon">
-							<div class="mblDomButtonArrow mblDomButton" title="">
-								<div></div>
-							</div>
-						</div>
-					</div>
-					<ul class="nav tree active-trial">
-						<li class="tree-item">
-							<a href="#"><span class="navLabel navSubLabel">Requirements Specifications</span></a>
-						</li>
-						<li class="tree-item">
-							<a href="#"><span class="navLabel navSubLabel">Work Items</span></a>
-						</li>
-						<li class="tree-item">
-							<a href="#"><span class="navLabel navSubLabel">Test Planning</span></a>
-						</li>
-					</ul>
-				</li>
-				<li class="nav-divider"></li>
-				<li>
-					<div class="tree-toggler">
-						<label class="nav-header"><span class="navLabel">Presentations</span></label>
-						<div class="mblListItemRightIcon">
-							<div class="mblDomButtonArrow mblDomButton" title="">
-								<div></div>
-							</div>
-						</div>
-					</div>
-					<ul class="nav  tree active-trial">
-						<li class="tree-item"><a href="#"><span
-								class="navLabel navSubLabel">pr 1</span></a></li>
-						<li class="tree-item"><a href="#"><span
-								class="navLabel navSubLabel">pr 2</span></a></li>
-						<li class="tree-item"><a href="#"><span
-								class="navLabel navSubLabel">pr 3</span></a></li>
-					</ul>
-				</li>
-				<li class="nav-divider"></li>
-				<li>
-					<div class="tree-toggler">
-						<label class="nav-header"><span class="navLabel">Legal</span></label>
-						<div class="mblListItemRightIcon">
-							<div class="mblDomButtonArrow mblDomButton" title="">
-								<div></div>
-							</div>
-						</div>
-					</div>
-					<ul class="nav  tree active-trial">
-						<li class="tree-item"><a href="#"><span
-								class="navLabel navSubLabel">Legal 1</span></a></li>
-						<li class="tree-item"><a href="#"><span
-								class="navLabel navSubLabel">L2</span></a></li>
-						<li class="tree-item"><a href="#"><span
-								class="navLabel navSubLabel">L3</span></a></li>
-					</ul>
-				</li>
-				<li class="nav-divider"></li-->
 			</ul>
 		</div>
 	</div>
@@ -132,10 +66,10 @@
 						<span>URL: &nbsp;</span>
 					</div>
 					<div class="col-xs-9  alignment-right">
-						<input name="title" type="text" class="form-control input-title" />
+						<input type="text" class="form-control input-url" />
 					</div>
 					<div class="col-xs-1 alignment-left">
-						<button class="btn btn-primary form-control">&nbsp;&nbsp;&nbsp;Go&nbsp;&nbsp;&nbsp;</button>
+						<button class="input-xml-go" class="btn btn-primary form-control">&nbsp;&nbsp;&nbsp;Go&nbsp;&nbsp;&nbsp;</button>
 					</div>
 				</div>
 			</div>
@@ -144,11 +78,11 @@
 
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation"><a
-						href="#preview-design" role="tab" data-toggle="tab"
-						data-type="templates">Preview</a></li>
-					<li role="presentation" class="active"><a href="#data-selection" role="tab"
-						data-toggle="tab" data-type="stylesheets">Data Selection</a></li>
+					<li role="presentation"><a href="#preview-design" role="tab"
+						data-toggle="tab" data-type="templates">Preview</a></li>
+					<li role="presentation" class="active"><a
+						href="#data-selection" role="tab" data-toggle="tab"
+						data-type="stylesheets">Data Selection</a></li>
 				</ul>
 			</div>
 
@@ -253,23 +187,29 @@
 							<table id="dataSelected" class="all-reports">
 								<thead>
 									<tr>
-										<th class="col-title table-header col-xs-3"><a href="#"><img alt="edit"
-												src="${contextPath}/graphics/edit.png"></a> TOPIC</th>
-										<th class="col-description table-header col-xs-3"><a href="#"><img alt="edit"
-												src="${contextPath}/graphics/edit.png"></a> PUBLICATION DATE</th>
-										<th class="col-last-modified table-header col-xs-3"><a href="#"><img alt="edit"
+										<th class="col-title table-header col-xs-3"><a href="#"><img
+												alt="edit" src="${contextPath}/graphics/edit.png"></a>
+											TOPIC</th>
+										<th class="col-description table-header col-xs-3"><a
+											href="#"><img alt="edit"
+												src="${contextPath}/graphics/edit.png"></a> PUBLICATION
+											DATE</th>
+										<th class="col-last-modified table-header col-xs-3"><a
+											href="#"><img alt="edit"
 												src="${contextPath}/graphics/edit.png"></a> DESCRIPTION</span></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<td class="table-data col-xs-3">Omar biography</td>
-										<td class="table-data col-xs-3">Sun , 05 Apr 2015, 9:00 GMT</td>
+										<td class="table-data col-xs-3">Sun , 05 Apr 2015, 9:00
+											GMT</td>
 										<td class="table-data col-xs-3">Description</td>
 									</tr>
 									<tr>
 										<td class="table-data col-xs-3">Omar biography</td>
-										<td class="table-data col-xs-3">Sun , 05 Apr 2015, 9:00 GMT</td>
+										<td class="table-data col-xs-3">Sun , 05 Apr 2015, 9:00
+											GMT</td>
 										<td class="table-data col-xs-3">Description</td>
 									</tr>
 								</tbody>
@@ -288,7 +228,6 @@
 		</div>
 	</div>
 </div>
-
 
 <script type="text/template" id="nav-divider-template">
 	<li class="nav-divider"></li>
