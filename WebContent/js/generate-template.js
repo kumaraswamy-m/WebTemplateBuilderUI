@@ -81,57 +81,7 @@ require(
 					} ];
 				}
 
-<<<<<<< HEAD
 				populatePredefinedTemplates(json);
-=======
-	function attachHandlers() {
-		$genTemplatePage.find(".tab").click(toggleUnderlineColor);
-		$genTemplatePage.find(".highlight").click(toggleColor);
-		
-		$genTemplatePage.find(".input-xml-go").click(handleSelectionTree);
-	}
-	function toggleColor(e){
-		e.preventDefault();
-		$genTemplatePage.find(".highlight").removeClass("btn-primary btn-default").addClass("btn-default");
-		$(e.target).removeClass("btn-default btn-primary").addClass("btn-primary");
-	}
-	function toggleUnderlineColor(e){
-		e.preventDefault();
-		$genTemplatePage.find(".label").removeClass("selected unselected").addClass("unselected");
-		$(e.target).removeClass("unselected selected").addClass("selected");
-	}
-	function toggleBackground(e) {
-		e.preventDefault();
-		$genTemplatePage.find(".selectedItem").removeClass("mouseIn").addClass("mouseOut");
-		$(e).removeClass("mouseOut mouseIn selectedItem").addClass("mouseIn selectedItem");
-	}
-	function togglePredefinedTemplateTree(e) {
-		e.preventDefault();
-		var $tree = $(e.target);
-
-		while (!$tree.hasClass("tree-toggler")) {
-			$tree = $tree.parent();
-		}
-
-		$tree.parent().children('ul.tree').toggle(200);
-	}
-
-	function hideAllPredefinedTemplates() {
-		$.each($genTemplatePage.find('.tree-toggler'), function(ind, val) {
-			this.click();
-		});
-	}
-	
-	function handleSelectionTree(e) {
-		var urlInput = $genTemplatePage.find(".input-url").val();
-		$.ajax({
-			url : baseUrl + "/api/xmltojson/schema",
-			data : {url: urlInput},
-			method : 'GET',
-			success : function(result) {
-				alert(result);
-				populateTree(result);
->>>>>>> refs/remotes/origin/master
 			}
 
 			function populatePredefinedTemplates(json) {
@@ -232,7 +182,7 @@ require(
 			function handleSelectionTree(e) {
 				var urlInput = $genTemplatePage.find(".input-url").val();
 				$.ajax({
-					url : baseUrl + "/ReturnJson",
+					url : baseUrl + "/api/xmltojson/schema",
 					data : {
 						url : urlInput
 					},
