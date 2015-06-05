@@ -354,7 +354,7 @@ address, caption, cite, code, dfn, th, var {
 }
 .docUI #contentPage {
     padding: 0px 0px 0px;
-    background-color: #FFF;
+    background-color: #f9f9f9;
     color : #152935;
     font-family: "Arial-bold";
     font-size: 14pt;

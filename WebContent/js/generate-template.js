@@ -205,13 +205,9 @@ require(
 
 			function handleDataSelectionCheck(e) {
 
-				// alert($(e.target).prop('tagName') + ' :: ' +
-				// $(e.target).parent().hasClass('jstree-clicked'));
 				if ($(e.target).parent().hasClass('jstree-clicked')) {
 					$node = $(e.target);
-					// alert(($node).prop('tagName'));
 					if ($node.closest('li').hasClass('jstree-leaf')) {
-						// alert($node.closest('a').text());
 						populateDataSelection($node.closest('a').text());
 					} else {
 						$(e.target).click();

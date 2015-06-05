@@ -291,6 +291,7 @@
 		</ul>
 	</li>
 </script>
+<!-- Template to add columns to data selection -->
 <script type="text/template" id="data-selection-tree-node-template">
 <tr>
 	<th class="col-title table-header col-xs-3">
