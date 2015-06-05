@@ -66,7 +66,7 @@
 						<span>URL: &nbsp;</span>
 					</div>
 					<div class="col-xs-9  alignment-right">
-						<input type="text" class="form-control input-url drop" />
+						<input type="text" class="form-control input-url" />
 					</div>
 					<div class="col-xs-1 alignment-left">
 						<button class="input-xml-go btn btn-primary form-control goButton">&nbsp;&nbsp;&nbsp;GO&nbsp;&nbsp;&nbsp;</button>
@@ -90,7 +90,7 @@
 			<div class="tab-content col-xs-12">
 				<div role="tabpanel" class="tab-pane" id="preview-design"
 					data-type="preview">
-					<div class="insert-menu alignment-right">
+					<!-- <div class="insert-menu alignment-right">
 						<select name="type" class="upload-type form-control">
 							<option value="scripts">--Insert--</option>
 							<option value="templates">Table of contents</option>
@@ -99,7 +99,7 @@
 							<option value="stylesheets">Header</option>
 							<option value="templates">Footer</option>
 						</select>
-					</div>
+					</div> -->
 					<div class="scroll-content">
 						<div class="row">
 							<div class="col-xs-2">
@@ -113,7 +113,7 @@
 							<!-- delete icon -->
 							<div class="col-xs-1 align-right alignment-left ">
 								<a href="#"><img alt="delete"
-									src="${contextPath}/graphics/delete-icon.png"></a>
+									src="${contextPath}/graphics/delete.png"></a>
 
 							</div>
 
@@ -139,9 +139,12 @@
 										onMouseOver="show_bottomBar(1)" onMouseOut="hide_bottomBar(1)">
 										<div id="display-on-hover" class="hide">
 											<button class="btn btn-primary">Select Data</button>
-											<a href="#"><img alt="edit"
-												src="${contextPath}/graphics/edit.png"></a> <a href="#"><img
-												alt="delete" src="${contextPath}/graphics/delete-icon.png"></a>
+											<a href="#"><img alt="delete"
+												src="${contextPath}/graphics/onHover/edit.png"></a> <a
+												href="#"><img alt="delete"
+												src="${contextPath}/graphics/onHover/Add-Container.png"></a>
+											<a href="#"><img alt="delete"
+												src="${contextPath}/graphics/onHover/delete.png"></a>
 										</div>
 									</div>
 								</div>
@@ -155,7 +158,7 @@
 										placeholder="Please add title here"
 										class="form-control input-title" />
 								</div>
-								<div class="col-xs-2">
+								<div class="col-xs-2 alignment-left">
 									<select name="type" class="upload-type form-control">
 										<option value="scripts">--Select--</option>
 										<option value="templates">Table</option>
@@ -170,8 +173,11 @@
 										<div id="display-on-hover" class="hide">
 											<button class="btn btn-primary">Select Data</button>
 											<a href="#"><img alt="delete"
-												src="${contextPath}/graphics/edit.png"></a> <a href="#"><img
-												alt="delete" src="${contextPath}/graphics/delete-icon.png"></a>
+												src="${contextPath}/graphics/onHover/edit.png"></a> <a
+												href="#"><img alt="delete"
+												src="${contextPath}/graphics/onHover/Add-Container.png"></a>
+											<a href="#"><img alt="delete"
+												src="${contextPath}/graphics/onHover/delete.png"></a>
 										</div>
 									</div>
 								</div>
@@ -194,39 +200,49 @@
 									<button class=" highlight btn btn-default">Paragraph</button>
 								</div>
 							</div>
+							<div class="row">
+								<div class="col-xs-1">
+									<span class="alignment">Title: </span>
+								</div>
+								<div class="col-xs-11">
+									<input name="title" type="text"
+										class="drop form-control input-title" />
+								</div>
+							</div>
 							<table id="dataSelected" class="all-reports">
 								<thead>
-									<tr>
-										<th class="col-title table-header col-xs-3"><a href="#"><img
-												alt="edit" src="${contextPath}/graphics/edit.png"></a>
-											TOPIC</th>
+									<%-- <tr>
+										<th class="col-title table-header col-xs-3"><a
+											class="no-edit-title" href="#"><img alt="edit"
+												src="${contextPath}/graphics/edit.png"></a><span
+											class="title">TOPIC</span></th>
 
 										<th class="col-description table-header col-xs-3"><a
-											href="#"><img alt="edit"
-												src="${contextPath}/graphics/edit.png"></a> PUBLICATION
-											DATE</th>
+											class="no-edit-title" href="#"><img alt="edit"
+												src="${contextPath}/graphics/edit.png"></a><span
+											class="title">PUBLICATION DATE</span></th>
+
 										<th class="col-last-modified table-header col-xs-3"><a
-											href="#"><img alt="edit"
-												src="${contextPath}/graphics/edit.png"></a> DESCRIPTION</span></th>
-									</tr>
+											class="no-edit-title" href="#"><img alt="edit"
+												src="${contextPath}/graphics/edit.png"></a><span
+											class="title">DESCRIPTION</span></th>
+									</tr> --%>
 								</thead>
 								<tbody>
 									<tr>
-										<td class="table-data col-xs-3">Omar biography</td>
-										<td class="table-data col-xs-3">Sun , 05 Apr 2015, 9:00
-											GMT</td>
-										<td class="table-data col-xs-3">Description</td>
+										<td class="table-data  col-xs-3"></td>
+										<td class="table-data  col-xs-3"></td>
+										<td class="table-data  col-xs-3"></td>
 									</tr>
 									<tr>
-										<td class="table-data col-xs-3">Omar biography</td>
-										<td class="table-data col-xs-3">Sun , 05 Apr 2015, 9:00
-											GMT</td>
-										<td class="table-data col-xs-3">Description</td>
+										<td class="table-data col-xs-3"></td>
+										<td class="table-data col-xs-3"></td>
+										<td class="table-data col-xs-3"></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-						<div class="col-xs-3">
+						<div class="col-xs-3 schema-tree">
 							<!-- navigation tree -->
 							<div class="navigation-tree">
 								<div class="navigation-top-bar">Navigator</div>
@@ -234,8 +250,10 @@
 							</div>
 						</div>
 					</div>
-					<button class="btn btn-primary">SELECT</button>
-					<button class="btn btn-default">CANCEL</button>
+					<div class="data-select-buttons">
+						<button class="get-data btn btn-primary">SELECT</button>
+						<button class="remove-data btn btn-default">CANCEL</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -272,4 +290,14 @@
 			%NAV_TREE_ITEMS%
 		</ul>
 	</li>
+</script>
+<script type="text/template" id="data-selection-tree-node-template">
+<tr>
+	<th class="col-title table-header col-xs-3">
+		<a class="no-edit-title" href="#">
+			<img alt="edit" src="${contextPath}/graphics/edit.png">
+		</a>
+		<span class="title"><@= name @></span>
+	</th>
+</tr>
 </script>

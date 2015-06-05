@@ -139,6 +139,37 @@ require(
 
 				$genTemplatePage.find(".input-xml-go").click(
 						handleSelectionTree);
+				$genTemplatePage.find(".get-data").click(handleGetData);
+				$genTemplatePage.find(".no-edit-title").off('click').click(
+						handleEditTitle);
+				$genTemplatePage.on('blur', 'input', changeTitle);
+
+			}
+			function changeTitle(e) {
+				var $th = $(event.target).closest("th");
+				var $val = $genTemplatePage.find(".editable").val();
+				$th.find(".title").removeClass("hide").addClass("show");
+				$th.find(".title").replaceWith(
+						$('<span />').addClass("title").html($val));
+				$th.find(".editable").remove();
+			}
+			function handleEditTitle(e) {
+				var $th = $(event.target).closest("th");
+				var input = $('<input />', {
+					'type' : 'text',
+					'name' : 'unique',
+					'class' : 'editable',
+					'value' : $th.find(".title").html()
+				});
+				$th.find(".title").parent().append(input);
+				$th.find(".title").addClass("hide").removeClass("show");
+				input.focus();
+			}
+			function handleGetData(e) {
+				e.preventDefault();
+				var $data = $genTemplatePage.find(".drop").val();
+				alert($data);
+
 			}
 			function toggleColor(e) {
 				e.preventDefault();
@@ -172,6 +203,24 @@ require(
 				$tree.parent().children('ul.tree').toggle(200);
 			}
 
+			function handleDataSelectionCheck(e) {
+
+				// alert($(e.target).prop('tagName') + ' :: ' +
+				// $(e.target).parent().hasClass('jstree-clicked'));
+				if ($(e.target).parent().hasClass('jstree-clicked')) {
+					$node = $(e.target);
+					// alert(($node).prop('tagName'));
+					if ($node.closest('li').hasClass('jstree-leaf')) {
+						// alert($node.closest('a').text());
+						populateDataSelection($node.closest('a').text());
+					} else {
+						$(e.target).click();
+					}
+				}
+			}
+			function populateDataSelection(nodeName) {
+
+			}
 			function hideAllPredefinedTemplates() {
 				$.each($genTemplatePage.find('.tree-toggler'), function(ind,
 						val) {
@@ -194,18 +243,19 @@ require(
 			}
 
 			function populateTree(jsonTreeData) {
+				$('.data-selection-tree').empty();
 				$('.data-selection-tree')
 						.jstree(
 								{
-									'plugins' : [ 'dnd','checkbox' ],
+									'plugins' : [ 'dnd', 'checkbox' ],
 									"dnd" : {
 										drop_target : ".drop",
 										drop_check : function(data) {
 											return false;
 										},
-										 "checkbox" : {
-										      "keep_selected_style" : false
-										    },
+									},
+									"checkbox" : {
+										"keep_selected_style" : false
 									},
 									'core' : {
 										'check_callback' : function(operation,
@@ -222,7 +272,7 @@ require(
 												// 'Parent'
 											}
 											return true; // allow all other
-															// operations
+											// operations
 										},
 										'themes' : {
 											'dots' : false,
@@ -278,6 +328,7 @@ require(
 						}
 					}
 				});
+
 				function getPath(selectedElement) {
 					var path = "";
 					var temp;
@@ -290,7 +341,16 @@ require(
 					}
 					return path;
 				}
+
+				$genTemplatePage.on("click.jstree", ".jstree-anchor",
+						handleDataSelectionCheck);
 			}
 			attachHandlers();
 			getPredefinedTemplates();
+
+			$genTemplatePage
+					.find(".input-url")
+					.val(
+							'http://localhost:8080/rpet/template/data/requisitepro.xml');
+			handleSelectionTree();
 		});
