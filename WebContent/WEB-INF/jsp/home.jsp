@@ -15,6 +15,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="locale" value="${pageContext.request.locale}" />
 <fmt:setLocale value="${locale}" />
+<fmt:setBundle basename="com.ibm.rpe.web.template.ui.messages.UIMessages" />
 
 <!DOCTYPE html>
 <html>
@@ -36,6 +37,11 @@
 <body class="docUI mblBackground">
 	<%@include file="includes/nav-bar-top.jsp"%>
 
+	<div class="loading-text hide">
+		<span class="text-content"> <span></span>
+			<button type="button" class="btn btn-link close-loading-text hide">X</button>
+		</span>
+	</div>
 	<div id="generate-template-page" class="container"></div>
 
 	<script src="${contextPath}/js/base.min.js"></script>

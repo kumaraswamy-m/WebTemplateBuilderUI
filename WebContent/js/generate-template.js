@@ -22,10 +22,9 @@ require(
 				escape : /<@-([\s\S]+?)@>/g
 			};
 
-			var baseUrl = window.location.protocol + '//'
-					+ window.location.host + $(document).data("context_path");
-
+			var baseUrl = window.location.protocol + '//' + window.location.host + $(document).data("context_path");
 			var $genTemplatePage = $("#generate-template-page");
+			var $loadingText = $(".docUI .loading-text");
 
 			function getPredefinedTemplates(json) {
 				if (!json) {
@@ -340,13 +339,12 @@ require(
 
 				$genTemplatePage.on("click.jstree", ".jstree-anchor",
 						handleDataSelectionCheck);
+				
+				$loadingText.trigger("show", {text: messages.navigatorTreeLoaded});
 			}
 			attachHandlers();
 			getPredefinedTemplates();
 
-			$genTemplatePage
-					.find(".input-url")
-					.val(
-							'http://localhost:8080/rpet/template/data/requisitepro.xml');
+			$genTemplatePage.find(".input-url").val('http://localhost:8080/rpet/template/data/requisitepro.xml');
 			handleSelectionTree();
 		});

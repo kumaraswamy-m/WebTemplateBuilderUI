@@ -24,6 +24,7 @@ require(
 
 			var baseUrl = window.location.protocol + '//' + window.location.host + $(document).data("context_path");
 			var allPageIds = [ "#generate-template-page" ];
+			var $loadingText = $(".docUI .loading-text");
 
 			function switchPageTo(showPageId) {
 				allPageIds.forEach(function(id) {
@@ -44,8 +45,9 @@ require(
 			}
 
 			function changeTitle(newTitle) {
-				if (!newTitle)
+				if (!newTitle) {
 					return;
+				}
 
 				$("head title").text(messages.rpe + " - " + newTitle);
 			}
@@ -67,7 +69,7 @@ require(
 
 			function initializeLoadingText() {
 
-				var $loadingText = $(".side-bar-content .loading-text");
+				// var $loadingText = $(".side-bar-content .loading-text");
 
 				$loadingText.find(".close-loading-text").on("click",
 						function(event) {

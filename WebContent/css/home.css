@@ -10,36 +10,29 @@
 body {
 	xbackground-color: #4C4D53;	
 }
-
-.sidebar-nav {
-	float: left;
-    margin: 0;
-    font-size: 18px;
-}
-
-.side-bar-menu {
-	max-width: 110px;
-	margin-top: 60px;
-	margin-left: 10px;
-    background: #231F20;
-}
-
-.side-bar-icon {
-	width: 110px;
-	text-align: center
-}
-
 .icon {
 	display: inline-block;
 	width: 32px;
 	height: 32px;
 }
 
-.side-bar-content {
-	margin-top: 50px;
-	padding-left: 2px;
-	width: calc(100% - 1px);
-	float: right;
+.docUI .loading-text {
+	text-align: center;
+	margin-top: 5px;
+}
+
+.docUI .loading-text .text-content {
+	background: #00A6A0;
+	border-radius: 2px;
+	padding: 5px;
+	color: white;
+	margin-right: 5px;
+}
+
+.docUI .loading-text .close-loading-text {
+	padding: 0px;
+	color: white;
+	margin-left: 15px;
 }
 
 .navbar-inverse .sidebar-nav > li > a, .sidebar-nav > li > a {
@@ -81,65 +74,6 @@ body {
 	font-size: 15px;
 	color: white;
 	display: block;
-}
-
-.side-bar-content > .container {
-	width: 100%;
-}
-
-.side-bar-content .section-header {
-	margin-top: 15px;
-}
-
-.side-bar-content .section-header > .panel-heading .page-title {
-	font-size: 20px;
-}
-
-.side-bar-content .loading-text {
-	text-align: center;
-	margin-top: 5px;
-}
-
-.side-bar-content .loading-text .text-content {
-	background: #00A6A0;
-	border-radius: 2px;
-	padding: 5px;
-	color: white;
-	margin-right: 5px;
-}
-
-.side-bar-content .loading-text .close-loading-text {
-	padding: 0px;
-	color: white;
-	margin-left: 15px;
-}
-
-.loading {
-	display: inline-block;
-	width: 20px;
-	height: 20px;
-	background-image: url("../graphics/loading.gif");
-}
-
-.pagination {
-	margin: 0;
-}
-
-.pagination > li > a,
-	.pagination > li > span {
-	padding: 3px 6px;
-}
-
-div.advanced-search-well .advanced-search-categories td {
-	border: 0px !important;
-	padding: 3px 0px;
-}
-
-nav .items-per-page {
-	position: relative;
-	top: -8px;
-	font-weight: normal;
-	margin-left: 20px;
 }
 
 label input, label select, label span {

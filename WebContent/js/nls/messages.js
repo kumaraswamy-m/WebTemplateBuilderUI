@@ -8,6 +8,8 @@
  *******************************************************************************/
 define("nls/messages", [],  {
 	root : {
-		"generatePageTitle": "Document generation"
+		"rpe": "RPE",
+		"generatePageTitle": "Document Template Generation",
+		"navigatorTreeLoaded": "Ready for tree selection"
 	}
 });

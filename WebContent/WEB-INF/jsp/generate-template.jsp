@@ -15,15 +15,11 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="locale" value="${pageContext.request.locale}" />
-<fmt:setLocale value="${locale}" />
-<fmt:setBundle
-	basename="com.ibm.rpe.web.template.ui.messages.commonMessages" />
+<fmt:setBundle basename="com.ibm.rpe.web.template.ui.messages.UIMessages" />
+
 <link rel="stylesheet" href="${contextPath}/css/generate-template.css">
 <link rel="stylesheet" href="${contextPath}/css/style3.0.css" />
 
-<%-- <script src="${contextPath}/js/jstree.js"></script>
-<script src="${contextPath}/js/jstree.dnd.js"></script>
- --%>
 <script type="text/javascript">
 	function show_bottomBar(containerNum) {
 		$("." + containerNum).find("#display-on-hover").removeClass("hide");
@@ -37,7 +33,7 @@
 <div class="dijitContentPane dijitContentPaneSingleChild"
 	id="leftNavPane" role="navigation">
 	<div class="sidePanelHeader">
-		<span class="navLabelHeader">Predefined Templates</span>
+		<span class="navLabelHeader"><fmt:message key="sidebar.left.heading.predefined_layouts" /></span>
 	</div>
 	<div class="mblView mblScrollableView" id="docUINav">
 		<div id="div1" class="mblScrollableViewContainer">
@@ -54,22 +50,22 @@
 			<div class="titleContent col-xs-12">
 				<div class="row">
 					<div class="col-xs-2">
-						<span class="alignment">Document Name: </span>
+						<span class="alignment"><fmt:message key="template.generator.label.document_name" /></span>
 					</div>
 					<div class="col-xs-10">
-						<input name="title" type="text" class="form-control input-title" />
+						<input name="title" type="text" class="form-control input-title" placeholder="<fmt:message key="template.generator.placeholder.document_name" />" />
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-xs-2">
-						<span>URL: &nbsp;</span>
+						<span><fmt:message key="template.generator.label.url" /></span>
 					</div>
 					<div class="col-xs-9  alignment-right">
-						<input type="text" class="form-control input-url" />
+						<input type="text" class="form-control input-url" placeholder="<fmt:message key="template.generator.placeholder.url" />" />
 					</div>
 					<div class="col-xs-1 alignment-left">
-						<button class="input-xml-go btn btn-primary form-control goButton">&nbsp;&nbsp;&nbsp;GO&nbsp;&nbsp;&nbsp;</button>
+						<button class="input-xml-go btn btn-primary form-control goButton"><fmt:message key="template.generator.button.go" /></button>
 					</div>
 				</div>
 			</div>
@@ -79,10 +75,10 @@
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
 					<li role="presentation"><a href="#preview-design" role="tab"
-						data-toggle="tab" data-type="templates">Preview</a></li>
+						data-toggle="tab" data-type="templates"><fmt:message key="template.generator.tab.Preview" /></a></li>
 					<li role="presentation" class="active"><a
 						href="#data-selection" role="tab" data-toggle="tab"
-						data-type="stylesheets">Data Selection</a></li>
+						data-type="stylesheets"><fmt:message key="template.generator.tab.data_selection" /></a></li>
 				</ul>
 			</div>
 
@@ -90,20 +86,10 @@
 			<div class="tab-content col-xs-12">
 				<div role="tabpanel" class="tab-pane" id="preview-design"
 					data-type="preview">
-					<!-- <div class="insert-menu alignment-right">
-						<select name="type" class="upload-type form-control">
-							<option value="scripts">--Insert--</option>
-							<option value="templates">Table of contents</option>
-							<option value="stylesheets">Index</option>
-							<option value="templates">Cover page</option>
-							<option value="stylesheets">Header</option>
-							<option value="templates">Footer</option>
-						</select>
-					</div> -->
 					<div class="scroll-content">
 						<div class="row">
 							<div class="col-xs-2">
-								<span>Table of Contents: </span>
+								<span><fmt:message key="template.generator.label.table_of_contents" /></span>
 							</div>
 							<div class="col-xs-9 alignment-right alignment">
 								<input name="title" type="text"
@@ -127,9 +113,9 @@
 								</div>
 								<div class="col-xs-2  alignment-left">
 									<select name="type" class="upload-type form-control">
-										<option value="scripts">--Select--</option>
-										<option value="templates">Table</option>
-										<option value="stylesheets">Paragraph</option>
+										<option value="scripts"><fmt:message key="template.generator.format.select" /></option>
+										<option value="templates"><fmt:message key="template.generator.format.table" /></option>
+										<option value="stylesheets"><fmt:message key="template.generator.format.paragraph" /></option>
 									</select>
 								</div>
 							</div>
@@ -138,7 +124,7 @@
 									<div class="text-area form-control"
 										onMouseOver="show_bottomBar(1)" onMouseOut="hide_bottomBar(1)">
 										<div id="display-on-hover" class="hide">
-											<button class="btn btn-primary">Select Data</button>
+											<button class="btn btn-primary"><fmt:message key="template.generator.tab.data_selection" /></button>
 											<a href="#"><img alt="delete"
 												src="${contextPath}/graphics/onHover/edit.png"></a> <a
 												href="#"><img alt="delete"
@@ -160,9 +146,9 @@
 								</div>
 								<div class="col-xs-2 alignment-left">
 									<select name="type" class="upload-type form-control">
-										<option value="scripts">--Select--</option>
-										<option value="templates">Table</option>
-										<option value="stylesheets">Paragraph</option>
+										<option value="scripts"><fmt:message key="template.generator.format.select" /></option>
+										<option value="templates"><fmt:message key="template.generator.format.table" /></option>
+										<option value="stylesheets"><fmt:message key="template.generator.format.paragraph" /></option>
 									</select>
 								</div>
 							</div>
@@ -171,7 +157,7 @@
 									<div class="text-area form-control"
 										onMouseOver="show_bottomBar(2)" onMouseOut="hide_bottomBar(2)">
 										<div id="display-on-hover" class="hide">
-											<button class="btn btn-primary">Select Data</button>
+											<button class="btn btn-primary"><fmt:message key="template.generator.hover.select_data" /></button>
 											<a href="#"><img alt="delete"
 												src="${contextPath}/graphics/onHover/edit.png"></a> <a
 												href="#"><img alt="delete"
@@ -185,9 +171,9 @@
 						</div>
 					</div>
 					<div class="footer-bar">
-						<a href="#"><span>Save Layout</span></a>
-						<button class="btn btn-primary">Generate</button>
-						<button class="btn btn-default">Cancel</button>
+						<a href="#"><span><fmt:message key="template.generator.button.save_layout" /></span></a>
+						<button class="btn btn-primary"><fmt:message key="template.generator.button.generate" /></button>
+						<button class="btn btn-default"><fmt:message key="template.generator.button.cancel" /></button>
 					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane active" id="data-selection"
@@ -196,17 +182,17 @@
 						<div class="col-xs-9 selected-content">
 							<div class="wrapper">
 								<div class="data-formats">
-									<button class=" highlight btn btn-primary">Table</button>
-									<button class=" highlight btn btn-default">Paragraph</button>
+									<button class=" highlight btn btn-primary"><fmt:message key="template.generator.format.table" /></button>
+									<button class=" highlight btn btn-default"><fmt:message key="template.generator.format.paragraph" /></button>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-xs-1">
-									<span class="alignment">Title: </span>
+									<span class="alignment"><fmt:message key="template.generator.label.title" /></span>
 								</div>
 								<div class="col-xs-11">
 									<input name="title" type="text"
-										class="drop form-control input-title" />
+										class="drop form-control input-title" placeholder="<fmt:message key="template.generator.placeholder.drag.title" />" />
 								</div>
 							</div>
 							<table id="dataSelected" class="all-reports">
@@ -245,14 +231,14 @@
 						<div class="col-xs-3 schema-tree">
 							<!-- navigation tree -->
 							<div class="navigation-tree">
-								<div class="navigation-top-bar">Navigator</div>
+								<div class="navigation-top-bar"><fmt:message key="template.generator.dataselection.label.navigator" /></div>
 								<div class="data-selection-tree"></div>
 							</div>
 						</div>
 					</div>
 					<div class="data-select-buttons">
-						<button class="get-data btn btn-primary">SELECT</button>
-						<button class="remove-data btn btn-default">CANCEL</button>
+						<button class="get-data btn btn-primary"><fmt:message key="template.generator.button.select" /></button>
+						<button class="remove-data btn btn-default"><fmt:message key="template.generator.button.cancel" /></button>
 					</div>
 				</div>
 			</div>
