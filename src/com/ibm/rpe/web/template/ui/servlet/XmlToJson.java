@@ -25,6 +25,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -44,10 +45,10 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 /**
- * Servlet implementation class ReturnJson
+ * Servlet implementation class to convert xml to json or to json schema
  */
 @Path("/xmltojson")
-public class ReturnJson
+public class XmlToJson
 {
 	private static final long serialVersionUID = 1L;
 	public static String ELEMENT = "element";
@@ -57,31 +58,54 @@ public class ReturnJson
 	public static int ELEMENT_ID = 1;
 	public static int id = 10;
 
+	public static final String API_URL = "http://localhost:8080/rpet/api/"; //$NON-NLS-1$
+
 	@GET
 	@Path("/schema")
 	@Produces(
 	{ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
-	public Response convertXmlToJson(@Context HttpServletRequest request, @QueryParam("url") String xmlUrl)
+	public Response convertXmlToJsonSchema(@Context HttpServletRequest request, @QueryParam("url") String xmlUrl)
 			throws Exception
 	{
 
 		System.out.println(xmlUrl);
 
 		Client client = new Client();
-		WebResource service = client.resource(UriBuilder.fromUri("http://localhost:8080/rpet/api/xmltoxsd?url=" + xmlUrl).build());
+		WebResource service = client.resource(UriBuilder.fromUri(API_URL + "xmltoxsd?url=" + xmlUrl).build());
 
 		// create the job
 		ClientResponse clientResponse = service.accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
 		if (Response.Status.OK.getStatusCode() != clientResponse.getStatus())
 		{
-			// return Response.serverError().status(Status.BAD_REQUEST)
-			// .entity(clientResponse.getEntity(String.class)).build();
+			return Response.serverError().status(Status.BAD_REQUEST).entity(clientResponse.getEntity(String.class)).build();
 		}
 		InputStream is = clientResponse.getEntityInputStream();
 		String xsdString = FileUtils.getStringFromInputStream(is);
 
 		String jsonData = buildJson(xsdString);
 		return Response.ok().entity(jsonData).build();
+	}
+
+	@GET
+	@Produces(
+	{ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
+	public Response convertXmlToJson(@QueryParam("url") String xmlUrl) throws Exception
+	{
+
+		System.out.println(xmlUrl);
+
+		Client client = new Client();
+		WebResource service = client.resource(UriBuilder.fromUri(API_URL + "xmltojson?url=" + xmlUrl).build());
+
+		// create the job
+		ClientResponse clientResponse = service.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+		if (Response.Status.OK.getStatusCode() != clientResponse.getStatus())
+		{
+			return Response.serverError().status(Status.BAD_REQUEST).entity(clientResponse.getEntity(String.class)).build();
+		}
+		InputStream is = clientResponse.getEntityInputStream();
+		String jsonString = FileUtils.getStringFromInputStream(is);
+		return Response.ok().entity(jsonString).build();
 	}
 
 	private String buildJson(String inputXSD) throws IOException
