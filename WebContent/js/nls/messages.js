@@ -10,6 +10,7 @@ define("nls/messages", [],  {
 	root : {
 		"rpe": "RPE",
 		"generatePageTitle": "Document Template Generation",
-		"navigatorTreeLoaded": "Ready for tree selection"
+		"navigatorTreeLoaded": "Ready for tree selection",
+		"warning_parentNodeSelected": "Please select only the child elements"
 	}
 });

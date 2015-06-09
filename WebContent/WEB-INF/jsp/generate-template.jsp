@@ -195,36 +195,10 @@
 										class="drop form-control input-title" placeholder="<fmt:message key="template.generator.placeholder.drag.title" />" />
 								</div>
 							</div>
-							<table id="dataSelected" class="all-reports">
+							<table class="table-data-selection">
 								<thead>
-									<%-- <tr>
-										<th class="col-title table-header col-xs-3"><a
-											class="no-edit-title" href="#"><img alt="edit"
-												src="${contextPath}/graphics/edit.png"></a><span
-											class="title">TOPIC</span></th>
-
-										<th class="col-description table-header col-xs-3"><a
-											class="no-edit-title" href="#"><img alt="edit"
-												src="${contextPath}/graphics/edit.png"></a><span
-											class="title">PUBLICATION DATE</span></th>
-
-										<th class="col-last-modified table-header col-xs-3"><a
-											class="no-edit-title" href="#"><img alt="edit"
-												src="${contextPath}/graphics/edit.png"></a><span
-											class="title">DESCRIPTION</span></th>
-									</tr> --%>
 								</thead>
 								<tbody>
-									<tr>
-										<td class="table-data  col-xs-3"></td>
-										<td class="table-data  col-xs-3"></td>
-										<td class="table-data  col-xs-3"></td>
-									</tr>
-									<tr>
-										<td class="table-data col-xs-3"></td>
-										<td class="table-data col-xs-3"></td>
-										<td class="table-data col-xs-3"></td>
-									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -232,6 +206,7 @@
 							<!-- navigation tree -->
 							<div class="navigation-tree">
 								<div class="navigation-top-bar"><fmt:message key="template.generator.dataselection.label.navigator" /></div>
+								<div class="xml-as-json hide" data-xmlJson=""></div>
 								<div class="data-selection-tree"></div>
 							</div>
 						</div>
@@ -278,13 +253,16 @@
 	</li>
 </script>
 <!-- Template to add columns to data selection -->
-<script type="text/template" id="data-selection-tree-node-template">
-<tr>
-	<th class="col-title table-header col-xs-3">
+<script type="text/template" id="data-selection-header-column-template">
+	<th class="col-title table-header col-xs-3" data-query="<@= query@>" data-isquery="true">
 		<a class="no-edit-title" href="#">
 			<img alt="edit" src="${contextPath}/graphics/edit.png">
 		</a>
 		<span class="title"><@= name @></span>
 	</th>
-</tr>
+</script>
+<script type="text/template" id="data-selection-data-column-template">
+	<td class="col-data col-xs-3">
+		<span class="data"><@= data @></span>
+	</td>
 </script>

@@ -22,7 +22,8 @@ require(
 				escape : /<@-([\s\S]+?)@>/g
 			};
 
-			var baseUrl = window.location.protocol + '//' + window.location.host + $(document).data("context_path");
+			var baseUrl = window.location.protocol + '//'
+					+ window.location.host + $(document).data("context_path");
 			var $genTemplatePage = $("#generate-template-page");
 			var $loadingText = $(".docUI .loading-text");
 
@@ -114,8 +115,6 @@ require(
 						}
 						$genTemplatePage.find("#docUINav .nav-parent").append(
 								category);
-						$genTemplatePage.find("#docUINav .nav-parent").append(
-								navDividerTemplate());
 					});
 
 					attachItemHandlers();
@@ -139,8 +138,6 @@ require(
 				$genTemplatePage.find(".input-xml-go").click(
 						handleSelectionTree);
 				$genTemplatePage.find(".get-data").click(handleGetData);
-				$genTemplatePage.find(".no-edit-title").off('click').click(
-						handleEditTitle);
 				$genTemplatePage.on('blur', 'input', changeTitle);
 
 			}
@@ -201,21 +198,125 @@ require(
 
 				$tree.parent().children('ul.tree').toggle(200);
 			}
-
 			function handleDataSelectionCheck(e) {
-
-				if ($(e.target).parent().hasClass('jstree-clicked')) {
-					$node = $(e.target);
+				var $node = $(e.target);
+				if ($node.parent().hasClass('jstree-clicked')) {
 					if ($node.closest('li').hasClass('jstree-leaf')) {
-						populateDataSelection($node.closest('a').text());
+						var json = {
+							name : $node.closest('a').text(),
+							query : getSelectElementXPath($node.parent())
+						};
+						var newContext = json.query;
+						var existingContext = null;
+
+						$.each($genTemplatePage .find(".table-data-selection thead th"),
+							function(index, value) {
+								existingContext = $(this).attr('data-query');
+							});
+
+						if (existingContext != null) {
+							if (existingContext.indexOf('/') != -1) {
+								existingContext = existingContext.substring(0,
+										existingContext.lastIndexOf('/'));
+							}
+
+							if (newContext.indexOf('/') != -1) {
+								newContext = newContext.substring(0, newContext
+										.lastIndexOf('/'));
+							}
+
+							if (existingContext != newContext) {
+								$node.click();
+								alert('Different context');
+								return;
+							}
+						}
+
+						populateDataSelection(json);
+						$genTemplatePage.find(".no-edit-title").off('click').click(handleEditTitle);
+						
+						var selectedTreeItems = [];
+						$.each($genTemplatePage.find('.table-data-selection thead th'),
+								function(index, value) {
+									var tableHeader = $(this).attr('data-query');
+									selectedTreeItems.push(tableHeader.substring(tableHeader.lastIndexOf('/')+1));
+								});
+
+						var xpath = getSelectElementXPath($node.parent());
+						pathArray = xpath.split('/');
+						var jsonObj = null;
+						for ( var i = 0; i < pathArray.length - 1; i++) {
+							if (jsonObj == null) {
+								jsonObj = jQuery.parseJSON($genTemplatePage
+										.find('.xml-as-json').attr(
+												'data-xmljson'))[pathArray[i]];
+							} else {
+								jsonObj = jsonObj[pathArray[i]];
+							}
+						}
+						
+						$genTemplatePage.find(".table-data-selection tbody").empty();
+						var tr = '<tr></tr>';
+						
+						
+						var jsonData;
+						var dataLength = jsonObj.length;
+						if(dataLength > 10) {
+							dataLength = 10;
+						}
+						
+						for ( var k = 0; k < dataLength; k++) {
+							var $row = $genTemplatePage.find(".table-data-selection tbody").append(tr);
+							var dataRow = jsonObj[k];
+							$.each(selectedTreeItems, function(index, value) {
+								jsonData = {
+									data : dataRow[value]
+								};
+								populateData($row, jsonData);
+							});
+						}
+						
+						$.each(jsonObj, function(ind, val) {
+							// alert(val[json.name]);
+							jsonData = {
+								data : val[json.name]
+							};
+							populateData(jsonData);
+						});
+
 					} else {
-						$(e.target).click();
+						$node.click();
+						alert(messages.warning_parentNodeSelected);
+					}
+				} else {
+					if ($node.closest('li').hasClass('jstree-leaf')) {
+						var xPath = getSelectElementXPath($node.parent());
+						$.each($genTemplatePage
+								.find(".table-data-selection thead th"),
+								function(index, value) {
+									if (xPath == $(this).attr('data-query')) {
+										$(this).remove();
+										return;
+									}
+								});
 					}
 				}
 			}
-			function populateDataSelection(nodeName) {
-
+			function populateDataSelection(data) {
+				var columnHeaderTemplate = _.template($(
+						"#data-selection-header-column-template").html());
+				$genTemplatePage.find(".table-data-selection thead").append(
+						columnHeaderTemplate(data));
+				return;
 			}
+			
+			function populateData($tr, data) {
+				var columnDataTemplate = _.template($("#data-selection-data-column-template").html());
+				// $genTemplatePage.find(".table-data-selection tbody").append(columnDataTemplate(data));
+				$tr.append(columnDataTemplate(data));
+				return;
+			}
+
 			function hideAllPredefinedTemplates() {
 				$.each($genTemplatePage.find('.tree-toggler'), function(ind,
 						val) {
@@ -237,7 +338,40 @@ require(
 				});
 			}
 
+			function getSelectElementXPath(selectedElement) {
+				var path = "";
+				var temp;
+				while (selectedElement.parent().prop('tagName') != 'DIV') {
+					if (selectedElement.parent().prop('tagName') == 'LI') {
+						temp = selectedElement.parent().find('a')[0].text;
+						path = temp + '/' + path;
+					}
+					selectedElement = selectedElement.parent();
+				}
+				if (path.substring(path.length - 1) == '/') {
+					path = path.substring(0, path.length - 1);
+				}
+				return path;
+			}
+
 			function populateTree(jsonTreeData) {
+				$(".xml-as-json").attr('data-xmlJson', '');
+
+				// ajax call to xmltojson
+
+				var urlInput = $genTemplatePage.find(".input-url").val();
+				$.ajax({
+					url : baseUrl + "/api/xmltojson",
+					data : {
+						url : urlInput
+					},
+					method : 'GET',
+					success : function(result) {
+						$(".xml-as-json").attr('data-xmlJson',
+								JSON.stringify(result));
+					}
+				});
+
 				$('.data-selection-tree').empty();
 				$('.data-selection-tree')
 						.jstree(
@@ -312,39 +446,34 @@ require(
 													'jstree-er');
 								}
 							}
-						}).on('dnd_stop.vakata', function(e, data) {
-					var t = $(data.event.target);
-					if (!t.closest('.jstree').length) {
-						if (t.closest('.drop').length) {
-							var path = getPath($(data.element).parent());
+						}).on(
+						'dnd_stop.vakata',
+						function(e, data) {
+							var t = $(data.event.target);
+							if (!t.closest('.jstree').length) {
+								if (t.closest('.drop').length) {
+									var path = getSelectElementXPath($(
+											data.element).parent());
 
-							path += $(data.element)[0].text;
-							t.closest('.drop').val(path);
-						}
-					}
-				});
-
-				function getPath(selectedElement) {
-					var path = "";
-					var temp;
-					while (selectedElement.parent().prop('tagName') != 'DIV') {
-						if (selectedElement.parent().prop('tagName') == 'LI') {
-							temp = selectedElement.parent().find('a')[0].text;
-							path = temp + '/' + path;
-						}
-						selectedElement = selectedElement.parent();
-					}
-					return path;
-				}
+									path += '/' + $(data.element)[0].text;
+									t.closest('.drop').val(path);
+								}
+							}
+						});
 
 				$genTemplatePage.on("click.jstree", ".jstree-anchor",
 						handleDataSelectionCheck);
-				
-				$loadingText.trigger("show", {text: messages.navigatorTreeLoaded});
+
+				$loadingText.trigger("show", {
+					text : messages.navigatorTreeLoaded
+				});
 			}
 			attachHandlers();
 			getPredefinedTemplates();
 
-			$genTemplatePage.find(".input-url").val('http://localhost:8080/rpet/template/data/requisitepro.xml');
+			$genTemplatePage
+					.find(".input-url")
+					.val(
+							'http://localhost:8080/rpet/template/data/requisitepro.xml');
 			handleSelectionTree();
 		});
