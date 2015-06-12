@@ -132,23 +132,80 @@ require(
 			}
 
 			function attachHandlers() {
-				$genTemplatePage.find(".tab").click(toggleUnderlineColor);
-				$genTemplatePage.find(".highlight").click(toggleColor);
+				$genTemplatePage.find(".tab").off('click').click(toggleUnderlineColor);
+				$genTemplatePage.find(".highlight").off('click').click(toggleColor);
 
 				$genTemplatePage.find(".input-xml-go").click(
 						handleSelectionTree);
-				$genTemplatePage.find(".get-data").click(handleGetData);
 				$genTemplatePage.on('blur', 'input', changeTitle);
-
+				$genTemplatePage.find(".add-container").off('click').click(addContainer);
+				$genTemplatePage.find(".delete-container").off('click').click(deleteContainer);
+				$genTemplatePage.find(".data-selection-btn").off('click').click(handleDataSelection);
+				$genTemplatePage.find(".container-action").mouseenter(handleContainerFooterBarDisplay);
+				$genTemplatePage.find(".container-action").mouseleave(toggleContainerFooterBar);
 			}
+			
+			function toggleContainerFooterBar(e){
+				$(e.target).find("#display-on-hover").addClass("hide");
+			}
+			
+			function handleContainerFooterBarDisplay(e){
+				$(e.target).find("#display-on-hover").removeClass("hide");
+			}
+			
+			function handleDataSelection(e){
+				var $container = $(e.target).closest('div.section-container');
+				var url = $genTemplatePage.find(".input-url").val();
+				if(url == '' || ($('.data-selection-tree').is(':empty'))){
+					$genTemplatePage.find('.input-url').focus();
+				} else {
+					$genTemplatePage.find(".btn-select-data").off('click').click(populateDataPreview);
+					clearDataSelectionPage();
+					$genTemplatePage.find('.design-tabs a[href="#data-selection"]').tab('show');
+				}
+				
+				function populateDataPreview(){
+					// $(".table-data-selection").clone(true).prependTo($container.find(".text-area")); preview-data-selected
+					
+					var $previewContainerData = $container.find(".text-area .preview-data-selected");
+					
+					$previewContainerData.html(_.template($("#preview-container-empty-template").html()));
+					
+					
+					$.each($genTemplatePage.find('.table-data-selection thead th'),
+							function(index, value) {
+								var json = {
+										query: $(this).attr('data-query'),
+										name: $(this).find('.title').text()
+								};
+								populateHeaderCell(json, '#preview-header-column-template', $previewContainerData.find('.preview-container-table'));
+							});
+					
+					
+					populateDataRows($previewContainerData.find('.preview-container-table'));
+					
+					$genTemplatePage.find('.design-tabs a[href="#preview-design"]').tab('show');
+				}
+			}
+			
+			function clearDataSelectionPage() {
+				$(".table-data-selection thead").empty();
+				$(".table-data-selection tbody").empty();
+				
+				$.each($genTemplatePage.find(".data-selection-tree .jstree-clicked"),
+					function(index, value) {
+						$(this).click();
+					});
+			}
+			
 			function changeTitle(e) {
 				var $th = $(event.target).closest("th");
 				var $val = $genTemplatePage.find(".editable").val();
 				$th.find(".title").removeClass("hide").addClass("show");
-				$th.find(".title").replaceWith(
-						$('<span />').addClass("title").html($val));
+				$th.find(".title").replaceWith($('<span />').addClass("title").html($val));
 				$th.find(".editable").remove();
 			}
+			
 			function handleEditTitle(e) {
 				var $th = $(event.target).closest("th");
 				var input = $('<input />', {
@@ -161,12 +218,7 @@ require(
 				$th.find(".title").addClass("hide").removeClass("show");
 				input.focus();
 			}
-			function handleGetData(e) {
-				e.preventDefault();
-				var $data = $genTemplatePage.find(".drop").val();
-				alert($data);
-
-			}
+			
 			function toggleColor(e) {
 				e.preventDefault();
 				$genTemplatePage.find(".highlight").removeClass(
@@ -232,58 +284,11 @@ require(
 							}
 						}
 
-						populateDataSelection(json);
+						populateHeaderCell(json, '#data-selection-header-column-template', $genTemplatePage.find('.table-data-selection'));
 						$genTemplatePage.find(".no-edit-title").off('click').click(handleEditTitle);
 						
-						var selectedTreeItems = [];
-						$.each($genTemplatePage.find('.table-data-selection thead th'),
-								function(index, value) {
-									var tableHeader = $(this).attr('data-query');
-									selectedTreeItems.push(tableHeader.substring(tableHeader.lastIndexOf('/')+1));
-								});
-
-						var xpath = getSelectElementXPath($node.parent());
-						pathArray = xpath.split('/');
-						var jsonObj = null;
-						for ( var i = 0; i < pathArray.length - 1; i++) {
-							if (jsonObj == null) {
-								jsonObj = jQuery.parseJSON($genTemplatePage
-										.find('.xml-as-json').attr(
-												'data-xmljson'))[pathArray[i]];
-							} else {
-								jsonObj = jsonObj[pathArray[i]];
-							}
-						}
+						populateDataRows($genTemplatePage.find('.table-data-selection'));
 						
-						$genTemplatePage.find(".table-data-selection tbody").empty();
-						var tr = '<tr></tr>';
-						
-						
-						var jsonData;
-						var dataLength = jsonObj.length;
-						if(dataLength > 10) {
-							dataLength = 10;
-						}
-						
-						for ( var k = 0; k < dataLength; k++) {
-							var $row = $genTemplatePage.find(".table-data-selection tbody").append(tr);
-							var dataRow = jsonObj[k];
-							$.each(selectedTreeItems, function(index, value) {
-								jsonData = {
-									data : dataRow[value]
-								};
-								populateData($row, jsonData);
-							});
-						}
-						
-						$.each(jsonObj, function(ind, val) {
-							// alert(val[json.name]);
-							jsonData = {
-								data : val[json.name]
-							};
-							populateData(jsonData);
-						});
-
 					} else {
 						$node.click();
 						alert(messages.warning_parentNodeSelected);
@@ -291,30 +296,112 @@ require(
 				} else {
 					if ($node.closest('li').hasClass('jstree-leaf')) {
 						var xPath = getSelectElementXPath($node.parent());
-						$.each($genTemplatePage
-								.find(".table-data-selection thead th"),
+						
+						var headerIndex = null;
+						$.each($genTemplatePage.find(".table-data-selection thead th"),
 								function(index, value) {
 									if (xPath == $(this).attr('data-query')) {
 										$(this).remove();
-										return;
+										headerIndex = index;
 									}
+								});
+						
+						$.each($genTemplatePage.find(".table-data-selection tbody tr"),
+								function(index, value) {
+									$.each($(this).find('td'), function(ind, val) {
+										if(ind == headerIndex) {
+											$(this).remove();
+										}
+									});
 								});
 					}
 				}
 			}
-			function populateDataSelection(data) {
+			
+			function populateDataRows($containerTable) {
+				var selectedTreeItems = [];
+				var xpath = null;
+				$.each($genTemplatePage.find('.table-data-selection thead th'),
+						function(index, value) {
+							var tableHeader = $(this).attr('data-query');
+							if(xpath == null) {
+								xpath = tableHeader;
+							}
+							selectedTreeItems.push(tableHeader.substring(tableHeader.lastIndexOf('/')+1));
+						});
+
+				pathArray = xpath.split('/');
+				var jsonObj = null;
+				for ( var i = 0; i < pathArray.length - 1; i++) {
+					if (jsonObj == null) {
+						jsonObj = jQuery.parseJSON($genTemplatePage
+								.find('.xml-as-json').attr(
+										'data-xmljson'))[pathArray[i]];
+					} else {
+						jsonObj = jsonObj[pathArray[i]];
+					}
+				}
+
+				$containerTable.find("tbody").empty();
+				
+				var jsonData;
+				var dataLength = jsonObj.length;
+				if(dataLength > 10) {
+					dataLength = 10;
+				}
+				
+				for ( var k = 0; k < dataLength; k++) {
+					var $row = $('<tr></tr>');
+					$containerTable.find("tbody").append($row);
+					var dataRow = jsonObj[k];
+					$.each(selectedTreeItems, function(index, value) {
+						jsonData = {
+							data : dataRow[value]
+						};
+						populateDataCell($row, jsonData);
+					});
+				}
+			}
+			
+			function populateHeaderCell(data, templateName, $containerTable) {
 				var columnHeaderTemplate = _.template($(
-						"#data-selection-header-column-template").html());
-				$genTemplatePage.find(".table-data-selection thead").append(
+						templateName).html());
+				$containerTable.find("thead").append(
 						columnHeaderTemplate(data));
+			}
+			
+			function addContainer(e){
+				if(($genTemplatePage.find(".section-container")).length == 1){
+					$genTemplatePage.find(".delete-container").addClass("hide");
+				}
+				$(e.target).closest('div').find(".delete-container").removeClass("hide");
+				var containerTemplate = _.template($("#preview-design-format-container-template").html());
+				$genTemplatePage.find(".scroll-content").append(containerTemplate());
+				$genTemplatePage.find(".add-container").off('click').click(addContainer);
+				$genTemplatePage.find(".delete-container").off('click').click(deleteContainer);
+				$genTemplatePage.find(".data-selection-btn").off('click').click(handleDataSelection);
+				$genTemplatePage.find(".container-action").mouseleave(toggleContainerFooterBar);
+				$genTemplatePage.find(".container-action").mouseenter(handleContainerFooterBarDisplay);
 				return;
 			}
 			
-			function populateData($tr, data) {
+			function populateDefaultContainer() {
+				$genTemplatePage.find('#preview-main-content').append(_.template($("#preview-design-format-container-template").html()));
+			}
+
+			function deleteContainer(e) {
+				var container = $(e.target);
+				if ($(container).closest('div.section-container')) {
+					container.closest('div.section-container').remove();
+				}
+				if (($genTemplatePage.find(".section-container")).length == 1) {
+					$genTemplatePage.find(".delete-container").addClass("hide");
+				}
+			}
+			
+			function populateDataCell($tr, data) {
 				var columnDataTemplate = _.template($("#data-selection-data-column-template").html());
-				// $genTemplatePage.find(".table-data-selection tbody").append(columnDataTemplate(data));
 				$tr.append(columnDataTemplate(data));
-				return;
 			}
 
 			function hideAllPredefinedTemplates() {
@@ -461,19 +548,19 @@ require(
 							}
 						});
 
-				$genTemplatePage.on("click.jstree", ".jstree-anchor",
+				$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor",
 						handleDataSelectionCheck);
 
 				$loadingText.trigger("show", {
 					text : messages.navigatorTreeLoaded
 				});
 			}
+
+			populateDefaultContainer();
 			attachHandlers();
 			getPredefinedTemplates();
+			
 
-			$genTemplatePage
-					.find(".input-url")
-					.val(
-							'http://localhost:8080/rpet/template/data/requisitepro.xml');
+			$genTemplatePage.find(".input-url").val('http://localhost:8080/rpet/template/data/requisitepro.xml');
 			handleSelectionTree();
 		});

@@ -129,6 +129,7 @@ a:focus {
 #contentPage .tab-content #preview-design .text-area {
 	min-height: 100px;
 	max-height: 200px;
+	overflow: auto;
 }
 
 #contentPage .tab-content #preview-design .section-container {
@@ -155,14 +156,17 @@ a:focus {
 }
 
 .tab-content #preview-design .section-container #display-on-hover {
-	padding-top: 58px;
+	xpadding-top: 58px;
 	max-height: 5px;
 	text-align: right;
+	float: right;
+	xz-index: 10;
 }
 
 #contentPage .scroll-content {
-	max-height: 430px;
+	max-height: 400px;
 	overflow: auto;
+	min-height: 400px;
 }
 
 .docUI #contentPage {
@@ -174,8 +178,6 @@ a:focus {
 	text-align: right;
 	padding-top: 10px;
 	padding-right: 20px;
-	height: 75px;
-	background-color: #e3dfe0;
 	width: 100%;
 }
 
@@ -238,15 +240,14 @@ a:focus {
 }
 
 #preview-design .insert-menu {
-	padding-top: 5px !important;
-	width: 50px;
 	height: 34px;
-	text-align: right !important;
+	text-align: center !important;
+	float: right;
 }
 
 #data-selection .table-data {
 	height: 45px;
-	border-top : none !important;
+	border-top: none !important;
 }
 
 #data-selection .table-data .select-data {
@@ -261,8 +262,8 @@ a:focus {
 	padding-top: 10px;
 	padding-right: 35px;
 	width: 100%;
-	height: 75px;
-	background-color: #e3dfe0;
+	xheight: 75px;
+	xbackground-color: #e3dfe0;
 	text-align: right;
 }
 
@@ -273,21 +274,20 @@ a:focus {
 #data-selection .schema-tree {
 	padding-left: 0px;
 }
-#data-selection #dataSelected{
+
+#data-selection #dataSelected {
 	border-collapse: separate !important;
 	border-spacing: 2px !important;
 }
 
-.jstree-default .jstree-open > .jstree-ocl {
-  background-position: -132px -4px;
-  
+.jstree-default .jstree-open>.jstree-ocl {
+	background-position: -132px -4px;
 }
-.jstree-default .jstree-closed > .jstree-ocl {
-  background-position: -100px -4px;
+
+.jstree-default .jstree-closed>.jstree-ocl {
+	background-position: -100px -4px;
 }
-.jstree-default .jstree-leaf > .jstree-ocl {
-  background-position: -68px -4px;
+
+.jstree-default .jstree-leaf>.jstree-ocl {
+	background-position: -68px -4px;
 }
-/* .jstree-default .jstree-node, .jstree-default .jstree-icon {
-  background-image: none !important;
-} */

@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- © Copyright IBM Corporation -->
+<Project Version="1.0">
+	
+	<Requirements>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR1">
+			<Name />
+			<FullTag>PR1</FullTag>
+			<Text>The QBS system shall, upon user request, display detailed customer information</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>3424</DocPosn>
+			<Bookmark>REQJUIORS</Bookmark>
+			<TagNumber>1</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{B5FF269B-2DA0-4AA2-9DB7-F90998D7CFDB}</GUID>
+			<UniqueID>1</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Incorporated</Status>
+			<Difficulty>Low</Difficulty>
+			<Stability>High</Stability>
+			<AssignedTo />
+			<Origin>marketing</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+			<Changed>2008.01.02</Changed>
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR2">
+			<Name />
+			<FullTag>PR2</FullTag>
+			<Text>
+				The QBS system shall provide a loan officer with the
+				ability to manage all auto loans.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>3524</DocPosn>
+			<Bookmark>REQJUIOUS</Bookmark>
+			<TagNumber>2</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{4C4DB6F2-2D6A-4FF0-8145-F7ABD4E3777E}</GUID>
+			<UniqueID>2</UniqueID>
+			<Priority>Low</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>Medium</Stability>
+			<AssignedTo />
+			<Origin>end users</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+			<Changed>2008.01.03</Changed>
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR3">
+			<Name />
+			<FullTag>PR3</FullTag>
+			<Text>
+				The QBS system shall calculate the blue book value for
+				autos.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>3617</DocPosn>
+			<Bookmark>REQJUIOXS</Bookmark>
+			<TagNumber>3</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{52735BD3-E176-4BF5-B99C-BAF631268461}</GUID>
+			<UniqueID>3</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Proposed</Status>
+			<Difficulty>High</Difficulty>
+			<Stability>Low</Stability>
+			<AssignedTo />
+			<Origin>competitors</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+			<Changed>2008.01.01</Changed>
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR4">
+			<Name />
+			<FullTag>PR4</FullTag>
+			<Text>
+				The QBS system shall allow only maintenance of current
+				savings accounts.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>3711</DocPosn>
+			<Bookmark>REQJUIP2S</Bookmark>
+			<TagNumber>4</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{D92099D2-0B22-4A62-8108-A1CAAE016D56}</GUID>
+			<UniqueID>4</UniqueID>
+			<Priority>High</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Low</Difficulty>
+			<Stability>Medium</Stability>
+			<AssignedTo />
+			<Origin>partners</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+			<Changed>2007.02.21</Changed>
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR5">
+			<Name />
+			<FullTag>PR5</FullTag>
+			<Text>
+				The QBS system shall maintain all current checking
+				accounts.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>3807</DocPosn>
+			<Bookmark>REQJUIP5S</Bookmark>
+			<TagNumber>5</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{BA0F5BBD-A877-4E53-B4E5-503E39B8284A}</GUID>
+			<UniqueID>5</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Low</Difficulty>
+			<Stability>High</Stability>
+			<AssignedTo />
+			<Origin>marketing</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR6">
+			<Name />
+			<FullTag>PR6</FullTag>
+			<Text>
+				The QBS system shall allow updates to customer
+				information only in the Customer Information Screen.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>3919</DocPosn>
+			<Bookmark>REQ9TQW92</Bookmark>
+			<TagNumber>6</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{8EDC906A-09E2-41C8-9FBE-15A22D166E1D}</GUID>
+			<UniqueID>110</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>Medium</Stability>
+			<AssignedTo />
+			<Origin />
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR7">
+			<Name />
+			<FullTag>PR7</FullTag>
+			<Text>
+				All other screens shall have customer information
+				updated from the Customer Information Screen.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>4024</DocPosn>
+			<Bookmark>REQJW5L6K</Bookmark>
+			<TagNumber>7</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{50918563-3C84-4A82-BAE3-EA1EE7124110}</GUID>
+			<UniqueID>104</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Incorporated</Status>
+			<Difficulty>High</Difficulty>
+			<Stability>High</Stability>
+			<AssignedTo />
+			<Origin>marketing</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR8">
+			<Name />
+			<FullTag>PR8</FullTag>
+			<Text>
+				All balance information shall be updated systematically
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>4125</DocPosn>
+			<Bookmark>REQJW5LIK</Bookmark>
+			<TagNumber>8</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{155B24B4-11DF-4F71-8CEA-FAA62D1B9B45}</GUID>
+			<UniqueID>105</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>Medium</Stability>
+			<AssignedTo />
+			<Origin>competitors</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR9">
+			<Name />
+			<FullTag>PR9</FullTag>
+			<Text>
+				The QBS system shall provide the following reports:
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>true</HasChildren>
+			<DocPosn>4194</DocPosn>
+			<Bookmark>REQJUIPGS</Bookmark>
+			<TagNumber>9</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{C136435B-28AA-4D3B-A0F4-2B1343D15D6A}</GUID>
+			<UniqueID>7</UniqueID>
+			<Priority>High</Priority>
+			<Status>Proposed</Status>
+			<Difficulty>High</Difficulty>
+			<Stability>Medium</Stability>
+			<AssignedTo />
+			<Origin>end users</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR9.1">
+			<Name />
+			<FullTag>PR9.1</FullTag>
+			<Text>Report: Complete customer history per account.</Text>
+			<HasParent>true</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>4251</DocPosn>
+			<Bookmark>REQGT33KK</Bookmark>
+			<TagNumber>9.1</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>1</Level>
+			<GUID>{0DC0B289-7777-4024-8206-ACCA20F16C41}</GUID>
+			<UniqueID>106</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>Medium</Stability>
+			<AssignedTo />
+			<Origin />
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<ParentRequirement />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR9.2">
+			<Name />
+			<FullTag>PR9.2</FullTag>
+			<Text>Report: Customer demographic report.</Text>
+			<HasParent>true</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>4305</DocPosn>
+			<Bookmark>REQGT33UK</Bookmark>
+			<TagNumber>9.2</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>1</Level>
+			<GUID>{D4437C5F-ED9D-44E7-9D33-4034CE8043B0}</GUID>
+			<UniqueID>107</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>Medium</Stability>
+			<AssignedTo />
+			<Origin />
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<ParentRequirement />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR9.3">
+			<Name />
+			<FullTag>PR9.3</FullTag>
+			<Text>
+				Report: Customer listing with options to sort by name,
+				company, interest rate, and origination date.
+			</Text>
+			<HasParent>true</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>4349</DocPosn>
+			<Bookmark>REQGT345K</Bookmark>
+			<TagNumber>9.3</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>1</Level>
+			<GUID>{B36F74FA-1C81-4F26-B6AF-F9644CBA0D8B}</GUID>
+			<UniqueID>108</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>Medium</Stability>
+			<AssignedTo />
+			<Origin />
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<ParentRequirement />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR10">
+			<Name />
+			<FullTag>PR10</FullTag>
+			<Text>
+				The QBS system shall track the last date a report was
+				printed.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>4458</DocPosn>
+			<Bookmark>REQJUIPJS</Bookmark>
+			<TagNumber>10</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{22BBDD97-1908-4E7F-9374-313AF85FF688}</GUID>
+			<UniqueID>8</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>Low</Stability>
+			<AssignedTo />
+			<Origin>end users</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR11">
+			<Name />
+			<FullTag>PR11</FullTag>
+			<Text>
+				Each user shall have a unique login and associated
+				password.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>4537</DocPosn>
+			<Bookmark>REQJUIPMS</Bookmark>
+			<TagNumber>11</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{D0D088D6-CB81-465B-94B5-953B8E7B9D8E}</GUID>
+			<UniqueID>9</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>High</Stability>
+			<AssignedTo />
+			<Origin>end users</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR12">
+			<Name />
+			<FullTag>PR12</FullTag>
+			<Text>
+				Security implementation shall prevent the user from
+				seeing inappropriate menu selections.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>4605</DocPosn>
+			<Bookmark>REQJUIPOS</Bookmark>
+			<TagNumber>12</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{9B476CDF-445F-400D-BCCF-B2F951665E50}</GUID>
+			<UniqueID>10</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Validated</Status>
+			<Difficulty>Low</Difficulty>
+			<Stability>Medium</Stability>
+			<AssignedTo />
+			<Origin>marketing</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR13">
+			<Name />
+			<FullTag>PR13</FullTag>
+			<Text>
+				The QBS system shall offer a comprehensive on-line help
+				system.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>4715</DocPosn>
+			<Bookmark>REQJUIPWS</Bookmark>
+			<TagNumber>13</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{E0064D9F-AEC9-43B8-8004-5F0E546EA4D2}</GUID>
+			<UniqueID>11</UniqueID>
+			<Priority>High</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>High</Stability>
+			<AssignedTo />
+			<Origin>marketing</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR14">
+			<Name />
+			<FullTag>PR14</FullTag>
+			<Text>
+				The QBS system shall be accessible in Word 2000 and Word
+				2002.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>4785</DocPosn>
+			<Bookmark>REQGT34MK</Bookmark>
+			<TagNumber>14</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{789D7DE6-D76D-4AD8-A109-35CED6BD4FF3}</GUID>
+			<UniqueID>109</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>Medium</Stability>
+			<AssignedTo />
+			<Origin>competitors</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR15">
+			<Name />
+			<FullTag>PR15</FullTag>
+			<Text>
+				Upon user request, the QBS system shall display a
+				standard “About” box, which contains the name of the
+				application, the date of the last revision, and the
+				revision code.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>4865</DocPosn>
+			<Bookmark>REQ9TQWA2</Bookmark>
+			<TagNumber>15</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{8BD57FAF-0C24-4645-861C-1E14ED7AF105}</GUID>
+			<UniqueID>111</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>Medium</Stability>
+			<AssignedTo />
+			<Origin />
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR16">
+			<Name />
+			<FullTag>PR16</FullTag>
+			<Text>
+				The QBS system shall automatically switch to either
+				internal or external battery power without interruption
+				of operation.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>5387</DocPosn>
+			<Bookmark>REQJUIQ4S</Bookmark>
+			<TagNumber>16</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{59D9C833-280A-45D6-8D7C-81D1B6A28E5B}</GUID>
+			<UniqueID>13</UniqueID>
+			<Priority>Low</Priority>
+			<Status>Approved</Status>
+			<Difficulty>High</Difficulty>
+			<Stability>Low</Stability>
+			<AssignedTo />
+			<Origin>marketing</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR17">
+			<Name />
+			<FullTag>PR17</FullTag>
+			<Text>
+				The QBS system shall respond to inquiries within two
+				seconds.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>5555</DocPosn>
+			<Bookmark>REQJUIQ7S</Bookmark>
+			<TagNumber>17</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{F5EC43EC-D5BB-4579-AD3D-5F9343316786}</GUID>
+			<UniqueID>14</UniqueID>
+			<Priority>Medium</Priority>
+			<Status>Validated</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>Low</Stability>
+			<AssignedTo />
+			<Origin>marketing</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+		<PRRequirement
+			href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Requirements/PR/PR18">
+			<Name />
+			<FullTag>PR18</FullTag>
+			<Text>
+				The QBS system shall use no more than 1 megabyte of disk
+				space to maintain customer data.
+			</Text>
+			<HasParent>false</HasParent>
+			<HasChildren>false</HasChildren>
+			<DocPosn>5636</DocPosn>
+			<Bookmark>REQJUIQAS</Bookmark>
+			<TagNumber>18</TagNumber>
+			<TagPrefix>PR</TagPrefix>
+			<Level>0</Level>
+			<GUID>{AD4F4D69-C500-499E-AAD2-54212F9FE311}</GUID>
+			<UniqueID>15</UniqueID>
+			<Priority>High</Priority>
+			<Status>Approved</Status>
+			<Difficulty>Medium</Difficulty>
+			<Stability>Medium</Stability>
+			<AssignedTo />
+			<Origin>marketing</Origin>
+			<TracesTo />
+			<Revisions />
+			<Children />
+			<ParentProject
+				href="http://localhost:8080/RationalDataServices/requisitepro/Learning Project - Traditional/Projects" />
+			<TracesFrom />
+			<Document />
+			<RequirementType />
+			<ParentPackage />
+		</PRRequirement>
+	</Requirements>
+</Project>
