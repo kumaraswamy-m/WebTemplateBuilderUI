@@ -141,8 +141,7 @@ require(
 				$genTemplatePage.find(".add-container").off('click').click(addContainer);
 				$genTemplatePage.find(".delete-container").off('click').click(deleteContainer);
 				$genTemplatePage.find(".data-selection-btn").off('click').click(handleDataSelection);
-				$genTemplatePage.find(".container-action").mouseenter(handleContainerFooterBarDisplay);
-				$genTemplatePage.find(".container-action").mouseleave(toggleContainerFooterBar);
+				$genTemplatePage.find(".select-global-menu").off('change').change(handleInsertGlobal);
 			}
 			
 			function toggleContainerFooterBar(e){
@@ -153,10 +152,26 @@ require(
 				$(e.target).find("#display-on-hover").removeClass("hide");
 			}
 			
+			function handleInsertGlobal(e)
+			{
+				if($(e.target).val() == 'toc') {
+					if($genTemplatePage.find('#preview-main-content .toc').length > 0) {
+						alert('Table of contents is already added.');
+						$(e.target).val('');
+						return;
+					} else {
+						$genTemplatePage.find('#preview-main-content').prepend(_.template($("#table-of-contents-template").html()));
+						$(e.target).val('');
+					}
+				} else if($(e.target).val() != '') {
+					alert('Yet to be implemented');
+				}
+			}
+			
 			function handleDataSelection(e){
 				var $container = $(e.target).closest('div.section-container');
 				var url = $genTemplatePage.find(".input-url").val();
-				if(url == '' || ($('.data-selection-tree').is(':empty'))){
+				if(url == '' || ($('.navigation-tree .data-selection-tree').is(':empty'))){
 					$genTemplatePage.find('.input-url').focus();
 				} else {
 					$genTemplatePage.find(".btn-select-data").off('click').click(populateDataPreview);
@@ -171,7 +186,16 @@ require(
 					
 					$previewContainerData.html(_.template($("#preview-container-empty-template").html()));
 					
+					containerDisplayOnHoverAction(".table-data-selection");
 					
+					// populate format title from data selection page
+					// input-preview-section-title
+					//
+					$container.find('.input-preview-section-title').val($genTemplatePage.find('.selected-content .input-ds-title').val());
+					$container.find('.input-preview-section-title').attr('data-query', $genTemplatePage.find('.selected-content .input-ds-title').attr('data-query'));
+					$container.find('.input-preview-section-title').attr('title', messages.title_sample_value);
+					
+					// populate header row from data selection page
 					$.each($genTemplatePage.find('.table-data-selection thead th'),
 							function(index, value) {
 								var json = {
@@ -181,7 +205,7 @@ require(
 								populateHeaderCell(json, '#preview-header-column-template', $previewContainerData.find('.preview-container-table'));
 							});
 					
-					
+					// populate data rows from data selection page
 					populateDataRows($previewContainerData.find('.preview-container-table'));
 					
 					$genTemplatePage.find('.design-tabs a[href="#preview-design"]').tab('show');
@@ -192,7 +216,7 @@ require(
 				$(".table-data-selection thead").empty();
 				$(".table-data-selection tbody").empty();
 				
-				$.each($genTemplatePage.find(".data-selection-tree .jstree-clicked"),
+				$.each($genTemplatePage.find(".navigation-tree .data-selection-tree .jstree-clicked"),
 					function(index, value) {
 						$(this).click();
 					});
@@ -380,13 +404,19 @@ require(
 				$genTemplatePage.find(".add-container").off('click').click(addContainer);
 				$genTemplatePage.find(".delete-container").off('click').click(deleteContainer);
 				$genTemplatePage.find(".data-selection-btn").off('click').click(handleDataSelection);
-				$genTemplatePage.find(".container-action").mouseleave(toggleContainerFooterBar);
-				$genTemplatePage.find(".container-action").mouseenter(handleContainerFooterBarDisplay);
-				return;
+				
+				containerDisplayOnHoverAction(".container-action");
 			}
 			
 			function populateDefaultContainer() {
 				$genTemplatePage.find('#preview-main-content').append(_.template($("#preview-design-format-container-template").html()));
+				containerDisplayOnHoverAction(".container-action");
+			}
+			
+			function containerDisplayOnHoverAction(element)
+			{
+				$genTemplatePage.find(element).off('mouseenter').mouseenter(handleContainerFooterBarDisplay);
+				$genTemplatePage.find(element).off('mouseleave').mouseleave(toggleContainerFooterBar);
 			}
 
 			function deleteContainer(e) {
@@ -459,8 +489,11 @@ require(
 					}
 				});
 
-				$('.data-selection-tree').empty();
-				$('.data-selection-tree')
+				$genTemplatePage.find('.navigation-tree .data-selection-tree').remove();
+				
+				$genTemplatePage.find('.navigation-tree').append(_.template($("#navigator-tree-div-template").html()));
+				
+				$genTemplatePage.find('.navigation-tree .data-selection-tree')
 						.jstree(
 								{
 									'plugins' : [ 'dnd', 'checkbox' ],
@@ -544,6 +577,7 @@ require(
 
 									path += '/' + $(data.element)[0].text;
 									t.closest('.drop').val(path);
+									t.closest('.drop').attr('data-query', path);
 								}
 							}
 						});
@@ -561,6 +595,6 @@ require(
 			getPredefinedTemplates();
 			
 
-			$genTemplatePage.find(".input-url").val('http://localhost:8080/rpet/template/data/requisitepro.xml');
+			$genTemplatePage.find(".input-url").val('http://localhost:8080/rpet/template/data/rss.xml');
 			handleSelectionTree();
 		});

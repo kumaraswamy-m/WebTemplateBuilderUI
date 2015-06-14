@@ -46,7 +46,7 @@
 								key="template.generator.label.document_name" /></span>
 					</div>
 					<div class="col-xs-10">
-						<input name="title" type="text" class="form-control input-title"
+						<input type="text" class="form-control document-title"
 							placeholder="<fmt:message key="template.generator.placeholder.document_name" />" />
 					</div>
 				</div>
@@ -86,15 +86,18 @@
 				<div role="tabpanel" class="tab-pane active" id="preview-design"
 					data-type="preview">
 					<div class="row">
-						<div class="col-xs-2 insert-menu">
+						<div class="col-xs-2 select-global-menu">
 							<select name="type" class="upload-type form-control">
-								<option value="scripts">
+								<option value="">
 									<fmt:message key="template.generator.global.insert.label" />
 								</option>
-								<option value="templates">
+								<option value="toc">
+									<fmt:message key="template.generator.toc.label" />
+								</option>
+								<option value="header">
 									<fmt:message key="template.generator.header.label" />
 								</option>
-								<option value="stylesheets">
+								<option value="footer">
 									<fmt:message key="template.generator.footer.label" />
 								</option>
 							</select>
@@ -134,7 +137,7 @@
 								</div>
 								<div class="col-xs-11">
 									<input name="title" type="text"
-										class="drop form-control input-title"
+										class="drop form-control input-ds-title"
 										placeholder="<fmt:message key="template.generator.placeholder.drag.title" />" />
 								</div>
 							</div>
@@ -230,11 +233,11 @@
 <div class="row section-container">
 	<div class="row">
 		<div class="col-xs-10  alignment-right">
-		<input name="title" type="text"	placeholder="Please add title here"
-										class="form-control input-title" />
+		<input type="text"placeholder="Please add title here"
+				class="form-control input-preview-section-title"/>
 		</div>
 		<div class="col-xs-2  alignment-left">
-			<select name="type" class="upload-type form-control">
+			<select name="type" class="upload-type form-control format-preview-section">
 				<option value="scripts">
 					<fmt:message key="template.generator.format.select" />
 				</option>
@@ -275,7 +278,7 @@
 </script>
 
 <script type="text/template" id="table-of-contents-template">
-	<div class="row">
+	<div class="row toc">
 		<div class="col-xs-2">
 			<span>
 				<fmt:message key="template.generator.label.table_of_contents" />
@@ -293,4 +296,8 @@
 
 		</div>
 	</div>
+</script>
+
+<script type="text/template" id="navigator-tree-div-template">
+	<div class="data-selection-tree"></div>
 </script>

@@ -123,7 +123,7 @@ a:focus {
 }
 
 #contentPage .tab-content #preview-design {
-	margin-top: 33px;
+	margin-top: 5px;
 }
 
 #contentPage .tab-content #preview-design .text-area {
@@ -135,7 +135,7 @@ a:focus {
 #contentPage .tab-content #preview-design .section-container {
 	xborder: 1px solid #CCC;
 	padding: 5px;
-	margin-bottom: 30px;
+	margin-bottom: 5px;
 }
 
 #contentPage .align-right {
@@ -239,10 +239,11 @@ a:focus {
 	border-bottom: 3px solid #00b299 !important;
 }
 
-#preview-design .insert-menu {
+#preview-design .select-global-menu {
 	height: 34px;
 	text-align: center !important;
 	float: right;
+	margin-bottom: 10px;
 }
 
 #data-selection .table-data {
