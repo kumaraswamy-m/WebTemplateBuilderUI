@@ -50,13 +50,11 @@ import com.sun.jersey.api.client.WebResource;
 @Path("/xmltojson")
 public class XmlToJson
 {
-	private static final long serialVersionUID = 1L;
-	public static String ELEMENT = "element";
-	public static String ATTRIBUTE = "attribute";
-	public static final String NAME = "name";
-	private static final int String = 0;
 	public static int ELEMENT_ID = 1;
-	public static int id = 10;
+
+	private static final String NAME = "name"; //$NON-NLS-1$
+	private String ELEMENT = "element"; //$NON-NLS-1$
+	private String ATTRIBUTE = "attribute"; //$NON-NLS-1$
 
 	public static final String API_URL = "http://localhost:8080/rpet/api/"; //$NON-NLS-1$
 
@@ -67,9 +65,6 @@ public class XmlToJson
 	public Response convertXmlToJsonSchema(@Context HttpServletRequest request, @QueryParam("url") String xmlUrl)
 			throws Exception
 	{
-
-		System.out.println(xmlUrl);
-
 		Client client = new Client();
 		WebResource service = client.resource(UriBuilder.fromUri(API_URL + "xmltoxsd?url=" + xmlUrl).build());
 
@@ -82,7 +77,7 @@ public class XmlToJson
 		InputStream is = clientResponse.getEntityInputStream();
 		String xsdString = FileUtils.getStringFromInputStream(is);
 
-		String jsonData = buildJson(xsdString);
+		String jsonData = buildJsonSchema(xsdString);
 		return Response.ok().entity(jsonData).build();
 	}
 
@@ -108,12 +103,11 @@ public class XmlToJson
 		return Response.ok().entity(jsonString).build();
 	}
 
-	private String buildJson(String inputXSD) throws IOException
+	private String buildJsonSchema(String inputXSD) throws IOException
 	{
 		ELEMENT = "element";
 		ATTRIBUTE = "attribute";
-		ELEMENT_ID = 1;
-		id++;
+		int ELEMENT_ID = 1;
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
 		try
@@ -187,7 +181,7 @@ public class XmlToJson
 		return JSONUtils.writeValue(parentList);
 	}
 
-	private static void traversal(TreeElement parentEleTag, NodeList nodeList, Map<Node, TreeElement> nodeMap)
+	private void traversal(TreeElement parentEleTag, NodeList nodeList, Map<Node, TreeElement> nodeMap)
 	{
 		for (int i = 0; i < nodeList.getLength(); i++)
 		{
@@ -227,7 +221,7 @@ public class XmlToJson
 		}
 	}
 
-	private static void attributeTraversal(TreeElement parentEleTag, NodeList nodeList, Map<Node, TreeElement> nodeMap)
+	private void attributeTraversal(TreeElement parentEleTag, NodeList nodeList, Map<Node, TreeElement> nodeMap)
 	{
 		for (int i = 0; i < nodeList.getLength(); i++)
 		{
