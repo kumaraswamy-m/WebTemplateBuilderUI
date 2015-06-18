@@ -71,12 +71,12 @@
 
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a href="#preview-design" role="tab"
-						data-toggle="tab" data-type="templates"><fmt:message
+					<li role="presentation" class="active"><a
+						href="#preview-design" role="tab" data-toggle="tab"
+						data-type="templates"><fmt:message
 								key="template.generator.tab.Preview" /></a></li>
-					<li role="presentation"><a
-						href="#data-selection" role="tab" data-toggle="tab"
-						data-type="stylesheets"><fmt:message
+					<li role="presentation"><a href="#data-selection" role="tab"
+						data-toggle="tab" data-type="stylesheets"><fmt:message
 								key="template.generator.tab.data_selection" /></a></li>
 				</ul>
 			</div>
@@ -103,8 +103,7 @@
 							</select>
 						</div>
 					</div>
-					<div id="preview-main-content" class="scroll-content">
-					</div>
+					<div id="preview-main-content" class="scroll-content"></div>
 					<div class="footer-bar">
 						<a href="#"><span><fmt:message
 									key="template.generator.button.save_layout" /></span></a>
@@ -122,10 +121,11 @@
 						<div class="col-xs-9 selected-content">
 							<div class="wrapper">
 								<div class="data-formats">
-									<button class=" highlight btn btn-primary">
+									<button id="table-format" class="active-btn highlight btn btn-primary">
 										<fmt:message key="template.generator.format.table" />
 									</button>
-									<button class=" highlight btn btn-default">
+									<button id="paragraph-format"
+										class=" highlight btn btn-default">
 										<fmt:message key="template.generator.format.paragraph" />
 									</button>
 								</div>
@@ -141,6 +141,7 @@
 										placeholder="<fmt:message key="template.generator.placeholder.drag.title" />" />
 								</div>
 							</div>
+							<div class="paragraph-data-selection"></div>
 							<table class="table-data-selection">
 								<thead>
 								</thead>
@@ -207,7 +208,7 @@
 </script>
 <!-- Template to add columns to data selection -->
 <script type="text/template" id="data-selection-header-column-template">
-	<th class="col-title table-header col-xs-3" data-query="<@= query@>" data-isquery="true">
+	<th class="col-title header-label col-xs-3" data-query="<@= query@>" data-isquery="true">
 		<a class="no-edit-title" href="#">
 			<img alt="edit" src="${contextPath}/graphics/edit.png">
 		</a>
@@ -217,7 +218,7 @@
 
 <!-- header without edit -->
 <script type="text/template" id="preview-header-column-template">
-	<th class="col-title table-header col-xs-3" data-query="<@= query@>" data-isquery="true">
+	<th class="col-title header-label col-xs-3" data-query="<@= query@>" data-isquery="true">
 		<span class="title"><@= name @></span>
 	</th>
 </script>
@@ -237,14 +238,14 @@
 				class="form-control input-preview-section-title"/>
 		</div>
 		<div class="col-xs-2  alignment-left">
-			<select name="type" class="upload-type form-control format-preview-section">
-				<option value="scripts">
+			<select name="type" class="upload-type form-control format-preview-section selectFormat">
+				<option value="">
 					<fmt:message key="template.generator.format.select" />
 				</option>
-				<option value="templates">
+				<option value="table">
 					<fmt:message key="template.generator.format.table" />
 				</option>
-				<option value="stylesheets">
+				<option value="paragraph">
 					<fmt:message key="template.generator.format.paragraph" />
 				</option>
 			</select>
@@ -300,4 +301,35 @@
 
 <script type="text/template" id="navigator-tree-div-template">
 	<div class="data-selection-tree"></div>
+</script>
+<script type="text/template" id="data-selection-paragraph-div-template">
+				<div class="row data-selection-paragraph">
+					<div class="col-xs-2 header-label" data-query="<@= query@>">
+						<span class="alignment title"><@= name @></span>
+					</div>
+					<div class="col-xs-8">
+						<span class="data"><@= data @></span>
+					</div>
+				</div>
+</script>
+<script type="text/template" id="data-selection-paragraph-edit-div-template">
+<div class="row data-selection-paragraph">
+					<div class="col-xs-2 header-label" data-query="<@= query@>">
+						<a class="no-edit-title" href="#"><img alt="edit" src="${contextPath}/graphics/edit.png">
+						</a><span class="alignment title"><@= name @></span>
+					</div>
+					<div class="col-xs-8">
+						<span class="data"><@= data @></span>
+					</div>
+				</div>
+</script>
+<script type="text/template" id="preview-paragraph-row-template">
+	<div class="row preview-paragraph">
+					<div class="col-xs-2 header-label" data-query="<@= query@>">
+						<span class="alignment title"><@= name @></span>
+					</div>
+					<div class="col-xs-8">
+						<span class="data"><@= data @></span>
+					</div>
+				</div>
 </script>
