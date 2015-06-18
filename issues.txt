@@ -1,0 +1,25 @@
+Open issues
+-----------------------
+- Click on text in the navigator tree checks the chtck box but the data is not populated
+- checking parent tree element after few items were selected screws up the table
+- req pro attribute href is not shown in js tree schema
+- xml url should be xsd url
+- table of contents delete
+- do not delete last container
+- change format should not be allowed if container is empty
+- clear container upon clicking clear icon
+- select data should retain preview contents in data selection page
+- title in preview should be read-only
+- data selection tab should be disabled
+- Clear in Data Selection page
+- adding table of header gets a horizontal scrollbar
+- changing XML URL should clean up everything
+- changing format to table fails if data selection was paragraph
+
+- Generate Layout
+- Save and Open Template
+- 
+
+Fixed issues
+-----------------------
+

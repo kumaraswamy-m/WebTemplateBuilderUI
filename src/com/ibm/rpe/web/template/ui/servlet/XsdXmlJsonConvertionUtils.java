@@ -40,6 +40,7 @@ import org.xml.sax.SAXException;
 import com.ibm.rpe.web.template.ui.model.TreeElement;
 import com.ibm.rpe.web.template.ui.utils.FileUtils;
 import com.ibm.rpe.web.template.ui.utils.JSONUtils;
+import com.ibm.rpe.web.template.ui.utils.Utils;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -56,8 +57,6 @@ public class XsdXmlJsonConvertionUtils
 	private String ELEMENT = "element"; //$NON-NLS-1$
 	private String ATTRIBUTE = "attribute"; //$NON-NLS-1$
 
-	public static final String API_URL = "http://localhost:8080/rpet/api/"; //$NON-NLS-1$
-
 	@GET
 	@Path("/xmltoxsd")
 	@Produces(
@@ -66,7 +65,7 @@ public class XsdXmlJsonConvertionUtils
 			throws Exception
 	{
 		Client client = new Client();
-		WebResource service = client.resource(UriBuilder.fromUri(API_URL + "xmltoxsd?url=" + xmlUrl).build());
+		WebResource service = client.resource(UriBuilder.fromUri(Utils.getTemplateServiceUrl(request) + "/api/xmltoxsd?url=" + xmlUrl).build());
 
 		// create the job
 		ClientResponse clientResponse = service.accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
@@ -88,7 +87,7 @@ public class XsdXmlJsonConvertionUtils
 			throws Exception
 	{
 		Client client = new Client();
-		WebResource service = client.resource(UriBuilder.fromUri(API_URL + "xmltoxsd?url=" + xmlUrl).build());
+		WebResource service = client.resource(UriBuilder.fromUri(Utils.getTemplateServiceUrl(request) + "/api/xmltoxsd?url=" + xmlUrl).build());
 
 		// create the job
 		ClientResponse clientResponse = service.accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
@@ -130,13 +129,13 @@ public class XsdXmlJsonConvertionUtils
 	@Path("/xmltojson")
 	@Produces(
 	{ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
-	public Response convertXmlToJson(@QueryParam("url") String xmlUrl) throws Exception
+	public Response convertXmlToJson(@Context HttpServletRequest request, @QueryParam("url") String xmlUrl) throws Exception
 	{
 
 		System.out.println(xmlUrl);
 
 		Client client = new Client();
-		WebResource service = client.resource(UriBuilder.fromUri(API_URL + "xmltojson?url=" + xmlUrl).build());
+		WebResource service = client.resource(UriBuilder.fromUri(Utils.getTemplateServiceUrl(request) + "/api/xmltojson?url=" + xmlUrl).build());
 
 		// create the job
 		ClientResponse clientResponse = service.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
