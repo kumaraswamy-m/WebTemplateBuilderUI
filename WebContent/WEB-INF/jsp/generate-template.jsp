@@ -73,10 +73,10 @@
 				<ul class="nav nav-tabs" role="tablist">
 					<li role="presentation" class="active"><a
 						href="#preview-design" role="tab" data-toggle="tab"
-						data-type="templates"><fmt:message
+						data-type="preview"><fmt:message
 								key="template.generator.tab.Preview" /></a></li>
-					<li role="presentation"><a href="#data-selection" role="tab"
-						data-toggle="tab" data-type="stylesheets"><fmt:message
+					<li role="presentation" class="disabled data-selection-tab"><a href="#data-selection" role="tab"
+						data-toggle="tab" data-type="dataSelection"><fmt:message
 								key="template.generator.tab.data_selection" /></a></li>
 				</ul>
 			</div>
@@ -105,7 +105,7 @@
 					</div>
 					<div id="preview-main-content" class="scroll-content"></div>
 					<div class="footer-bar">
-						<a href="#"><span><fmt:message
+						<a href="#" class="save-layout"><span><fmt:message
 									key="template.generator.button.save_layout" /></span></a>
 						<button class="btn btn-primary">
 							<fmt:message key="template.generator.button.generate" />
@@ -248,13 +248,16 @@
 				<option value="paragraph">
 					<fmt:message key="template.generator.format.paragraph" />
 				</option>
+				<option value="static-text">
+					<fmt:message key="template.generator.format.static-text" />
+				</option>
 			</select>
 		</div>
 	</div>
 <div class="row">
 	<div class="1 col-xs-12">
 		<div class="text-area form-control container-action">
-			<div id="display-on-hover" class="col-xs-12 hide">
+			<div id="display-on-hover" class="hide">
 				<button class="data-selection-btn btn btn-primary">
 					<fmt:message key="template.generator.hover.select_data" />
 				</button>
@@ -285,13 +288,13 @@
 				<fmt:message key="template.generator.label.table_of_contents" />
 			</span>
 		</div>
-		<div class="col-xs-9 alignment-right alignment">
+		<div class="col-xs-9 alignment-right alignment-left">
 			<input name="title" type="text" placeholder="Type the name of Table of Contents"
 				class="form-control input-title" />
 		</div>
 		<!-- delete icon -->
-		<div class="col-xs-1 align-right alignment-left ">
-			<a href="#">
+		<div class="col-xs-1 align-right alignment-left-icon alignment-right">
+			<a href="#" class="delete-toc">
 				<img alt="delete" src="${contextPath}/graphics/delete.png">
 			</a>
 
@@ -325,11 +328,11 @@
 </script>
 <script type="text/template" id="preview-paragraph-row-template">
 	<div class="row preview-paragraph">
-					<div class="col-xs-2 header-label" data-query="<@= query@>">
+					<div class="col-xs-2 header-label preview-header" data-query="<@= query@>">
 						<span class="alignment title"><@= name @></span>
 					</div>
 					<div class="col-xs-8">
 						<span class="data"><@= data @></span>
 					</div>
-				</div>
+	</div>
 </script>

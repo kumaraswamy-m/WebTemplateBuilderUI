@@ -1,11 +1,7 @@
 Open issues
 -----------------------
-- Click on text in the navigator tree checks the chtck box but the data is not populated
+- Click on text in the navigator tree checks the check box but the data is not populated
 - checking parent tree element after few items were selected screws up the table
-- req pro attribute href is not shown in js tree schema
-- xml url should be xsd url
-- table of contents delete
-- do not delete last container
 - change format should not be allowed if container is empty
 - clear container upon clicking clear icon
 - select data should retain preview contents in data selection page
@@ -15,11 +11,24 @@ Open issues
 - adding table of header gets a horizontal scrollbar
 - changing XML URL should clean up everything
 - changing format to table fails if data selection was paragraph
+- For paragraph in preview page, label/title should have different a background
+- Container with editable text
+- don't store entire xml json
+- test on firefox as well
+- page width should not be set (like 1222)
+- remove un-necessary predefined layout
+- predefined layout should not have any data source attached
 
-- Generate Layout
-- Save and Open Template
+- Generate Template
+   - 
+- Save and Open Layout
+   - Use template model api to store template layout
 - 
 
 Fixed issues
 -----------------------
+- table of contents delete
+- do not delete last container
+- req pro attribute href is not shown in js tree schema
+- xml url should be xsd url
 
