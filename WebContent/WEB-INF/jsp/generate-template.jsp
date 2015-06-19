@@ -105,7 +105,7 @@
 					</div>
 					<div id="preview-main-content" class="scroll-content"></div>
 					<div class="footer-bar">
-						<a href="#"><span><fmt:message
+						<a href="#" class="save-layout"><span><fmt:message
 									key="template.generator.button.save_layout" /></span></a>
 						<button class="btn btn-primary">
 							<fmt:message key="template.generator.button.generate" />
@@ -285,13 +285,13 @@
 				<fmt:message key="template.generator.label.table_of_contents" />
 			</span>
 		</div>
-		<div class="col-xs-9 alignment-right alignment">
+		<div class="col-xs-9 alignment-right alignment-left">
 			<input name="title" type="text" placeholder="Type the name of Table of Contents"
 				class="form-control input-title" />
 		</div>
 		<!-- delete icon -->
-		<div class="col-xs-1 align-right alignment-left ">
-			<a href="#">
+		<div class="col-xs-1 align-right alignment-left-icon alignment-right">
+			<a href="#" class="delete-toc">
 				<img alt="delete" src="${contextPath}/graphics/delete.png">
 			</a>
 
@@ -325,11 +325,11 @@
 </script>
 <script type="text/template" id="preview-paragraph-row-template">
 	<div class="row preview-paragraph">
-					<div class="col-xs-2 header-label" data-query="<@= query@>">
+					<div class="col-xs-2 header-label preview-header" data-query="<@= query@>">
 						<span class="alignment title"><@= name @></span>
 					</div>
 					<div class="col-xs-8">
 						<span class="data"><@= data @></span>
 					</div>
-				</div>
+	</div>
 </script>

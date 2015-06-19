@@ -147,6 +147,10 @@ a:focus {
 	width: 82%;
 }
 
+#contentPage .alignment-left-icon{
+	padding-left : 60px;
+}
+
 #contentPage .alignment-right {
 	padding-right: 2px;
 }
@@ -291,4 +295,8 @@ a:focus {
 
 .jstree-default .jstree-leaf>.jstree-ocl {
 	background-position: -68px -4px;
+}
+.preview-paragraph .preview-header {
+	background-color : #f1f3f2;
+	margin : 2px;
 }

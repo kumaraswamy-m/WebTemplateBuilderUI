@@ -184,6 +184,13 @@ require(
 				} else if ($(e.target).val() != '') {
 					alert('Yet to be implemented');
 				}
+				$genTemplatePage.find(".delete-toc").off('click').click(deleteTableOfContents);
+			}
+			
+			function deleteTableOfContents(e){
+				if ($genTemplatePage.find('#preview-main-content .toc').length > 0) {
+					$genTemplatePage.find('#preview-main-content .toc').remove();
+				}
 			}
 
 			function handleDataSelection(e) {
@@ -249,6 +256,8 @@ require(
 			}
 			
 			function populateDataPreviewSection(format, dataSelectionJson, $container) {
+				$container.find('.input-preview-section-title').val(dataSelectionJson['title']); 
+				$container.find('.input-preview-section-title').attr('title-query', dataSelectionJson['titleQuery']);
 				if (format == 'paragraph') {
 					var $previewContainerData = $container.find(".text-area .preview-data-selected");
 					$previewContainerData.empty();
@@ -297,8 +306,45 @@ require(
 							};
 							populateHeaderCell(json,'#preview-header-column-template',$previewContainerData.find('.preview-container-table'));
 						});
-						populateDataRows($previewContainerData.find('.preview-container-table'));
+						populateDataRowsPreview(dataSelectionJson , $previewContainerData.find('.preview-container-table'));
 				}
+			}
+			
+			function populateDataRowsPreview(dataSelectionJson , $containerTable) {
+				var selectedTreeItems = [];
+				var xpath = null;
+				$.each(dataSelectionJson.selectedItems,
+						function(index, value) {
+							var tableHeader = value.query;
+							if (xpath == null) {
+								xpath = tableHeader;
+							}
+							selectedTreeItems.push(tableHeader.substring(tableHeader
+											.lastIndexOf('/') + 1));
+						});
+
+				var jsonObj = getJSONobjByPath(xpath);
+				
+				$containerTable.find("tbody").empty();
+
+				var jsonData;
+				var dataLength = jsonObj.length;
+				if (dataLength > dataSelectionPageLimit) {
+					dataLength = dataSelectionPageLimit;
+				}
+
+				for ( var k = 0; k < dataLength; k++) {
+					var $row = $('<tr></tr>');
+					$containerTable.find("tbody").append($row);
+					var dataRow = jsonObj[k];
+					$.each(selectedTreeItems, function(index, value) {
+						jsonData = {
+							data : dataRow[value]
+						};
+						populateDataCell($row, jsonData);
+					});
+				}
+				
 			}
 			
 			function getJSONobjByPath(xpath) {
@@ -457,8 +503,7 @@ require(
 						$genTemplatePage.find(".no-edit-title").off('click')
 								.click(handleEditTitle);
 
-						populateDataRows($genTemplatePage
-								.find('.table-data-selection'));
+						populateDataRows($genTemplatePage.find('.table-data-selection'));
 
 					} else {
 						$node.click();
@@ -699,6 +744,7 @@ require(
 						_.template($(
 								"#preview-design-format-container-template")
 								.html()));
+				$genTemplatePage.find(".delete-container").addClass("hide");
 				containerDisplayOnHoverAction(".container-action");
 			}
 
@@ -909,6 +955,20 @@ require(
 				 
 					 $genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", handleDataSelectionCheck);
 				 
+					 $genTemplatePage.find(".save-layout").off('click').click(handleSaveLayout);
+					 
+					 function handleSaveLayout(e){
+						var saveLayoutData = {};
+						saveLayoutData['docName'] = $genTemplatePage.find(".document-title").val();
+						saveLayoutData['xmlUrl'] = $genTemplatePage.find(".input-url").val();
+						 var containerData = saveLayoutData['containerData'] = [];
+						 $.each($genTemplatePage.find(".section-container"),function(index, value){
+							 var container = {};
+								container['container-selected-metadata'] = $(this).attr('selected-metadata');
+								containerData.push(container);
+						 });
+						 alert(JSON.stringify(saveLayoutData));
+					 }
 				
 				$loadingText.trigger("show", {
 					text : messages.navigatorTreeLoaded
