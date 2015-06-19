@@ -8,14 +8,21 @@
  *******************************************************************************/
 package com.ibm.rpe.web.template.ui.utils;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
+
+import org.apache.commons.io.IOUtils;
 
 public class Utils
 {
-
-	public static void main(String[] args)
-	{
-	}
+	private static final String CONTENT_DISPOSITION = "Content-Disposition"; //$NON-NLS-1$
+	private static final String ATTACHMENT_FILENAME = "attachment; filename="; //$NON-NLS-1$ 
 
 	public static String getTemplateServiceUrl(HttpServletRequest request)
 	{
@@ -61,5 +68,25 @@ public class Utils
 		}
 
 		return value != null ? value : defaultValue;
+	}
+
+	public static Response downloadResponse(final InputStream is, String name)
+	{
+		if (is == null)
+		{
+			return Response.status(Response.Status.NOT_FOUND).entity("File not found").build();
+		}
+
+		// OR: use a custom StreamingOutput and set to Response
+		StreamingOutput stream = new StreamingOutput()
+		{
+			@Override
+			public void write(OutputStream output) throws IOException
+			{
+				IOUtils.copy(is, output);
+			}
+		};
+
+		return Response.ok(stream, MediaType.APPLICATION_OCTET_STREAM).header(CONTENT_DISPOSITION, ATTACHMENT_FILENAME + name).build();
 	}
 }

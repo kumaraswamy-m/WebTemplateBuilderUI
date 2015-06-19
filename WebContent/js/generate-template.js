@@ -148,18 +148,38 @@ require(
 			}
 			
 			function handleChangingFormat(e) {
+				var oldFormat = $(e.target).closest('div.section-container').find('.selectFormat').attr('previous-format');
+				var newFormat = $(e.target).val();
 				$container  = $(e.target).closest('div.section-container');
-				var format = $(e.target).val();
+				if((oldFormat == 'table' && newFormat == 'static-text') || (oldFormat == 'paragraph' && newFormat == 'static-text')){
+					$(e.target).closest('div.section-container').find('.selectFormat').attr('previous-format', newFormat);
+					clearSectionContainer($(e.target).closest('div.section-container'));
+					$(e.target).closest('div.section-container').find(".text-area").attr('contenteditable' , "true");
+				}else if((oldFormat == 'static-text' && newFormat == 'table') || (oldFormat == 'static-text' && newFormat == 'paragraph')){
+					$(e.target).closest('div.section-container').find('.selectFormat').attr('previous-format', newFormat);
+					clearSectionContainer($(e.target).closest('div.section-container'));
+					$(e.target).closest('div.section-container').find(".text-area").attr('contenteditable' , "false");
+				}
+				else {
 				var dataSelectionJson = $container.attr('selected-metadata');
-				populateDataPreviewSection(format, jQuery.parseJSON(dataSelectionJson), $container);
+				populateDataPreviewSection(newFormat, jQuery.parseJSON(dataSelectionJson), $container);
+				}
+			}
+			
+			function clearSectionContainer($sectionContainer){
+				$sectionContainer.find(".title").empty();
+				$sectionContainer.find(".text-area").empty();
+				
 			}
 
-			function toggleContainerFooterBar(e) {
-				$(e.target).find("#display-on-hover").addClass("hide");
+			function hideContainerActionIcons(e) {
+				$(e.target).closest('.section-container').find('.title-query').removeClass('col-xs-7').addClass('col-xs-10');
+				$(e.target).closest('.section-container').find("#display-on-hover").addClass("hide").removeClass('col-xs-3');
 			}
 
-			function handleContainerFooterBarDisplay(e) {
-				$(e.target).find("#display-on-hover").removeClass("hide");
+			function displayContainerActionIcons(e) {
+				$(e.target).closest('.section-container').find('.title-query').removeClass('col-xs-10').addClass('col-xs-7');
+				$(e.target).closest('.section-container').find("#display-on-hover").removeClass("hide").addClass('col-xs-3');
 			}
 			
 			function handleInsertGlobal(e) {
@@ -732,7 +752,7 @@ require(
 				$genTemplatePage.find(".data-selection-btn").off('click')
 						.click(handleDataSelection);
 
-				containerDisplayOnHoverAction(".container-action");
+				containerDisplayOnHoverAction(".section-container");
 				$genTemplatePage.find(".selectFormat").off('change').change(handleChangingFormat);
 			}
 
@@ -742,14 +762,12 @@ require(
 								"#preview-design-format-container-template")
 								.html()));
 				$genTemplatePage.find(".delete-container").addClass("hide");
-				containerDisplayOnHoverAction(".container-action");
+				containerDisplayOnHoverAction(".section-container");
 			}
 
 			function containerDisplayOnHoverAction(element) {
-				$genTemplatePage.find(element).off('mouseenter').mouseenter(
-						handleContainerFooterBarDisplay);
-				$genTemplatePage.find(element).off('mouseleave').mouseleave(
-						toggleContainerFooterBar);
+				$genTemplatePage.find(element).off('mouseenter').mouseenter(displayContainerActionIcons);
+				$genTemplatePage.find(element).off('mouseleave').mouseleave(hideContainerActionIcons);
 			}
 
 			function deleteContainer(e) {
@@ -961,10 +979,13 @@ require(
 						 var containerData = saveLayoutData['containerData'] = [];
 						 $.each($genTemplatePage.find(".section-container"),function(index, value){
 							 var container = {};
-								container['container-selected-metadata'] = $(this).attr('selected-metadata');
-								containerData.push(container);
+								container = $(this).attr('selected-metadata');
+								containerData.push(jQuery.parseJSON(container));
 						 });
-						 alert(JSON.stringify(saveLayoutData));
+						 var $saveLink = $genTemplatePage.find(".save-to-local")[0];
+						$saveLink.href = "http://localhost:8080/rpetui/api/savejson?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
+						 //$saveLink.attr('href', "http://localhost:8080/rpetui/api/savejson?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName']);
+						 $saveLink.click();
 					 }
 				
 				$loadingText.trigger("show", {

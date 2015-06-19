@@ -105,8 +105,9 @@
 					</div>
 					<div id="preview-main-content" class="scroll-content"></div>
 					<div class="footer-bar">
+						<a href="#" class="save-to-local hide"></a>
 						<a href="#" class="save-layout"><span><fmt:message
-									key="template.generator.button.save_layout" /></span></a>
+									key="template.generator.button.save_layout" /></span></a>&nbsp;
 						<button class="btn btn-primary">
 							<fmt:message key="template.generator.button.generate" />
 						</button>
@@ -233,12 +234,12 @@
 	id="preview-design-format-container-template">
 <div class="row section-container">
 	<div class="row">
-		<div class="col-xs-10  alignment-right">
+		<div class="col-xs-10 title-query">
 		<input type="text"placeholder="Please add title here"
 				class="form-control input-preview-section-title"/>
 		</div>
 		<div class="col-xs-2  alignment-left">
-			<select name="type" class="upload-type form-control format-preview-section selectFormat">
+			<select name="type" class="upload-type form-control format-preview-section selectFormat" previous-format="table">
 				<option value="">
 					<fmt:message key="template.generator.format.select" />
 				</option>
@@ -253,10 +254,7 @@
 				</option>
 			</select>
 		</div>
-	</div>
-<div class="row">
-	<div class="1 col-xs-12">
-		<div class="text-area form-control container-action">
+		<div class="alignment-left">
 			<div id="display-on-hover" class="hide">
 				<button class="data-selection-btn btn btn-primary">
 					<fmt:message key="template.generator.hover.select_data" />
@@ -265,6 +263,11 @@
 				<a href="#" class="add-container"><img alt="delete" src="${contextPath}/graphics/onHover/Add-Container.png"></a>
 				<a href="#" class="delete-container"><img alt="delete" src="${contextPath}/graphics/onHover/delete.png"></a>
 			</div>
+		</div>
+	</div>
+<div class="row">
+	<div class="1 col-xs-12">
+		<div class="text-area form-control container-action">
 			<div class="preview-data-selected"></div>
 		</div>
 	</div>
