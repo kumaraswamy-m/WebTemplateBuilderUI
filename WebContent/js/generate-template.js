@@ -141,6 +141,8 @@ require(
 				$genTemplatePage.find(".select-global-menu").off('change').change(handleInsertGlobal);
 				
 				$genTemplatePage.find(".save-layout").off('click').click(handleSaveLayout);
+				$genTemplatePage.find("#table-format").off('click').click(handleFormatDataSelection);
+				$genTemplatePage.find("#paragraph-format").off('click').click(handleFormatDataSelection);
 				
 				$genTemplatePage.find(".footer-bar .generate-template-btn").off('click').click(handleGenerateTemplate);
 				$genTemplatePage.find(".footer-bar .preview-cancel-btn").off('click').click(handleCancelPreview);
@@ -163,6 +165,7 @@ require(
 			
 			function handleCancelDataSelection(e) {
 				toggleTab('#preview-design', 'show');
+				enableDisableTab('#data-selection', '');
 			}
 			
 			function enableDisableTab(elementId, toggleValue) {
@@ -185,27 +188,45 @@ require(
 			function handleChangingFormat(e) {
 				var oldFormat = $(e.target).closest('div.section-container').find('.selectFormat').attr('previous-format');
 				var newFormat = $(e.target).val();
+				
+				if(oldFormat != '' && newFormat == '') {
+					if(!$(e.target).closest('div.section-container').find(".preview-data-selected").is(':empty')) {
+						$(e.target).val(oldFormat);
+						alert('Cannot empty once populated.');
+						return;
+					}
+				}
+				
 				$container  = $(e.target).closest('div.section-container');
-				if((oldFormat == 'table' && newFormat == 'static-text') || (oldFormat == 'paragraph' && newFormat == 'static-text')){
-					$(e.target).closest('div.section-container').find('.selectFormat').attr('previous-format', newFormat);
+				$(e.target).closest('div.section-container').find('.selectFormat').attr('previous-format', newFormat);
+				
+				if((oldFormat == 'table' || oldFormat == 'paragraph') && newFormat == 'static-text'){
 					clearSectionContainer($(e.target).closest('div.section-container'));
-					$(e.target).closest('div.section-container').find(".text-area").attr('contenteditable' , "true");
-					$(e.target).closest('div.section-container').find(".text-area").attr('placeholder', 'Please enter static text here');
-					$(e.target).closest('div.section-container').find(".text-area").focus();
-				} else if((oldFormat == 'static-text' && newFormat == 'table') || (oldFormat == 'static-text' && newFormat == 'paragraph')){
-					$(e.target).closest('div.section-container').find('.selectFormat').attr('previous-format', newFormat);
+					$(e.target).closest('div.section-container').find(".preview-data-selected").attr('contenteditable' , "true");
+					$(e.target).closest('div.section-container').find(".data-selection-btn").addClass("hide");
+					$(e.target).closest('div.section-container').find(".preview-data-selected").attr('placeholder', 'Please enter static text here');
+					$(e.target).closest('div.section-container').find(".preview-data-selected").focus();
+				} else if(oldFormat == 'static-text' && (newFormat == 'table' || newFormat == 'paragraph')){
 					clearSectionContainer($(e.target).closest('div.section-container'));
-					$(e.target).closest('div.section-container').find(".text-area").attr('contenteditable' , "false");
-					$(e.target).closest('div.section-container').find(".text-area").attr('placeholder', 'eee');
+					$(e.target).closest('div.section-container').find(".preview-data-selected").attr('contenteditable' , "false");
+					$(e.target).closest('div.section-container').find(".data-selection-btn").removeClass("hide");
+					$(e.target).closest('div.section-container').find(".preview-data-selected").attr('placeholder', '');
 				} else {
 					var dataSelectionJson = $container.attr('selected-metadata');
-					populateDataPreviewSection(newFormat, jQuery.parseJSON(dataSelectionJson), $container);
+					if(dataSelectionJson) {
+						populateDataPreviewSection(newFormat, jQuery.parseJSON(dataSelectionJson), $container);
+					}
+				}
+				
+				if(newFormat == 'table' || newFormat == 'paragraph') {
+					$genTemplatePage.find('#' + newFormat + '-format').click();
 				}
 			}
 			
 			function clearSectionContainer($sectionContainer){
 				$sectionContainer.find(".title").empty();
-				$sectionContainer.find(".text-area").empty();
+				$sectionContainer.find(".preview-data-selected").empty();
+				$sectionContainer.attr('selected-metadata','');
 			}
 
 			function hideContainerActionIcons(e) {
@@ -248,6 +269,7 @@ require(
 				} else {
 					$genTemplatePage.find(".btn-select-data").off('click').click(populateDataPreview);
 					clearDataSelectionPage();
+					removeCheckboxFromParentNode();
 					enableDisableTab('#data-selection', 'tab');
 					enableDisableTab('#preview-design', '');
 					toggleTab('#data-selection', 'show');
@@ -303,13 +325,15 @@ require(
 			}
 			
 			function populateDataPreviewSection(format, dataSelectionJson, $container) {
+				if(!dataSelectionJson) {
+					return;
+				}
 				$container.find('.input-preview-section-title').val(dataSelectionJson['title']); 
 				$container.find('.input-preview-section-title').attr('title-query', dataSelectionJson['titleQuery']);
 				if (format == 'paragraph') {
-					var $previewContainerData = $container.find(".text-area .preview-data-selected");
+					var $previewContainerData = $container.find(".preview-data-selected");
 					$previewContainerData.empty();
 					containerDisplayOnHoverAction(".paragraph-data-selection");
-					
 					var xmlDataJson = getJSONobjByPath(dataSelectionJson.selectedItems[0].query);;
 					// dataSelectionPageLimit
 					var limit = xmlDataJson.length;
@@ -333,7 +357,7 @@ require(
 						});
 					}
 				} else if(format == 'table') {
-					var $previewContainerData = $container.find(".text-area .preview-data-selected");
+					var $previewContainerData = $container.find(".preview-data-selected");
 					$previewContainerData.empty();
 					containerDisplayOnHoverAction(".table-data-selection");
 					$previewContainerData.html(_.template($("#preview-container-empty-template").html()));
@@ -354,6 +378,9 @@ require(
 					});
 					populateDataRowsPreview(dataSelectionJson , $previewContainerData.find('.preview-container-table'));
 				}
+				
+				$genTemplatePage.find(".selectFormat").val(format);
+				$container.find('.selectFormat').attr('previous-format', format);
 			}
 			
 			function populateDataRowsPreview(dataSelectionJson , $containerTable) {
@@ -389,6 +416,7 @@ require(
 						populateDataCell($row, jsonData);
 					});
 				}
+				
 			}
 			
 			function getJSONobjByPath(xpath) {
@@ -412,7 +440,10 @@ require(
 			function clearDataSelectionPage() {
 				$(".table-data-selection thead").empty();
 				$(".table-data-selection tbody").empty();
-				$(".data-selection-paragraph-container").empty();
+				$(".input-ds-title").val('');
+				$(".input-ds-title").attr('data-query','');
+				$(".paragraph-data-selection").empty();
+				
 				$.each($genTemplatePage.find(".navigation-tree .data-selection-tree .jstree-clicked"),function(index, value) {
 					$(this).click();
 				});
@@ -460,7 +491,6 @@ require(
 				$genTemplatePage.find(".highlight").removeClass("btn-primary btn-default").addClass("btn-default");
 				$(e.target).removeClass("btn-default btn-primary").addClass("btn-primary");
 			}
-			
 			function toggleUnderlineColor(e) {
 				e.preventDefault();
 				$genTemplatePage.find(".label").removeClass("selected unselected").addClass("unselected");
@@ -484,13 +514,17 @@ require(
 				$tree.parent().children('ul.tree').toggle(200);
 			}
 			
-			function handleDataSelectionCheck(e) {
+			function handleTreeNodeCheck(e) {
 				var $node = $(e.target);
-				if ($node.parent().hasClass('jstree-clicked')) {
-					if ($node.closest('li').hasClass('jstree-leaf')) {
+				var selectedElement = $node;
+				if($node.prop('tagName') != 'A') {
+					selectedElement = $node.parent();
+				}
+				if (selectedElement.hasClass('jstree-clicked')) {
+					if (selectedElement.closest('li').hasClass('jstree-leaf')) {
 						var json = {
-							name : $node.closest('a').text(),
-							query : getSelectElementXPath($node.parent())
+							name : selectedElement.closest('a').text(),
+							query : getSelectElementXPath(selectedElement)
 						};
 						var newContext = json.query;
 						var existingContext = null;
@@ -524,9 +558,10 @@ require(
 						alert(messages.warning_parentNodeSelected);
 					}
 				} else {
-					if ($node.closest('li').hasClass('jstree-leaf')) {
-						var xPath = getSelectElementXPath($node.parent());
+					if (selectedElement.closest('li').hasClass('jstree-leaf')) {
+						var xPath = getSelectElementXPath(selectedElement);
 
+						// remove all table headrs
 						var headerIndex = null;
 						$.each($genTemplatePage.find(".table-data-selection thead th"),
 							function(index, value) {
@@ -536,15 +571,14 @@ require(
 								}
 							});
 
-						$.each($genTemplatePage.find(".table-data-selection tbody tr"),
-							function(index, value) {
-								$.each($(this).find('td'), function(ind,
-										val) {
+						// remove all table body rows
+						$.each($genTemplatePage.find(".table-data-selection tbody tr"), function(index, value) {
+								$.each($(this).find('td'), function(ind, val) {
 									if (ind == headerIndex) {
 										$(this).remove();
 									}
 								});
-							});
+						});
 					}
 				}
 			}
@@ -601,11 +635,15 @@ require(
 
 			function populateDataSelectionParagraph(e) {
 				var $node = $(e.target);
-				if ($node.parent().hasClass('jstree-clicked')) {
-					if ($node.closest('li').hasClass('jstree-leaf')) {
+				var selectedElement = $node;
+				if($node.prop('tagName') != 'A') {
+					selectedElement = $node.parent();
+				}
+				if (selectedElement.hasClass('jstree-clicked')) {
+					if (selectedElement.closest('li').hasClass('jstree-leaf')) {
 						var json = {
-							name : $node.closest('a').text(),
-							query : getSelectElementXPath($node.parent())
+							name : selectedElement.closest('a').text(),
+							query : getSelectElementXPath(selectedElement)
 						};
 
 						var xpath = null;
@@ -690,8 +728,8 @@ require(
 						$node.click();
 						alert(messages.warning_parentNodeSelected);
 					}
-				} else if ($node.closest('li').hasClass('jstree-leaf')) {
-					var xPath = getSelectElementXPath($node.parent());
+				} else if (selectedElement.closest('li').hasClass('jstree-leaf')) {
+					var xPath = getSelectElementXPath(selectedElement);
 					$.each($genTemplatePage.find(".data-selection-paragraph"),
 						function(index, value) {
 							if (xPath == $(this).find(".header-label")
@@ -919,43 +957,36 @@ require(
 									}
 								});
 				
+				$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", handleTreeNodeCheck);
+				$genTemplatePage.off("click.jstree", "i.jstree-icon.jstree-ocl").on("click.jstree", "i.jstree-icon.jstree-ocl", removeCheckboxFromParentNode);
 				
-				$genTemplatePage.find(".highlight").off('click').click(handleFormatDataSelection);
-				
-
-				function handleFormatDataSelection(e){
-					if($(e.target).attr('id') == 'table-format'){
-						clearDataSelectionPage();
-						 
-						if( $genTemplatePage.find(".highlight.btn-primary").attr('id') == 'paragraph-format'){
-							$genTemplatePage.find(".highlight").removeClass("btn-primary").addClass("btn-default");
-						}
-						$(e.target).addClass("btn-primary").removeClass("btn-default");
-						$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", handleDataSelectionCheck);
-					 
-					}
-					else if($(e.target).attr('id') == 'paragraph-format' && (!($(e.target).hasClass("active-btn")))){
-						clearDataSelectionPage();
-						if( $genTemplatePage.find(".highlight.btn-primary").attr('id') == 'table-format'){
-							$genTemplatePage.find(".highlight").removeClass("btn-primary").addClass("btn-default");
-						}
-						$(e.target).addClass("btn-primary").removeClass("btn-default");
-						$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", populateDataSelectionParagraph);
-					}
-				}
-				 
-				 
-				$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", handleDataSelectionCheck);
-			 
 				$loadingText.trigger("show", {
 					text : messages.navigatorTreeLoaded
 				});
+			}
+			
+			function handleFormatDataSelection(e){
+				if($(e.target).attr('id') == 'table-format') {
+					$genTemplatePage.find("#paragraph-format").removeClass("btn-primary").addClass("btn-default");
+					$(e.target).addClass("btn-primary").removeClass("btn-default");
+					$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", handleTreeNodeCheck);
+				} else if($(e.target).attr('id') == 'paragraph-format') {
+					$genTemplatePage.find("#table-format").removeClass("btn-primary").addClass("btn-default");
+					$(e.target).addClass("btn-primary").removeClass("btn-default");
+					$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", populateDataSelectionParagraph);
+				}
+				clearDataSelectionPage();
 			}
 			
 			function handleSaveLayout(e){
 				var saveLayoutData = {};
 				saveLayoutData['documentTitle'] = $genTemplatePage.find(".document-title").val();
 				saveLayoutData['xmlUrl'] = $genTemplatePage.find(".input-url").val();
+				
+				if($genTemplatePage.find("div.toc").length > 0) {
+					saveLayoutData['toc'] = $genTemplatePage.find("div.toc .input-toc-label").val();
+				}
+				
 				var sections = saveLayoutData['sections'] = [];
 				$.each($genTemplatePage.find(".section-container"),function(index, value){
 					if($(this).find('.selectFormat').val() != '') {
@@ -997,7 +1028,7 @@ require(
 					}
 				});
 			}
-			
+
 			function clearMainSection() {
 				$genTemplatePage.find(".document-title").val('');
 				$genTemplatePage.find(".input-url").val('');
@@ -1008,6 +1039,13 @@ require(
 				$genTemplatePage.find('.navigation-tree .data-selection-tree').remove();
 
 				$genTemplatePage.find('.navigation-tree').append(_.template($("#navigator-tree-div-template").html()));
+			}
+			
+			function removeCheckboxFromParentNode(e) {
+				$.each($genTemplatePage.find('.navigation-tree .jstree li[aria-expanded]').not('.jstree-leaf'), function(ind, val) {
+					// $(this).not('.jstree-leaf').find('.jstree-icon.jstree-checkbox').addClass('hide');
+					$(this).children().first().next().find('.jstree-icon.jstree-checkbox').addClass('hide');
+				});
 			}
 
 			addContainer();

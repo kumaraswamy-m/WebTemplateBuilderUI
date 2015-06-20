@@ -126,7 +126,7 @@ a:focus {
 	margin-top: 5px;
 }
 
-#contentPage .tab-content #preview-design .text-area {
+#contentPage .tab-content #preview-design .preview-data-selected {
 	min-height: 100px;
 	max-height: 200px;
 	overflow: auto;

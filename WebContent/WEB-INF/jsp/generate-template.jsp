@@ -270,9 +270,7 @@
 	</div>
 <div class="row">
 	<div class="1 col-xs-12">
-		<div class="text-area form-control container-action">
-			<div class="preview-data-selected"></div>
-		</div>
+		<div class="preview-data-selected form-control container-action"></div>
 	</div>
 </div>
 </div>
@@ -295,8 +293,7 @@
 			</span>
 		</div>
 		<div class="col-xs-9 alignment-right alignment-left">
-			<input name="title" type="text" placeholder="Type the name of Table of Contents"
-				class="form-control input-title" />
+			<input name="title" type="text" placeholder="<fmt:message key="template.generator.placeholder.toc_label" />" class="form-control input-toc-label" />
 		</div>
 		<!-- delete icon -->
 		<div class="col-xs-1 align-right alignment-left-icon alignment-right">

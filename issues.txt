@@ -2,28 +2,19 @@ Open issues
 -----------------------
 - Click on text in the navigator tree checks the check box but the data is not populated
 - checking parent tree element after few items were selected screws up the table
-- change format should not be allowed if container is empty
 - clear container upon clicking clear icon
-- select data should retain preview contents in data selection page
-- title in preview should be read-only
-- data selection tab should be disabled
-- Clear in Data Selection page
-- adding table of header gets a horizontal scrollbar
-- changing XML URL should clean up everything
-- changing format to table fails if data selection was paragraph
-- For paragraph in preview page, label/title should have different a background
-- Container with editable text
 - don't store entire xml json
 - test on firefox as well
 - page width should not be set (like 1222)
 - remove un-necessary predefined layout
-- predefined layout should not have any data source attached
 
 - Generate Template
-   - 
-- Save and Open Layout
+- Open Layout
    - Use template model api to store template layout
-- 
+
+- select data should retain preview contents in data selection page
+- predefined layout should not have any data source attached
+- changing XML URL should clean up everything
 
 Fixed issues
 -----------------------
@@ -31,4 +22,12 @@ Fixed issues
 - do not delete last container
 - req pro attribute href is not shown in js tree schema
 - xml url should be xsd url
-
+- data selection tab should be disabled
+- changing format to table fails if data selection was paragraph
+- For paragraph in preview page, label/title should have different a background
+- change format should not be allowed if container is empty
+- cancel in data selection tab should move back to preview tab
+- Clear in Data Selection page
+- adding table of contents gets a horizontal scrollbar
+- Container with editable text
+- Save layout
