@@ -127,24 +127,59 @@ require(
 			}
 
 			function attachItemHandlers() {
-				$genTemplatePage.find(".tree-toggler").off('click').click(
-						togglePredefinedTemplateTree);
-				$genTemplatePage.find(".tree-item").off('click').click(
-						toggleBackground);
+				$genTemplatePage.find(".tree-toggler").off('click').click(togglePredefinedTemplateTree);
+				$genTemplatePage.find(".tree-item").off('click').click(toggleBackground);
 				hideAllPredefinedTemplates();
 			}
 
 			function attachHandlers() {
-				$genTemplatePage.find(".tab").off('click').click(toggleUnderlineColor);
-				$genTemplatePage.find(".highlight").off('click').click(toggleColor);
+				// $genTemplatePage.find(".tab").off('click').click(toggleUnderlineColor);
+				// $genTemplatePage.find(".highlight").off('click').click(toggleColor);
 
 				$genTemplatePage.find(".input-xml-go").click(handleSelectionTree);
-				$genTemplatePage.on('blur', 'input', updateHeaderLabel);
-				$genTemplatePage.find(".add-container").off('click').click(addContainer);
-				$genTemplatePage.find(".delete-container").off('click').click(deleteContainer);
-				$genTemplatePage.find(".data-selection-btn").off('click').click(handleDataSelection);
+				$genTemplatePage.on('blur', 'input.editable', updateHeaderLabel);
 				$genTemplatePage.find(".select-global-menu").off('change').change(handleInsertGlobal);
-				$genTemplatePage.find(".selectFormat").off('change').change(handleChangingFormat);
+				
+				$genTemplatePage.find(".save-layout").off('click').click(handleSaveLayout);
+				
+				$genTemplatePage.find(".footer-bar .generate-template-btn").off('click').click(handleGenerateTemplate);
+				$genTemplatePage.find(".footer-bar .preview-cancel-btn").off('click').click(handleCancelPreview);
+				$genTemplatePage.find(".data-select-buttons .ds-cancel-btn").off('click').click(handleCancelDataSelection);
+				$genTemplatePage.find(".data-select-buttons .ds-clear-btn").off('click').click(handleClearDataSelection);
+			}
+			
+			function handleGenerateTemplate(e) {
+				alert('yet to be implemented - generate');
+			}
+			
+			function handleCancelPreview(e) {
+				var clear = confirm("Are you sure to clear the template layout?");
+				if (clear) {
+					clearPreviewSections();
+					clearMainSection();
+					clearNavigatinTree();
+				}
+			}
+			
+			function handleCancelDataSelection(e) {
+				toggleTab('#preview-design', 'show');
+			}
+			
+			function enableDisableTab(elementId, toggleValue) {
+				$genTemplatePage.find('.design-tabs a[href="' + elementId + '"]').attr('data-toggle', toggleValue);
+				if(toggleValue == 'tab') {
+					$genTemplatePage.find('.design-tabs a[href=' + elementId + ']').parent().removeClass('disabled');
+				} else {
+					$genTemplatePage.find('.design-tabs a[href=' + elementId + ']').parent().addClass('disabled');
+				}
+			}
+			
+			function toggleTab(elementId, showHide) {
+				$genTemplatePage.find('.design-tabs a[href="' + elementId + '"]').tab(showHide);
+			}
+			
+			function handleClearDataSelection(e) {
+				clearDataSelectionPage();
 			}
 			
 			function handleChangingFormat(e) {
@@ -155,21 +190,22 @@ require(
 					$(e.target).closest('div.section-container').find('.selectFormat').attr('previous-format', newFormat);
 					clearSectionContainer($(e.target).closest('div.section-container'));
 					$(e.target).closest('div.section-container').find(".text-area").attr('contenteditable' , "true");
-				}else if((oldFormat == 'static-text' && newFormat == 'table') || (oldFormat == 'static-text' && newFormat == 'paragraph')){
+					$(e.target).closest('div.section-container').find(".text-area").attr('placeholder', 'Please enter static text here');
+					$(e.target).closest('div.section-container').find(".text-area").focus();
+				} else if((oldFormat == 'static-text' && newFormat == 'table') || (oldFormat == 'static-text' && newFormat == 'paragraph')){
 					$(e.target).closest('div.section-container').find('.selectFormat').attr('previous-format', newFormat);
 					clearSectionContainer($(e.target).closest('div.section-container'));
 					$(e.target).closest('div.section-container').find(".text-area").attr('contenteditable' , "false");
-				}
-				else {
-				var dataSelectionJson = $container.attr('selected-metadata');
-				populateDataPreviewSection(newFormat, jQuery.parseJSON(dataSelectionJson), $container);
+					$(e.target).closest('div.section-container').find(".text-area").attr('placeholder', 'eee');
+				} else {
+					var dataSelectionJson = $container.attr('selected-metadata');
+					populateDataPreviewSection(newFormat, jQuery.parseJSON(dataSelectionJson), $container);
 				}
 			}
 			
 			function clearSectionContainer($sectionContainer){
 				$sectionContainer.find(".title").empty();
 				$sectionContainer.find(".text-area").empty();
-				
 			}
 
 			function hideContainerActionIcons(e) {
@@ -189,9 +225,7 @@ require(
 						$(e.target).val('');
 						return;
 					} else {
-						$genTemplatePage.find('#preview-main-content').prepend(
-								_.template($("#table-of-contents-template")
-										.html()));
+						$genTemplatePage.find('#preview-main-content').prepend(_.template($("#table-of-contents-template").html()));
 						$(e.target).val('');
 					}
 				} else if ($(e.target).val() != '') {
@@ -209,19 +243,15 @@ require(
 			function handleDataSelection(e) {
 				var $container = $(e.target).closest('div.section-container');
 				var url = $genTemplatePage.find(".input-url").val();
-				if (url == ''
-						|| ($('.navigation-tree .data-selection-tree')
-								.is(':empty'))) {
+				if (url == '' || ($('.navigation-tree .data-selection-tree').is(':empty'))) {
 					$genTemplatePage.find('.input-url').focus();
 				} else {
 					$genTemplatePage.find(".btn-select-data").off('click').click(populateDataPreview);
 					clearDataSelectionPage();
-					$genTemplatePage.find('.design-tabs a[href="#data-selection"]').attr('data-toggle', 'tab');
-					$genTemplatePage.find('.design-tabs a[href="#data-selection"]').parent().removeClass('disabled');
-					$genTemplatePage.find('.design-tabs a[href="#data-selection"]').tab('show');
+					enableDisableTab('#data-selection', 'tab');
+					enableDisableTab('#preview-design', '');
+					toggleTab('#data-selection', 'show');
 				}
-				
-				// metadata function
 				
 				function populateDataPreview() {
 					var format = null; // paragraph table
@@ -235,9 +265,9 @@ require(
 					
 					$container.attr('selected-metadata', JSON.stringify(dataSelectionJson));
 					
-					$genTemplatePage.find('.design-tabs a[href="#data-selection"]').attr('data-toggle', '');
-					$genTemplatePage.find('.design-tabs a[href="#data-selection"]').parent().addClass('disabled');
-					$genTemplatePage.find('.design-tabs a[href="#preview-design"]').tab('show');
+					enableDisableTab('#data-selection', '');
+					enableDisableTab('#preview-design', 'tab');
+					toggleTab('#preview-design', 'show');
 				}
 			}
 			
@@ -293,15 +323,14 @@ require(
 						$paragraphContainerTemplate = $paragraphContainerTemplate.eq(0);
 									
 						$.each(dataSelectionJson.selectedItems, function(index, value) {
-									
-									json = {
-										query : value.dataQuery,
-										name : value.label,
-										data : xmlDataJson[k][value.query.substring(value.query.lastIndexOf('/') + 1)]
-									};
-	
-									populateParagraphPreview(json, $paragraphContainerTemplate);
-								});
+							json = {
+								query : value.dataQuery,
+								name : value.label,
+								data : xmlDataJson[k][value.query.substring(value.query.lastIndexOf('/') + 1)]
+							};
+
+							populateParagraphPreview(json, $paragraphContainerTemplate);
+						});
 					}
 				} else if(format == 'table') {
 					var $previewContainerData = $container.find(".text-area .preview-data-selected");
@@ -315,30 +344,29 @@ require(
 						limit = previewPageLimit;
 					}
 					var json = null;
-						$.each(dataSelectionJson.selectedItems, function(index, value) {
-							
-							json = {
-								query : value.dataQuery,
-								name : value.label,
-							};
-							populateHeaderCell(json,'#preview-header-column-template',$previewContainerData.find('.preview-container-table'));
-						});
-						populateDataRowsPreview(dataSelectionJson , $previewContainerData.find('.preview-container-table'));
+					$.each(dataSelectionJson.selectedItems, function(index, value) {
+						
+						json = {
+							query : value.dataQuery,
+							name : value.label,
+						};
+						populateHeaderCell(json,'#preview-header-column-template',$previewContainerData.find('.preview-container-table'));
+					});
+					populateDataRowsPreview(dataSelectionJson , $previewContainerData.find('.preview-container-table'));
 				}
 			}
 			
 			function populateDataRowsPreview(dataSelectionJson , $containerTable) {
 				var selectedTreeItems = [];
 				var xpath = null;
-				$.each(dataSelectionJson.selectedItems,
-						function(index, value) {
-							var tableHeader = value.query;
-							if (xpath == null) {
-								xpath = tableHeader;
-							}
-							selectedTreeItems.push(tableHeader.substring(tableHeader
-											.lastIndexOf('/') + 1));
-						});
+				$.each(dataSelectionJson.selectedItems, function(index, value) {
+					var tableHeader = value.query;
+					if (xpath == null) {
+						xpath = tableHeader;
+					}
+					selectedTreeItems.push(tableHeader.substring(tableHeader
+									.lastIndexOf('/') + 1));
+				});
 
 				var jsonObj = getJSONobjByPath(xpath);
 				
@@ -361,7 +389,6 @@ require(
 						populateDataCell($row, jsonData);
 					});
 				}
-				
 			}
 			
 			function getJSONobjByPath(xpath) {
@@ -386,12 +413,13 @@ require(
 				$(".table-data-selection thead").empty();
 				$(".table-data-selection tbody").empty();
 				$(".data-selection-paragraph-container").empty();
-				$.each(
-								$genTemplatePage
-										.find(".navigation-tree .data-selection-tree .jstree-clicked"),
-								function(index, value) {
-									$(this).click();
-								});
+				$.each($genTemplatePage.find(".navigation-tree .data-selection-tree .jstree-clicked"),function(index, value) {
+					$(this).click();
+				});
+				
+				$.each($genTemplatePage.find(".navigation-tree .data-selection-tree .jstree-node.jstree-open"),function(index, value) {
+					$(this).find('.jstree-icon.jstree-ocl')[0].click();
+				});
 			}
 
 			function updateHeaderLabel(e) {
@@ -401,11 +429,10 @@ require(
 						".paragraph-data-selection")) {
 					$th = $genTemplatePage.find(".header-label");
 				} else {
-					var $th = $(e.target).closest(".header-label");
+					$th = $(e.target).closest(".header-label");
 				}
 
-				var dataQuery = $(e.target).closest(".header-label").attr(
-						'data-query');
+				var dataQuery = $(e.target).closest(".header-label").attr('data-query');
 
 				$.each($th, function(ind, val) {
 					if (dataQuery == $(this).attr('data-query')) {
@@ -426,45 +453,24 @@ require(
 				$th.find(".title").parent().append(input);
 				$th.find(".title").addClass("hide").removeClass("show");
 				input.focus();
-
-				/*
-				 * var updateHeaders = false; var $headers = null; var label =
-				 * null;
-				 * if($(event.target).closest(".header-label").closest(".paragraph-data-selection")){
-				 * $headers = $genTemplatePage.find(".header-label"); label =
-				 * $headers.first().text(); updateHeaders = true; }
-				 * 
-				 * $.each($headers , function(ind, val){
-				 * if($(event.target).closest(".header-label").attr('data-query')==$(this).attr('data-query')) {
-				 * var input = $('<input />', { 'type' : 'text', 'name' :
-				 * 'unique', 'class' : 'editable', 'value' :
-				 * $(this).find(".title").html() });
-				 * $(this).find(".title").parent().append(input);
-				 * $(this).find(".title").addClass("hide").removeClass("show");
-				 * input.focus(); } });
-				 */
 			}
 
 			function toggleColor(e) {
 				e.preventDefault();
-				$genTemplatePage.find(".highlight").removeClass(
-						"btn-primary btn-default").addClass("btn-default");
-				$(e.target).removeClass("btn-default btn-primary").addClass(
-						"btn-primary");
+				$genTemplatePage.find(".highlight").removeClass("btn-primary btn-default").addClass("btn-default");
+				$(e.target).removeClass("btn-default btn-primary").addClass("btn-primary");
 			}
+			
 			function toggleUnderlineColor(e) {
 				e.preventDefault();
-				$genTemplatePage.find(".label").removeClass(
-						"selected unselected").addClass("unselected");
-				$(e.target).removeClass("unselected selected").addClass(
-						"selected");
+				$genTemplatePage.find(".label").removeClass("selected unselected").addClass("unselected");
+				$(e.target).removeClass("unselected selected").addClass("selected");
 			}
+			
 			function toggleBackground(e) {
 				e.preventDefault();
-				$genTemplatePage.find(".selectedItem").removeClass("mouseIn")
-						.addClass("mouseOut");
-				$(e).removeClass("mouseOut mouseIn selectedItem").addClass(
-						"mouseIn selectedItem");
+				$genTemplatePage.find(".selectedItem").removeClass("mouseIn").addClass("mouseOut");
+				$(e).removeClass("mouseOut mouseIn selectedItem").addClass("mouseIn selectedItem");
 			}
 			
 			function togglePredefinedTemplateTree(e) {
@@ -489,39 +495,30 @@ require(
 						var newContext = json.query;
 						var existingContext = null;
 
-						$.each($genTemplatePage
-								.find(".table-data-selection thead th"),
-								function(index, value) {
-									existingContext = $(this)
-											.attr('data-query');
-								});
+						$.each($genTemplatePage.find(".table-data-selection thead th"), function(index, value) {
+							existingContext = $(this).attr('data-query');
+						});
 
 						if (existingContext != null) {
 							if (existingContext.indexOf('/') != -1) {
-								existingContext = existingContext.substring(0,
-										existingContext.lastIndexOf('/'));
+								existingContext = existingContext.substring(0, existingContext.lastIndexOf('/'));
 							}
 
 							if (newContext.indexOf('/') != -1) {
-								newContext = newContext.substring(0, newContext
-										.lastIndexOf('/'));
+								newContext = newContext.substring(0, newContext.lastIndexOf('/'));
 							}
 
 							if (existingContext != newContext) {
 								$node.click();
-								alert('Different context');
+								alert(messages.treeItem_differentContext);
 								return;
 							}
 						}
 
-						populateHeaderCell(json,
-								'#data-selection-header-column-template',
-								$genTemplatePage.find('.table-data-selection'));
-						$genTemplatePage.find(".no-edit-title").off('click')
-								.click(handleEditTitle);
+						populateHeaderCell(json, '#data-selection-header-column-template', $genTemplatePage.find('.table-data-selection'));
+						$genTemplatePage.find(".no-edit-title").off('click') .click(handleEditTitle);
 
 						populateDataRows($genTemplatePage.find('.table-data-selection'));
-
 					} else {
 						$node.click();
 						alert(messages.warning_parentNodeSelected);
@@ -531,25 +528,23 @@ require(
 						var xPath = getSelectElementXPath($node.parent());
 
 						var headerIndex = null;
-						$.each($genTemplatePage
-								.find(".table-data-selection thead th"),
-								function(index, value) {
-									if (xPath == $(this).attr('data-query')) {
+						$.each($genTemplatePage.find(".table-data-selection thead th"),
+							function(index, value) {
+								if (xPath == $(this).attr('data-query')) {
+									$(this).remove();
+									headerIndex = index;
+								}
+							});
+
+						$.each($genTemplatePage.find(".table-data-selection tbody tr"),
+							function(index, value) {
+								$.each($(this).find('td'), function(ind,
+										val) {
+									if (ind == headerIndex) {
 										$(this).remove();
-										headerIndex = index;
 									}
 								});
-
-						$.each($genTemplatePage
-								.find(".table-data-selection tbody tr"),
-								function(index, value) {
-									$.each($(this).find('td'), function(ind,
-											val) {
-										if (ind == headerIndex) {
-											$(this).remove();
-										}
-									});
-								});
+							});
 					}
 				}
 			}
@@ -558,15 +553,13 @@ require(
 				var selectedTreeItems = [];
 				var xpath = null;
 				$.each($genTemplatePage.find('.table-data-selection thead th'),
-						function(index, value) {
-							var tableHeader = $(this).attr('data-query');
-							if (xpath == null) {
-								xpath = tableHeader;
-							}
-							selectedTreeItems
-									.push(tableHeader.substring(tableHeader
-											.lastIndexOf('/') + 1));
-						});
+					function(index, value) {
+						var tableHeader = $(this).attr('data-query');
+						if (xpath == null) {
+							xpath = tableHeader;
+						}
+						selectedTreeItems.push(tableHeader.substring(tableHeader.lastIndexOf('/') + 1));
+					});
 
 				pathArray = xpath.split('/');
 				var jsonObj = null;
@@ -672,97 +665,90 @@ require(
 						var newContext = json.query;
 						var existingContext = null;
 
-						$.each($genTemplatePage
-								.find(".data-selection-paragraph div"),
-								function(index, value) {
-									existingContext = $(this)
-											.attr('data-query');
-								});
+						$.each($genTemplatePage.find(".data-selection-paragraph div"), function(index, value) {
+							existingContext = $(this).attr('data-query');
+						});
 
 						if (existingContext != null) {
 							if (existingContext.indexOf('/') != -1) {
-								existingContext = existingContext.substring(0,
-										existingContext.lastIndexOf('/'));
+								existingContext = existingContext.substring(0, existingContext.lastIndexOf('/'));
 							}
 
 							if (newContext.indexOf('/') != -1) {
-								newContext = newContext.substring(0, newContext
-										.lastIndexOf('/'));
+								newContext = newContext.substring(0, newContext.lastIndexOf('/'));
 							}
 
 							if (existingContext != newContext) {
 								$node.click();
-								alert('Different context');
+								alert(messages.treeItem_differentContext);
 								return;
 							}
 						}
 
-						$genTemplatePage.find(".no-edit-title").off('click')
-								.click(handleEditTitle);
-
+						$genTemplatePage.find(".no-edit-title").off('click').click(handleEditTitle);
 					} else {
 						$node.click();
 						alert(messages.warning_parentNodeSelected);
 					}
-				}
-
-				else if ($node.closest('li').hasClass('jstree-leaf')) {
+				} else if ($node.closest('li').hasClass('jstree-leaf')) {
 					var xPath = getSelectElementXPath($node.parent());
 					$.each($genTemplatePage.find(".data-selection-paragraph"),
-							function(index, value) {
-								if (xPath == $(this).find(".header-label")
-										.attr('data-query')) {
-									$(this).remove();
-								}
-							});
+						function(index, value) {
+							if (xPath == $(this).find(".header-label")
+									.attr('data-query')) {
+								$(this).remove();
+							}
+						});
 				}
 
-				if ($genTemplatePage
-						.find(".paragraph-data-selection .data-selection-paragraph").length == 0) {
+				if ($genTemplatePage.find(".paragraph-data-selection .data-selection-paragraph").length == 0) {
 					$genTemplatePage.find(".paragraph-data-selection").empty();
 				}
 			}
 			function populateParagraph(data, $paraContainer, addEdit) {
 				var paragraphTemplate = null;
 				if (addEdit) {
-					paragraphTemplate = _.template($(
-							"#data-selection-paragraph-edit-div-template")
-							.html());
+					paragraphTemplate = _.template($("#data-selection-paragraph-edit-div-template").html());
 				} else {
-					paragraphTemplate = _.template($(
-							"#data-selection-paragraph-div-template").html());
+					paragraphTemplate = _.template($("#data-selection-paragraph-div-template").html());
 				}
 				$paraContainer.append(paragraphTemplate(data));
 			}
 
 			function addContainer(e) {
-				if (($genTemplatePage.find(".section-container")).length == 1) {
-					$genTemplatePage.find(".delete-container").addClass("hide");
-				}
-				$(e.target).closest('div').find(".delete-container")
-						.removeClass("hide");
-				var containerTemplate = _.template($(
-						"#preview-design-format-container-template").html());
-				$genTemplatePage.find(".scroll-content").append(
-						containerTemplate());
-				$genTemplatePage.find(".add-container").off('click').click(
-						addContainer);
-				$genTemplatePage.find(".delete-container").off('click').click(
-						deleteContainer);
-				$genTemplatePage.find(".data-selection-btn").off('click')
-						.click(handleDataSelection);
+				var containerTemplate = _.template($("#preview-design-format-container-template").html());
+				$genTemplatePage.find(".scroll-content").append(containerTemplate());
+				$genTemplatePage.find(".add-container").off('click').click(addContainer);
+				$genTemplatePage.find(".delete-container").off('click').click(deleteContainer);
+				$genTemplatePage.find(".data-selection-btn").off('click').click(handleDataSelection);
 
 				containerDisplayOnHoverAction(".section-container");
 				$genTemplatePage.find(".selectFormat").off('change').change(handleChangingFormat);
+				
+				$genTemplatePage.find(".input-preview-section-title").off('keyup kewdown cut paste').on('keyup kewdown cut paste', handleEditSectionTitle);
+				
+				if(e) {
+					$genTemplatePage.find(".delete-container").removeClass("hide");
+				} else {
+					$genTemplatePage.find(".delete-container").addClass("hide");
+				}
 			}
-
-			function populateDefaultContainer() {
-				$genTemplatePage.find('#preview-main-content').append(
-						_.template($(
-								"#preview-design-format-container-template")
-								.html()));
-				$genTemplatePage.find(".delete-container").addClass("hide");
-				containerDisplayOnHoverAction(".section-container");
+			
+			function handleEditSectionTitle(e) {
+				var $metadata = $(e.target).closest('div.section-container');
+				
+				if($metadata.attr('selected-metadata')) {
+					var metadataJson = jQuery.parseJSON($metadata.attr('selected-metadata'));
+					var title = metadataJson.title;
+					var newTitle = $(e.target).val();
+					
+					if(title != newTitle) {
+						metadataJson.title = newTitle;
+						metadataJson.titleQuery = '';
+						
+						$metadata.attr('selected-metadata', JSON.stringify(metadataJson));
+					}
+				}
 			}
 
 			function containerDisplayOnHoverAction(element) {
@@ -824,10 +810,9 @@ require(
 			}
 
 			function populateTree(jsonTreeData) {
-				$(".xml-as-json").attr('data-xmlJson', '');
+				clearNavigatinTree();
 
 				// ajax call to xmltojson
-
 				var urlInput = $genTemplatePage.find(".input-url").val();
 				$.ajax({
 					url : baseUrl + "/api/utils/xmltojson",
@@ -840,12 +825,6 @@ require(
 								JSON.stringify(result));
 					}
 				});
-
-				$genTemplatePage.find('.navigation-tree .data-selection-tree')
-						.remove();
-
-				$genTemplatePage.find('.navigation-tree').append(
-						_.template($("#navigator-tree-div-template").html()));
 
 				$genTemplatePage
 						.find('.navigation-tree .data-selection-tree')
@@ -944,64 +923,104 @@ require(
 				$genTemplatePage.find(".highlight").off('click').click(handleFormatDataSelection);
 				
 
-				 function handleFormatDataSelection(e){
-					
-					 
-					 if($(e.target).attr('id') == 'table-format'){
-						 clearDataSelectionPage();
+				function handleFormatDataSelection(e){
+					if($(e.target).attr('id') == 'table-format'){
+						clearDataSelectionPage();
 						 
-						 if( $genTemplatePage.find(".highlight.btn-primary").attr('id') == 'paragraph-format'){
-							 $genTemplatePage.find(".highlight").removeClass("btn-primary").addClass("btn-default");
-						 }
-						 $(e.target).addClass("btn-primary").removeClass("btn-default");
-						 $genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", handleDataSelectionCheck);
-						 
-					 }
-					 else if($(e.target).attr('id') == 'paragraph-format' && (!($(e.target).hasClass("active-btn")))){
-						 clearDataSelectionPage();
-						 if( $genTemplatePage.find(".highlight.btn-primary").attr('id') == 'table-format'){
-							 $genTemplatePage.find(".highlight").removeClass("btn-primary").addClass("btn-default");
-						 }
-						 $(e.target).addClass("btn-primary").removeClass("btn-default");
-						 $genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", populateDataSelectionParagraph);
-					 }
-				 }
-				 
-				 
-					 $genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", handleDataSelectionCheck);
-				 
-					 $genTemplatePage.find(".save-layout").off('click').click(handleSaveLayout);
+						if( $genTemplatePage.find(".highlight.btn-primary").attr('id') == 'paragraph-format'){
+							$genTemplatePage.find(".highlight").removeClass("btn-primary").addClass("btn-default");
+						}
+						$(e.target).addClass("btn-primary").removeClass("btn-default");
+						$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", handleDataSelectionCheck);
 					 
-					 function handleSaveLayout(e){
-						var saveLayoutData = {};
-						saveLayoutData['docName'] = $genTemplatePage.find(".document-title").val();
-						saveLayoutData['xmlUrl'] = $genTemplatePage.find(".input-url").val();
-						 var containerData = saveLayoutData['containerData'] = [];
-						 $.each($genTemplatePage.find(".section-container"),function(index, value){
-							 var container = {};
-								container = $(this).attr('selected-metadata');
-								containerData.push(jQuery.parseJSON(container));
-						 });
-						 var $saveLink = $genTemplatePage.find(".save-to-local")[0];
-						$saveLink.href = "http://localhost:8080/rpetui/api/savejson?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
-						 //$saveLink.attr('href', "http://localhost:8080/rpetui/api/savejson?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName']);
-						 $saveLink.click();
-					 }
-				
+					}
+					else if($(e.target).attr('id') == 'paragraph-format' && (!($(e.target).hasClass("active-btn")))){
+						clearDataSelectionPage();
+						if( $genTemplatePage.find(".highlight.btn-primary").attr('id') == 'table-format'){
+							$genTemplatePage.find(".highlight").removeClass("btn-primary").addClass("btn-default");
+						}
+						$(e.target).addClass("btn-primary").removeClass("btn-default");
+						$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", populateDataSelectionParagraph);
+					}
+				}
+				 
+				 
+				$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", handleDataSelectionCheck);
+			 
 				$loadingText.trigger("show", {
 					text : messages.navigatorTreeLoaded
 				});
 			}
+			
+			function handleSaveLayout(e){
+				var saveLayoutData = {};
+				saveLayoutData['documentTitle'] = $genTemplatePage.find(".document-title").val();
+				saveLayoutData['xmlUrl'] = $genTemplatePage.find(".input-url").val();
+				var sections = saveLayoutData['sections'] = [];
+				$.each($genTemplatePage.find(".section-container"),function(index, value){
+					if($(this).find('.selectFormat').val() != '') {
+						var container = {};
+						if($(this).attr('selected-metadata')) {
+							container = $(this).attr('selected-metadata');
+							container = jQuery.parseJSON(container);
+						} else {
+							container['title'] = $(this).find('.input-preview-section-title').val();
+							container['staticText'] = $(this).find('preview-data-selected').text();
+						}
+						container['format'] = $(this).find('.selectFormat').val();
+						sections.push(container);
+					}
+				});
+				alert(JSON.stringify(saveLayoutData));
+				var $saveLink = $genTemplatePage.find(".save-to-local")[0];
+				$saveLink.href = "http://localhost:8080/rpetui/api/savejson?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
+				$saveLink.click();
+			}
+			
+			function clearPreviewSections() {
+				$.each($genTemplatePage.find(".section-container"),function(index, value){
+					$(this).find('.selectFormat').val('');
+					$(this).find('.selectFormat').attr('previous-format', '');
+					$(this).attr('selected-metadata', '');
+					$(this).find('.input-preview-section-title').val('');
+					if($(this).find('.selectFormat').val() != '') {
+						var container = {};
+						if($(this).attr('selected-metadata')) {
+							container = $(this).attr('selected-metadata');
+							container = jQuery.parseJSON(container);
+						} else {
+							container['title'] = $(this).find('.input-preview-section-title').val();
+							container['staticText'] = $(this).find('preview-data-selected').text();
+						}
+						container['format'] = $(this).find('.selectFormat').val();
+						sections.push(container);
+					}
+				});
+			}
+			
+			function clearMainSection() {
+				$genTemplatePage.find(".document-title").val('');
+				$genTemplatePage.find(".input-url").val('');
+			}
+			
+			function clearNavigatinTree() {
+				$genTemplatePage.find('.navigation-tree .xml-as-json').attr('data-xmlJson', '');
+				$genTemplatePage.find('.navigation-tree .data-selection-tree').remove();
 
-			populateDefaultContainer();
+				$genTemplatePage.find('.navigation-tree').append(_.template($("#navigator-tree-div-template").html()));
+			}
+
+			addContainer();
 			attachHandlers();
 			getPredefinedTemplates();
 
 			$genTemplatePage.find(".input-url").val(
 					'http://localhost:8080/rpet/template/data/requisitepro.xml');
 			// $genTemplatePage.find(".input-url").val('http://localhost:8080/rpet/template/data/rss.xml');
+			
+			$genTemplatePage.find(".document-title").val('Sample Requirements');
+			$genTemplatePage.find(".document-title").focus();
 			handleSelectionTree();
 			
-			$genTemplatePage.find('.design-tabs a[href="#data-selection"]').attr('data-toggle', '');
-			
+			enableDisableTab('#data-selection', '');
 		});

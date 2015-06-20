@@ -108,10 +108,10 @@
 						<a href="#" class="save-to-local hide"></a>
 						<a href="#" class="save-layout"><span><fmt:message
 									key="template.generator.button.save_layout" /></span></a>&nbsp;
-						<button class="btn btn-primary">
+						<button class="btn btn-primary generate-template-btn">
 							<fmt:message key="template.generator.button.generate" />
 						</button>
-						<button class="btn btn-default">
+						<button class="btn btn-default preview-cancel-btn">
 							<fmt:message key="template.generator.button.cancel" />
 						</button>
 					</div>
@@ -122,11 +122,11 @@
 						<div class="col-xs-9 selected-content">
 							<div class="wrapper">
 								<div class="data-formats">
-									<button id="table-format" class="active-btn highlight btn btn-primary">
+									<button id="table-format" class="highlight btn btn-primary">
 										<fmt:message key="template.generator.format.table" />
 									</button>
 									<button id="paragraph-format"
-										class=" highlight btn btn-default">
+										class="btn btn-default">
 										<fmt:message key="template.generator.format.paragraph" />
 									</button>
 								</div>
@@ -166,8 +166,11 @@
 						<button class="btn-select-data btn btn-primary">
 							<fmt:message key="template.generator.button.select" />
 						</button>
-						<button class="remove-data btn btn-default">
+						<button class="btn btn-default ds-cancel-btn">
 							<fmt:message key="template.generator.button.cancel" />
+						</button>
+						<button class="btn btn-default ds-clear-btn">
+							<fmt:message key="template.generator.button.clear" />
 						</button>
 					</div>
 				</div>

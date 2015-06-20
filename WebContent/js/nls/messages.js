@@ -12,6 +12,7 @@ define("nls/messages", [],  {
 		"generatePageTitle": "Document Template Generation",
 		"navigatorTreeLoaded": "Ready for tree selection",
 		"warning_parentNodeSelected": "Please select only the child elements",
-		"title_sample_value": "Sample value: "
+		"title_sample_value": "Sample value: ",
+		"treeItem_differentContext": "You cannot select from different parent."
 	}
 });
