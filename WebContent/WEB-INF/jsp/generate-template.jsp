@@ -214,7 +214,7 @@
 <script type="text/template" id="data-selection-header-column-template">
 	<th class="col-title header-label col-xs-3" data-query="<@= query@>" data-isquery="true">
 		<a class="no-edit-title" href="#">
-			<img alt="edit" src="${contextPath}/graphics/edit.png">
+			<img alt="edit" src="${contextPath}/graphics/edit.png" alt="edit">
 		</a>
 		<span class="title"><@= name @></span>
 	</th>
@@ -262,9 +262,9 @@
 				<button class="data-selection-btn btn btn-primary">
 					<fmt:message key="template.generator.hover.select_data" />
 				</button>
-				<a href="#"><img alt="delete" src="${contextPath}/graphics/onHover/edit.png"></a>
-				<a href="#" class="add-container"><img alt="delete" src="${contextPath}/graphics/onHover/Add-Container.png"></a>
-				<a href="#" class="delete-container"><img alt="delete" src="${contextPath}/graphics/onHover/delete.png"></a>
+				<a href="#"><img alt="clear section" src="${contextPath}/graphics/onHover/edit.png" title="clear section"></a>
+				<a href="#" class="add-container"><img alt="Add Section" src="${contextPath}/graphics/onHover/Add-Container.png" title="Add Section"></a>
+				<a href="#" class="delete-container"><img alt="Delete Section" src="${contextPath}/graphics/onHover/delete.png" alt="Delete Section"></a>
 			</div>
 		</div>
 	</div>
@@ -293,12 +293,12 @@
 			</span>
 		</div>
 		<div class="col-xs-9 alignment-right alignment-left">
-			<input name="title" type="text" placeholder="<fmt:message key="template.generator.placeholder.toc_label" />" class="form-control input-toc-label" />
+			<input name="title" type="text" placeholder="<fmt:message key="template.generator.placeholder.table_of_contents" />" class="form-control input-toc-label" />
 		</div>
 		<!-- delete icon -->
 		<div class="col-xs-1 align-right alignment-left-icon alignment-right">
 			<a href="#" class="delete-toc">
-				<img alt="delete" src="${contextPath}/graphics/delete.png">
+				<img alt="delete" src="${contextPath}/graphics/delete.png" title="delete">
 			</a>
 
 		</div>
@@ -321,7 +321,7 @@
 <script type="text/template" id="data-selection-paragraph-edit-div-template">
 <div class="row data-selection-paragraph">
 					<div class="col-xs-2 header-label" data-query="<@= query@>">
-						<a class="no-edit-title" href="#"><img alt="edit" src="${contextPath}/graphics/edit.png">
+						<a class="no-edit-title" href="#"><img alt="edit" src="${contextPath}/graphics/edit.png" title="edit">
 						</a><span class="alignment title"><@= name @></span>
 					</div>
 					<div class="col-xs-8">

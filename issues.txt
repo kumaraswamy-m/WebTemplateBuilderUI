@@ -7,6 +7,11 @@ Open issues
 - test on firefox as well
 - page width should not be set (like 1222)
 - remove un-necessary predefined layout
+- alt/title attribute for icons... like delete icon should show delete on hover on the icon
+- message on populating the tree... not alert.. message on top
+- spacing between title and select dropdown
+- switch display on hover and selection dropdown
+- 
 
 - Generate Template
 - Open Layout
