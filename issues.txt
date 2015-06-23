@@ -4,25 +4,17 @@ Open issues
 - alt/title attribute for icons... like delete icon should show delete on hover on the icon
 - handle ajax error
 
-- Generate Template
-- Open Layout
-   - Use template model api to store template layout
-
 - select data should retain preview contents in data selection page
-- predefined layout should not have any data source attached
 - changing XML URL should clean up everything
 - don't store entire xml json
 - test on firefox as well
--move data-query under sections in layout json selected metadata
--styling for predefined layouts
-- cancel on preview page doesn't clear sections
-- + should create container after the current one
+- styling for predefined layouts
+- Add icon should create container after the current one
 - title and data query should be from same parent
 - clear tree causes issue upon load layout json
 - disable select button is table or para and title is empty
-- open layout should populate toc
 - open layout display icon issue
-- 
+- testing end to end
 
 
 Fixed issues
@@ -47,3 +39,13 @@ Fixed issues
 - page width should not be set (like 1222)
 - remove un-necessary predefined layout
 - switch display on hover and selection dropdown
+- Generate Template
+- Open Layout
+   - Use template model api to store template layout
+- predefined layout should not have any data source attached
+- move data-query under sections in layout json selected metadata
+- cancel on preview page doesn't clear sections
+- static content is not saved in json
+- clear toc
+- req pro layout as per the ootb template
+- open layout should populate toc

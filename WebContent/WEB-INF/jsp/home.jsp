@@ -26,7 +26,7 @@
 <meta name="viewport"
 	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 
-<link rel="shortcut icon" href="${contextPath}/graphics/32px.png">
+<link rel="shortcut icon" href="${contextPath}/graphics/RPE_24.png">
 <link rel="stylesheet" href="${contextPath}/css/base.css">
 <link rel="stylesheet" href="${contextPath}/css/home.css">
 <link rel="stylesheet" href="${contextPath}/css/docUI.new.css">

@@ -46,48 +46,67 @@ require(
 								"name" : "Saved Layouts",
 								"items" : [ {
 									"id" : null,
-									"description" : "For DNG",
+									"description" : "",
 									"name" : "Requisite Pro",
 									"dataJson" : {
-										"title" : "hello",
+										"title" : "Sample Requirements",
 										"xmlUrl" : "",
+										"hasToc": true,
+										"tocLabel": "Table of Contents",
 										"sections" : [
 												{
-													"title" : "Project/Requirements/PRRequirement/FullTag",
-													"titleQuery" : "Project/Requirements/PRRequirement/FullTag",
+													"title" : "High Level Requirements",
+													"titleQuery" : "",
 													"dataAttributes" : [
 															{
-																"label" : "FullTag",
+																"label" : "Req",
 																"query" : "Project/Requirements/PRRequirement/FullTag"
 															},
 															{
 																"label" : "Text",
 																"query" : "Project/Requirements/PRRequirement/Text"
+															},
+															{
+																"label" : "Priority",
+																"query" : "Project/Requirements/PRRequirement/Priority"
+															},
+															{
+																"label" : "Difficulty",
+																"query" : "Project/Requirements/PRRequirement/Difficulty"
+															},
+															{
+																"label" : "Stability",
+																"query" : "Project/Requirements/PRRequirement/Stability"
+															},
+															{
+																"label" : "Status",
+																"query" : "Project/Requirements/PRRequirement/Status"
 															} ],
 															"format" : "table"
 												},
 												{
-													"title" : "",
-													"titleQuery" : "",
-													"dataAttributes" : [{}],
-													"staticContent" : "test passed",
-													"format" : "static-text"
-												},
-												{
-													"title" : "my paragraph",
-													"titleQuery" : "",
+													"title" : "Project/Requirements/PRRequirement/FullTag",
+													"titleQuery" : "Project/Requirements/PRRequirement/FullTag",
 													"dataAttributes" : [
 															{
-																"label" : "DocPosn",
-																"query" : "Project/Requirements/PRRequirement/DocPosn"
+																"label" : "GUID",
+																"query" : "Project/Requirements/PRRequirement/GUID"
+															},
+															{
+																"label" : "HREF",
+																"query" : "Project/Requirements/PRRequirement/href"
+															},
+															{
+																"label" : "Unique ID",
+																"query" : "Project/Requirements/PRRequirement/UniqueID"
 															},
 															{
 																"label" : "Bookmark",
 																"query" : "Project/Requirements/PRRequirement/Bookmark"
 															},
 															{
-																"label" : "TagNumber",
-																"query" : "Project/Requirements/PRRequirement/TagNumber"
+																"label" : "Text",
+																"query" : "Project/Requirements/PRRequirement/Text"
 															} ],
 													"format" : "paragraph"
 												} ]
@@ -120,7 +139,7 @@ require(
 				$genTemplatePage.find(".template-layout").off('click').click(handleOpenLayout);
 			}
 			
-			function clearPreviewLayout(){
+			function clearAllSections(){
 				clearMainSection();
 				$genTemplatePage.find(".section-container").remove();
 				// clearNavigationTree();
@@ -137,7 +156,13 @@ require(
 						return;
 					}
 				}
-				clearPreviewLayout();
+				
+				$loadingText.trigger("show", {
+					text: 'opening layout...',
+					persist: true
+				});
+				
+				clearAllSections();
 				
 				$genTemplatePage.find(".section-container").remove();
 				
@@ -147,6 +172,11 @@ require(
 					
 					$genTemplatePage.find(".document-title").val(layoutJsonObj.title);
 					$genTemplatePage.find(".input-url").val(layoutJsonObj.xmlUrl);
+					
+					if(layoutJsonObj.hasToc) {
+						$genTemplatePage.find('#preview-main-content').prepend(_.template($("#table-of-contents-template").html()));
+						$genTemplatePage.find(".input-toc-label").val(layoutJsonObj.tocLabel);
+					}
 
 					$genTemplatePage.find(".input-xml-go").click();
 					
@@ -161,6 +191,10 @@ require(
 				} else {
 					addContainer();
 				}
+				
+				$loadingText.trigger("show", {
+					text: 'opened layout'
+				});
 			}	
 
 			function populatePredefinedTemplates(json) {
@@ -248,13 +282,17 @@ require(
 				var saveLayoutData = buildSaveLayout();
 				var $saveLink = $genTemplatePage.find(".save-to-local")[0];
 				$saveLink.href = baseUrl + "/api/template/generate?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
+				$loadingText.trigger("show", {
+					text: 'Generating template. This might take a while. Pleas wait...',
+					persist: true
+				});
 				$saveLink.click();
 			}
 			
 			function handleCancelPreview(e) {
 				var clear = confirm("Are you sure to clear the template layout?");
 				if (clear) {
-					clearPreviewLayout();
+					clearAllSections();
 				}
 			}
 			
@@ -1112,20 +1150,20 @@ require(
 				if($genTemplatePage.find("div.toc").length > 0) {
 					saveLayoutData['tocLabel'] = $genTemplatePage.find("div.toc .input-toc-label").val();
 					saveLayoutData['hasToc'] = true;
-				}else{
-					saveLayoutData['hasToc'] = false;
 				}
 				
 				var sections = saveLayoutData['sections'] = [];
 				$.each($genTemplatePage.find(".section-container"),function(index, value){
 					if($(this).find('.selectFormat').val() != '') {
 						var container = {};
-						if($(this).attr('selected-metadata')) {
-							container = $(this).attr('selected-metadata');
-							container = jQuery.parseJSON(container);
+						if($(this).find('.selectFormat').val() != 'static-text') {
+							if($(this).attr('selected-metadata')) {
+								container = $(this).attr('selected-metadata');
+								container = jQuery.parseJSON(container);
+							}
 						} else {
 							container['title'] = $(this).find('.input-preview-section-title').val();
-							container['staticContent'] = $(this).find('preview-data-selected').text();
+							container['staticContent'] = $(this).find('.preview-data-selected').text();
 						}
 						container['format'] = $(this).find('.selectFormat').val();
 						sections.push(container);
@@ -1138,6 +1176,10 @@ require(
 			function clearMainSection() {
 				$genTemplatePage.find(".document-title").val('');
 				$genTemplatePage.find(".input-url").val('');
+				
+				if($genTemplatePage.find('#preview-main-content .toc').length > 0) {
+					$genTemplatePage.find('#preview-main-content .toc').remove();
+				}
 			}
 			
 			function clearNavigationTree() {
@@ -1188,9 +1230,12 @@ require(
 			}
 
 			addContainer();
-			attachHandlers();
 			getPredefinedTemplates();
-
+			attachHandlers();
+			$loadingText.trigger("show", {
+				text: 'loading...'
+			});
+			
 			$genTemplatePage.find(".input-url").val(defaultXmlUrl);
 			// $genTemplatePage.find(".input-url").val('http://localhost:8080/tegas/data/rss.xml');
 			
