@@ -83,7 +83,6 @@ public class SaveTemplateLayout
 
 			TemplateBuilderUIImpl tBuilder = new TemplateBuilderUIImpl(uiModel, serviceUrl);
 			String templateJson = tBuilder.buildTemplateJson();
-			System.out.println(templateJson);
 
 			String templatePath = tBuilder.buildTemplate(templateJson);
 
