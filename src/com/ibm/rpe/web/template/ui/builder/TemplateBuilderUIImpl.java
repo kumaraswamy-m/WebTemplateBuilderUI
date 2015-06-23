@@ -44,6 +44,8 @@ public class TemplateBuilderUIImpl
 
 	private static final String DOCUMENT_TITLE_STYLE = "Title"; //$NON-NLS-1$
 	private static final String TABLE_HEADER_CELL_STYLE = "Intense Emphasis"; //$NON-NLS-1$
+	private static final String TOC_LABEL_STYLE = "Subtitle"; //$NON-NLS-1$
+	private static final String SECTION_HEADER_STYLE = "Heading 1"; //$NON-NLS-1$
 
 	private static final String FORMAT_TABLE = "table"; //$NON-NLS-1$
 	private static final String FORMAT_PARAGPRAH = "paragraph"; //$NON-NLS-1$
@@ -151,16 +153,23 @@ public class TemplateBuilderUIImpl
 
 	private String buildDocumentTitle(String parentId, String documentTitle, String templateJson) throws Exception
 	{
-		Map<String, String> properties = new HashMap<String, String>();
-		properties.put(TemplateConstants.STYLE_NAME, DOCUMENT_TITLE_STYLE);
-		TemplateElement paragraphElement = buildElement(null, TemplateConstants.ELEMENT_PARAGPRAPH, null, null, null, null, null, properties, true);
-		templateJson = addElement(paragraphElement, TemplateConstants.OPERATION_ADD, parentId, TemplateConstants.LOCATION_CHILD, templateJson);
-		Template template = (Template) JSONUtils.readValue(templateJson, Template.class);
-		properties = new HashMap<String, String>();
+		if (!CommonUtils.isNullOrEmpty(documentTitle))
+		{
+			Map<String, String> properties = new HashMap<String, String>();
+			properties.put(TemplateConstants.STYLE_NAME, DOCUMENT_TITLE_STYLE);
+			TemplateElement paragraphElement = buildElement(null, TemplateConstants.ELEMENT_PARAGPRAPH, null, null, null, null, null, properties, true);
+			templateJson = addElement(paragraphElement, TemplateConstants.OPERATION_ADD, parentId, TemplateConstants.LOCATION_CHILD, templateJson);
+			Template template = (Template) JSONUtils.readValue(templateJson, Template.class);
+			properties = new HashMap<String, String>();
 
-		// add title
-		TemplateElement titleElement = buildElement(null, TemplateConstants.ELEMENT_TEXT, null, null, null, documentTitle, null, null, true);
-		templateJson = addElement(titleElement, TemplateConstants.OPERATION_ADD, template.getLastActedElement().getId(), TemplateConstants.LOCATION_CHILD, templateJson);
+			// add title
+			TemplateElement titleElement = buildElement(null, TemplateConstants.ELEMENT_TEXT, null, null, null, documentTitle, null, null, true);
+			templateJson = addElement(titleElement, TemplateConstants.OPERATION_ADD, template.getLastActedElement().getId(), TemplateConstants.LOCATION_CHILD, templateJson);
+
+			// add empty paragraph
+			paragraphElement = buildElement(null, TemplateConstants.ELEMENT_PARAGPRAPH, null, null, null, null, null, null, true);
+			templateJson = addElement(paragraphElement, TemplateConstants.OPERATION_ADD, parentId, TemplateConstants.LOCATION_CHILD, templateJson);
+		}
 
 		return templateJson;
 	}
@@ -177,7 +186,7 @@ public class TemplateBuilderUIImpl
 		if (!CommonUtils.isNullOrEmpty(tocLabel))
 		{
 			properties = new HashMap<String, String>(3);
-			properties.put(TemplateConstants.STYLE_NAME, "");
+			properties.put(TemplateConstants.STYLE_NAME, TOC_LABEL_STYLE);
 			TemplateElement paragraphElement = buildElement(null, TemplateConstants.ELEMENT_PARAGPRAPH, null, null, null, null, null, properties, true);
 			templateJson = addElement(paragraphElement, TemplateConstants.OPERATION_ADD, tocContainerId, TemplateConstants.LOCATION_CHILD, templateJson);
 			template = (Template) JSONUtils.readValue(templateJson, Template.class);
@@ -236,6 +245,7 @@ public class TemplateBuilderUIImpl
 		Map<String, String> properties = new HashMap<String, String>();
 		if (!CommonUtils.isNullOrEmpty(section.getTitle()))
 		{
+			properties.put(TemplateConstants.STYLE_NAME, SECTION_HEADER_STYLE);
 			TemplateElement paragraphElement = buildElement(null, TemplateConstants.ELEMENT_PARAGPRAPH, null, null, null, null, null, properties, true);
 			templateJson = addElement(paragraphElement, TemplateConstants.OPERATION_ADD, tableContainerId, TemplateConstants.LOCATION_CHILD, templateJson);
 			template = (Template) JSONUtils.readValue(templateJson, Template.class);
@@ -327,7 +337,6 @@ public class TemplateBuilderUIImpl
 	private String buildParagraphSection(String topContainerId, TemplateUISection section, String templateJson)
 			throws Exception
 	{
-
 		boolean isQueryAdded = false;
 		String paraContainerId = null;
 		String contextId = null;
@@ -354,6 +363,7 @@ public class TemplateBuilderUIImpl
 		Map<String, String> properties = new HashMap<String, String>();
 		if (!CommonUtils.isNullOrEmpty(section.getTitle()))
 		{
+			properties.put(TemplateConstants.STYLE_NAME, SECTION_HEADER_STYLE);
 			TemplateElement paragraphElement = buildElement(null, TemplateConstants.ELEMENT_PARAGPRAPH, null, null, null, null, null, properties, true);
 			templateJson = addElement(paragraphElement, TemplateConstants.OPERATION_ADD, paraContainerId, TemplateConstants.LOCATION_CHILD, templateJson);
 			template = (Template) JSONUtils.readValue(templateJson, Template.class);
