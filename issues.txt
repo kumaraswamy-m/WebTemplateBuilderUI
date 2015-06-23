@@ -1,17 +1,8 @@
 Open issues
 -----------------------
-- Click on text in the navigator tree checks the check box but the data is not populated
 - checking parent tree element after few items were selected screws up the table
-- clear container upon clicking clear icon
-- don't store entire xml json
-- test on firefox as well
-- page width should not be set (like 1222)
-- remove un-necessary predefined layout
 - alt/title attribute for icons... like delete icon should show delete on hover on the icon
-- message on populating the tree... not alert.. message on top
-- spacing between title and select dropdown
-- switch display on hover and selection dropdown
-- 
+- handle ajax error
 
 - Generate Template
 - Open Layout
@@ -20,6 +11,15 @@ Open issues
 - select data should retain preview contents in data selection page
 - predefined layout should not have any data source attached
 - changing XML URL should clean up everything
+- don't store entire xml json
+- test on firefox as well
+-move data-query under sections in layout json selected metadata
+-styling for predefined layouts
+- cancel on preview page doesn't clear sections
+- + should create container after the current one
+- title and data query should be from same parent
+- clear tree causes issue upon load layout json
+
 
 Fixed issues
 -----------------------
@@ -36,3 +36,10 @@ Fixed issues
 - adding table of contents gets a horizontal scrollbar
 - Container with editable text
 - Save layout
+- Click on text in the navigator tree checks the check box but the data is not populated
+- clear container upon clicking clear icon
+- spacing between title and select dropdown
+- message on populating the tree... not alert.. message on top
+- page width should not be set (like 1222)
+- remove un-necessary predefined layout
+- switch display on hover and selection dropdown

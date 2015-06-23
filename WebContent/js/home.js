@@ -24,7 +24,6 @@ require(
 
 			var baseUrl = window.location.protocol + '//' + window.location.host + $(document).data("context_path");
 			var allPageIds = [ "#generate-template-page" ];
-			var $loadingText = $(".docUI .loading-text");
 
 			function switchPageTo(showPageId) {
 				allPageIds.forEach(function(id) {
@@ -64,41 +63,7 @@ require(
 			}
 
 			function attachHandlers() {
-				initializeLoadingText();
-			}
-
-			function initializeLoadingText() {
-
-				// var $loadingText = $(".side-bar-content .loading-text");
-
-				$loadingText.find(".close-loading-text").on("click",
-						function(event) {
-							$loadingText.trigger("hide");
-						});
-
-				$loadingText.on("show", function(event, options) {
-					var text = "";
-					if (options.persist) {
-						$loadingText.find(".close-loading-text").addClass(
-								"hide");
-						text = "...";
-					} else
-						$loadingText.find(".close-loading-text").removeClass(
-								"hide");
-
-					if (options.text)
-						text = options.text + text;
-					else
-						text = messages.loading + text;
-
-					$loadingText.find(".text-content > span").text(text);
-
-					$loadingText.removeClass("hide");
-				});
-
-				$loadingText.on("hide", function(event) {
-					$loadingText.addClass("hide");
-				});
+				
 			}
 
 			// Backbone router initialization

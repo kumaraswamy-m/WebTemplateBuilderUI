@@ -21,6 +21,8 @@ require(
 				evaluate : /<@([\s\S]+?)@>/g,
 				escape : /<@-([\s\S]+?)@>/g
 			};
+			
+			var isLayoutDirty = false;
 
 			var baseUrl = window.location.protocol + '//'
 					+ window.location.host + $(document).data("context_path");
@@ -32,60 +34,127 @@ require(
 
 			function getPredefinedTemplates(json) {
 				if (!json) {
-					json = [ {
-						"id" : "default",
-						"name" : "Default"
-					}, {
-						"id" : null,
-						"name" : "Engineering Documents",
-						"items" : [ {
-							"id" : null,
-							"description" : "For DNG",
-							"name" : "Requirements Specification"
-						}, {
-							"id" : null,
-							"description" : "A work items from RTC",
-							"name" : "Work Items"
-						}, {
-							"id" : null,
-							"description" : "Test planning from RQM",
-							"name" : "Test Planning"
-						} ]
-					}, {
-						"id" : null,
-						"name" : "Presentations",
-						"items" : [ {
-							"id" : null,
-							"name" : "PR 1"
-						}, {
-							"id" : null,
-							"description" : "",
-							"name" : "PR 2"
-						}, {
-							"id" : null,
-							"description" : "Presentation category",
-							"name" : "PR 3"
-						} ]
-					}, {
-						"id" : null,
-						"name" : "Legal",
-						"items" : [ {
-							"id" : null,
-							"name" : "Finance"
-						}, {
-							"id" : null,
-							"description" : "",
-							"name" : "HR"
-						}, {
-							"id" : null,
-							"description" : "Presentation category",
-							"name" : "Google"
-						} ]
-					} ];
+					json = [
+							{
+								"id" : "default",
+								"name" : "Default"
+							},
+							{
+								"id" : null,
+								"name" : "Saved Layouts",
+								"items" : [ {
+									"id" : null,
+									"description" : "For DNG",
+									"name" : "Requisite Pro",
+									"dataJson" : {
+										"title" : "hello",
+										"xmlUrl" : "http://localhost:8080/rpet/template/data/requisitepro.xml",
+										"sections" : [
+												{
+													"title" : "Project/Requirements/PRRequirement/FullTag",
+													"titleQuery" : "Project/Requirements/PRRequirement/FullTag",
+													"dataAttributes" : [
+															{
+																"label" : "FullTag",
+																"query" : "Project/Requirements/PRRequirement/FullTag"
+															},
+															{
+																"label" : "Text",
+																"query" : "Project/Requirements/PRRequirement/Text"
+															} ],
+															"format" : "table"
+												},
+												{
+													"title" : "",
+													"titleQuery" : "",
+													"dataAttributes" : [{}],
+													"staticText" : "test passed",
+													"format" : "static-text"
+												},
+												{
+													"title" : "my paragraph",
+													"titleQuery" : "",
+													"dataAttributes" : [
+															{
+																"label" : "DocPosn",
+																"query" : "Project/Requirements/PRRequirement/DocPosn"
+															},
+															{
+																"label" : "Bookmark",
+																"query" : "Project/Requirements/PRRequirement/Bookmark"
+															},
+															{
+																"label" : "TagNumber",
+																"query" : "Project/Requirements/PRRequirement/TagNumber"
+															} ],
+													"format" : "paragraph"
+												} ]
+									}
+								}
+							  ]
+							},
+							{
+								"id" : null,
+								"name" : "Engineering Documents",
+								"items" : [ {
+									"id" : null,
+									"description" : "For DNG",
+									"name" : "Requirements Specification"
+								}, {
+									"id" : null,
+									"description" : "A work items from RTC",
+									"name" : "Work Items"
+								}, {
+									"id" : null,
+									"description" : "Test planning from RQM",
+									"name" : "Test Planning"
+								} ]
+							} ];
 				}
 
 				populatePredefinedTemplates(json);
+				$genTemplatePage.find(".template-layout").off('click').click(handleOpenLayout);
 			}
+			
+			function clearPreviewLayout(){
+				clearMainSection();
+				$genTemplatePage.find(".section-container").remove();
+				// clearNavigationTree();
+				
+				addContainer();
+				isLayoutDirty = false;
+			}
+				
+			function handleOpenLayout(e) {
+				if(isLayoutDirty) {
+					var clear = confirm("The current template layout changes would be lost. Do you want to continue?");
+					if (!clear) {
+						return;
+					}
+				}
+				clearPreviewLayout();
+				
+				$genTemplatePage.find(".section-container").remove();
+				
+				var layoutJson = $(e.target).closest("li").attr('data-json');
+				if(layoutJson && layoutJson.length > 0) {
+					var layoutJsonObj = jQuery.parseJSON(layoutJson);
+					
+					$genTemplatePage.find(".document-title").val(layoutJsonObj.title);
+					$genTemplatePage.find(".input-url").val(layoutJsonObj.xmlUrl);
+
+					$genTemplatePage.find(".input-xml-go").click();
+					
+					$.each(layoutJsonObj.sections , function(index, value) {
+						addContainer();
+						$container = $genTemplatePage.find(".section-container").eq(($genTemplatePage.find(".section-container")).length - 1);
+						$container.attr('selected-metadata',JSON.stringify(layoutJsonObj));
+						populateDataPreviewSection(value.format, value ,$container);
+					});
+					
+					isLayoutDirty = false;
+				}
+			}	
 
 			function populatePredefinedTemplates(json) {
 				$genTemplatePage.find("#docUINav .nav-parent").empty();
@@ -102,6 +171,11 @@ require(
 
 					$.each(json, function(index, value) {
 						var category = null;
+						if(!value.dataJson) {
+							value.dataJson = '';
+						}else{
+							value.dataJson = JSON.stringify(value.dataJson);
+						}
 						if (value.id == 'default') {
 							var defaultTreeItemTemplate = _.template($(
 									"#nav-tree-item-default-template").html());
@@ -110,14 +184,17 @@ require(
 							category = navTreeCategoryTemplate(value);
 							var treeItems = '';
 							$.each(value.items, function(itemIndex, itemValue) {
+								if(!itemValue.dataJson) {
+									itemValue.dataJson = '';
+								}else{
+									itemValue.dataJson = JSON.stringify(itemValue.dataJson);
+								}
 								treeItems += treeItemTemplate(itemValue);
 							});
 
-							category = category.replace("%NAV_TREE_ITEMS%",
-									treeItems);
+							category = category.replace("%NAV_TREE_ITEMS%", treeItems);
 						}
-						$genTemplatePage.find("#docUINav .nav-parent").append(
-								category);
+						$genTemplatePage.find("#docUINav .nav-parent").append(category);
 					});
 
 					attachItemHandlers();
@@ -148,6 +225,16 @@ require(
 				$genTemplatePage.find(".footer-bar .preview-cancel-btn").off('click').click(handleCancelPreview);
 				$genTemplatePage.find(".data-select-buttons .ds-cancel-btn").off('click').click(handleCancelDataSelection);
 				$genTemplatePage.find(".data-select-buttons .ds-clear-btn").off('click').click(handleClearDataSelection);
+				$genTemplatePage.find(".clear-section").off('click').click(handleClearSection);
+				
+				initializeLoadingText();
+			}
+			
+			function handleClearSection(e) {
+				$(e.target).closest('.section-container').find('.preview-data-selected').empty();
+				$(e.target).closest('.section-container').find('.input-preview-section-title').val('');
+				$(e.target).closest('.section-container').find('.input-preview-section-title').attr('title-query','');
+				$(e.target).closest('.section-container').attr('selected-metadata', '');
 			}
 			
 			function handleGenerateTemplate(e) {
@@ -157,9 +244,7 @@ require(
 			function handleCancelPreview(e) {
 				var clear = confirm("Are you sure to clear the template layout?");
 				if (clear) {
-					clearPreviewSections();
-					clearMainSection();
-					clearNavigatinTree();
+					clearPreviewLayout();
 				}
 			}
 			
@@ -299,7 +384,7 @@ require(
 				data['titleQuery'] = $genTemplatePage.find('.selected-content .input-ds-title').attr('data-query');
 				
 				if (format == 'paragraph') {
-					var selectedItems = data['selectedItems'] = [];
+					var selectedItems = data['dataAttributes'] = [];
 					if($genTemplatePage.find('.data-selection-paragraph-container').length > 0) {
 						var $oneParaContainer = $genTemplatePage.find('.data-selection-paragraph-container').first();
 						$.each($oneParaContainer.find('.data-selection-paragraph .header-label'), function(index, value) {
@@ -311,7 +396,7 @@ require(
 					}
 					
 				} else if (format == 'table') {
-					var selectedItems = data['selectedItems'] = [];
+					var selectedItems = data['dataAttributes'] = [];
 					if($genTemplatePage.find('.table-data-selection thead th').length > 0) {
 						$.each($genTemplatePage.find('.table-data-selection thead th.header-label'), function(index, value) {
 							var selectedItem = {};
@@ -334,7 +419,7 @@ require(
 					var $previewContainerData = $container.find(".preview-data-selected");
 					$previewContainerData.empty();
 					containerDisplayOnHoverAction(".paragraph-data-selection");
-					var xmlDataJson = getJSONobjByPath(dataSelectionJson.selectedItems[0].query);;
+					var xmlDataJson = getJSONobjByPath(dataSelectionJson.dataAttributes[0].query);;
 					// dataSelectionPageLimit
 					var limit = xmlDataJson.length;
 					if(limit > previewPageLimit){
@@ -346,7 +431,7 @@ require(
 						$previewContainerData.append($paragraphContainerTemplate);
 						$paragraphContainerTemplate = $paragraphContainerTemplate.eq(0);
 									
-						$.each(dataSelectionJson.selectedItems, function(index, value) {
+						$.each(dataSelectionJson.dataAttributes, function(index, value) {
 							json = {
 								query : value.dataQuery,
 								name : value.label,
@@ -362,13 +447,13 @@ require(
 					containerDisplayOnHoverAction(".table-data-selection");
 					$previewContainerData.html(_.template($("#preview-container-empty-template").html()));
 					
-					var xmlDataJson = getJSONobjByPath(dataSelectionJson.selectedItems[0].query);;
+					var xmlDataJson = getJSONobjByPath(dataSelectionJson.dataAttributes[0].query);;
 					var limit = xmlDataJson.length;
 					if(limit > previewPageLimit){
 						limit = previewPageLimit;
 					}
 					var json = null;
-					$.each(dataSelectionJson.selectedItems, function(index, value) {
+					$.each(dataSelectionJson.dataAttributes, function(index, value) {
 						
 						json = {
 							query : value.dataQuery,
@@ -377,16 +462,22 @@ require(
 						populateHeaderCell(json,'#preview-header-column-template',$previewContainerData.find('.preview-container-table'));
 					});
 					populateDataRowsPreview(dataSelectionJson , $previewContainerData.find('.preview-container-table'));
+				} else if(format == 'static-text'){
+					var $previewContainerData = $container.find(".preview-data-selected");
+					$previewContainerData.empty();
+					containerDisplayOnHoverAction(".preview-data-selected");
+					$previewContainerData.attr('contenteditable' , "true");
+					$previewContainerData.text(dataSelectionJson.staticText);
 				}
 				
-				$genTemplatePage.find(".selectFormat").val(format);
+				$container.find(".selectFormat").val(format);
 				$container.find('.selectFormat').attr('previous-format', format);
 			}
 			
 			function populateDataRowsPreview(dataSelectionJson , $containerTable) {
 				var selectedTreeItems = [];
 				var xpath = null;
-				$.each(dataSelectionJson.selectedItems, function(index, value) {
+				$.each(dataSelectionJson.dataAttributes, function(index, value) {
 					var tableHeader = value.query;
 					if (xpath == null) {
 						xpath = tableHeader;
@@ -759,6 +850,7 @@ require(
 				$genTemplatePage.find(".add-container").off('click').click(addContainer);
 				$genTemplatePage.find(".delete-container").off('click').click(deleteContainer);
 				$genTemplatePage.find(".data-selection-btn").off('click').click(handleDataSelection);
+				$genTemplatePage.find(".clear-section").off('click').click(handleClearSection);
 
 				containerDisplayOnHoverAction(".section-container");
 				$genTemplatePage.find(".selectFormat").off('change').change(handleChangingFormat);
@@ -819,6 +911,11 @@ require(
 
 			function handleSelectionTree(e) {
 				var urlInput = $genTemplatePage.find(".input-url").val();
+				if(urlInput == '') {
+					alert('URL is mandatory');
+					return;
+				}
+				isLayoutDirty = true;
 				$.ajax({
 					url : baseUrl + "/api/utils/xmltojsonschema",
 					data : {
@@ -827,6 +924,11 @@ require(
 					method : 'GET',
 					success : function(result) {
 						populateTree(result);
+					},
+					error: function(xhr, error) {
+						$loadingText.trigger("show", {
+							text : xhr.responseText
+						});
 					}
 				});
 			}
@@ -848,7 +950,7 @@ require(
 			}
 
 			function populateTree(jsonTreeData) {
-				clearNavigatinTree();
+				clearNavigationTree();
 
 				// ajax call to xmltojson
 				var urlInput = $genTemplatePage.find(".input-url").val();
@@ -861,6 +963,11 @@ require(
 					success : function(result) {
 						$(".xml-as-json").attr('data-xmlJson',
 								JSON.stringify(result));
+					},
+					error: function(xhr, error) {
+						$loadingText.trigger("show", {
+							text : xhr.responseText
+						});
 					}
 				});
 
@@ -961,7 +1068,7 @@ require(
 				$genTemplatePage.off("click.jstree", "i.jstree-icon.jstree-ocl").on("click.jstree", "i.jstree-icon.jstree-ocl", removeCheckboxFromParentNode);
 				
 				$loadingText.trigger("show", {
-					text : messages.navigatorTreeLoaded
+					text: messages.navigatorTreeLoaded
 				});
 			}
 			
@@ -980,11 +1087,14 @@ require(
 			
 			function handleSaveLayout(e){
 				var saveLayoutData = {};
-				saveLayoutData['documentTitle'] = $genTemplatePage.find(".document-title").val();
+				saveLayoutData['title'] = $genTemplatePage.find(".document-title").val();
 				saveLayoutData['xmlUrl'] = $genTemplatePage.find(".input-url").val();
 				
 				if($genTemplatePage.find("div.toc").length > 0) {
-					saveLayoutData['toc'] = $genTemplatePage.find("div.toc .input-toc-label").val();
+					saveLayoutData['tocLabel'] = $genTemplatePage.find("div.toc .input-toc-label").val();
+					saveLayoutData['hasToc'] = true;
+				}else{
+					saveLayoutData['hasToc'] = false;
 				}
 				
 				var sections = saveLayoutData['sections'] = [];
@@ -1002,39 +1112,17 @@ require(
 						sections.push(container);
 					}
 				});
-				alert(JSON.stringify(saveLayoutData));
 				var $saveLink = $genTemplatePage.find(".save-to-local")[0];
 				$saveLink.href = "http://localhost:8080/rpetui/api/savejson?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
 				$saveLink.click();
 			}
 			
-			function clearPreviewSections() {
-				$.each($genTemplatePage.find(".section-container"),function(index, value){
-					$(this).find('.selectFormat').val('');
-					$(this).find('.selectFormat').attr('previous-format', '');
-					$(this).attr('selected-metadata', '');
-					$(this).find('.input-preview-section-title').val('');
-					if($(this).find('.selectFormat').val() != '') {
-						var container = {};
-						if($(this).attr('selected-metadata')) {
-							container = $(this).attr('selected-metadata');
-							container = jQuery.parseJSON(container);
-						} else {
-							container['title'] = $(this).find('.input-preview-section-title').val();
-							container['staticText'] = $(this).find('preview-data-selected').text();
-						}
-						container['format'] = $(this).find('.selectFormat').val();
-						sections.push(container);
-					}
-				});
-			}
-
 			function clearMainSection() {
 				$genTemplatePage.find(".document-title").val('');
 				$genTemplatePage.find(".input-url").val('');
 			}
 			
-			function clearNavigatinTree() {
+			function clearNavigationTree() {
 				$genTemplatePage.find('.navigation-tree .xml-as-json').attr('data-xmlJson', '');
 				$genTemplatePage.find('.navigation-tree .data-selection-tree').remove();
 
@@ -1043,8 +1131,41 @@ require(
 			
 			function removeCheckboxFromParentNode(e) {
 				$.each($genTemplatePage.find('.navigation-tree .jstree li[aria-expanded]').not('.jstree-leaf'), function(ind, val) {
-					// $(this).not('.jstree-leaf').find('.jstree-icon.jstree-checkbox').addClass('hide');
 					$(this).children().first().next().find('.jstree-icon.jstree-checkbox').addClass('hide');
+				});
+			}
+			
+			function initializeLoadingText() {
+
+				// var $loadingText = $(".side-bar-content .loading-text");
+
+				$loadingText.find(".close-loading-text").on("click",
+						function(event) {
+							$loadingText.trigger("hide");
+						});
+
+				$loadingText.on("show", function(event, options) {
+					var text = "";
+					if (options.persist) {
+						$loadingText.find(".close-loading-text").addClass(
+								"hide");
+						text = "...";
+					} else
+						$loadingText.find(".close-loading-text").removeClass(
+								"hide");
+
+					if (options.text)
+						text = options.text + text;
+					else
+						text = messages.loading + text;
+
+					$loadingText.find(".text-content > span").text(text);
+
+					$loadingText.removeClass("hide");
+				});
+
+				$loadingText.on("hide", function(event) {
+					$loadingText.addClass("hide");
 				});
 			}
 
