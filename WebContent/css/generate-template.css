@@ -172,7 +172,7 @@ a:focus {
 
 .docUI #contentPage {
 	min-width: 1250px;
-	xwidth: 98%;
+	width: 100%;
 }
 
 #contentPage .footer-bar {

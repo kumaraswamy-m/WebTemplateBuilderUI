@@ -39,6 +39,11 @@
 	<div id="mainStackContainer" class="dijitStackContainer">
 		<div aria-label="contentPage" role="tabpanel" class="contentPage"
 			id="contentPage">
+			<div class="loading-text hide">
+				<span class="text-content"> <span></span>
+					<button type="button" class="btn btn-link close-loading-text hide">X</button>
+				</span>
+			</div>
 			<div class="titleContent col-xs-12">
 				<div class="row">
 					<div class="col-xs-2">
@@ -184,14 +189,14 @@
 </script>
 
 <script type="text/template" id="nav-tree-item-default-template">
-	<li class="tree-item selected">
-		<a href="#"><span class="navLabel default"><@= name @></span></a>
+	<li class="tree-item selected" data-json='<@= dataJson @>' >
+		<a href="#" class="template-layout"><span class="navLabel default"><@= name @></span></a>
 	</li>
 </script>
 
 <script type="text/template" id="nav-tree-item-template">
-	<li class="tree-item">
-		<a href="#"><span class="navLabel navSubLabel"><@= name @></span></a>
+	<li class="tree-item"  data-json='<@= dataJson @>' >
+		<a href="#" class="template-layout"><span class="navLabel navSubLabel"><@= name @></span></a>
 	</li>
 </script>
 
@@ -237,9 +242,19 @@
 	id="preview-design-format-container-template">
 <div class="row section-container">
 	<div class="row">
-		<div class="col-xs-10 title-query">
+		<div class="col-xs-10 title-query alignment-right">
 		<input type="text"placeholder="Please add title here"
 				class="form-control input-preview-section-title"/>
+		</div>
+		<div class="alignment-left">
+			<div id="display-on-hover" class="hide">
+				<button class="data-selection-btn btn btn-primary">
+					<fmt:message key="template.generator.hover.select_data" />
+				</button>
+				<a href="#" class="clear-section"><img alt="clear section" src="${contextPath}/graphics/onHover/edit.png" title="clear section"></a>
+				<a href="#" class="add-container"><img alt="Add Section" src="${contextPath}/graphics/onHover/Add-Container.png" title="Add Section"></a>
+				<a href="#" class="delete-container"><img alt="Delete Section" src="${contextPath}/graphics/onHover/delete.png" alt="Delete Section"></a>
+			</div>
 		</div>
 		<div class="col-xs-2  alignment-left">
 			<select name="type" class="upload-type form-control format-preview-section selectFormat" previous-format="table">
@@ -256,16 +271,6 @@
 					<fmt:message key="template.generator.format.static-text" />
 				</option>
 			</select>
-		</div>
-		<div class="alignment-left">
-			<div id="display-on-hover" class="hide">
-				<button class="data-selection-btn btn btn-primary">
-					<fmt:message key="template.generator.hover.select_data" />
-				</button>
-				<a href="#"><img alt="clear section" src="${contextPath}/graphics/onHover/edit.png" title="clear section"></a>
-				<a href="#" class="add-container"><img alt="Add Section" src="${contextPath}/graphics/onHover/Add-Container.png" title="Add Section"></a>
-				<a href="#" class="delete-container"><img alt="Delete Section" src="${contextPath}/graphics/onHover/delete.png" alt="Delete Section"></a>
-			</div>
 		</div>
 	</div>
 <div class="row">
