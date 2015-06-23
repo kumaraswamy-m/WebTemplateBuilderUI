@@ -24,9 +24,9 @@ public class Utils
 	private static final String CONTENT_DISPOSITION = "Content-Disposition"; //$NON-NLS-1$
 	private static final String ATTACHMENT_FILENAME = "attachment; filename="; //$NON-NLS-1$ 
 
-	public static String getTemplateServiceUrl(HttpServletRequest request)
+	public static String getTemplateServiceUrl(HttpServletRequest request, String systemProperty, String contextRoot)
 	{
-		String serviceURL = getSystemProperty("TEGAS_URL", null); //$NON-NLS-1$
+		String serviceURL = getSystemProperty(systemProperty, null);
 		if (CommonUtils.isNullOrEmpty(serviceURL))
 		{
 			serviceURL = request.getRequestURL().toString();
@@ -34,13 +34,13 @@ public class Utils
 
 			if (!CommonUtils.isNullOrEmpty(serviceURL))
 			{
-				if (serviceURL.endsWith("/"))
+				if (serviceURL.endsWith("/")) //$NON-NLS-1$
 				{
-					serviceURL = serviceURL + "rpet";
+					serviceURL = serviceURL + contextRoot;
 				}
 				else
 				{
-					serviceURL = serviceURL + "/rpet";
+					serviceURL = serviceURL + "/" + contextRoot; //$NON-NLS-1$
 				}
 
 				System.out.println("Template Service URL not set. Using " + serviceURL); //$NON-NLS-1$

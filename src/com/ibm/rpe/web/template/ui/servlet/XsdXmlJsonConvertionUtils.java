@@ -65,7 +65,7 @@ public class XsdXmlJsonConvertionUtils
 			throws Exception
 	{
 		Client client = new Client();
-		WebResource service = client.resource(UriBuilder.fromUri(Utils.getTemplateServiceUrl(request) + "/api/xmltoxsd?url=" + xmlUrl).build());
+		WebResource service = client.resource(UriBuilder.fromUri(getServiceUrl(request) + "/api/xmltoxsd?url=" + xmlUrl).build());
 
 		// create the job
 		ClientResponse clientResponse = service.accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
@@ -78,7 +78,7 @@ public class XsdXmlJsonConvertionUtils
 
 		return Response.ok().entity(xsdString).build();
 	}
-	
+
 	@GET
 	@Path("/xmltojsonschema")
 	@Produces(
@@ -87,7 +87,7 @@ public class XsdXmlJsonConvertionUtils
 			throws Exception
 	{
 		Client client = new Client();
-		WebResource service = client.resource(UriBuilder.fromUri(Utils.getTemplateServiceUrl(request) + "/api/xmltoxsd?url=" + xmlUrl).build());
+		WebResource service = client.resource(UriBuilder.fromUri(getServiceUrl(request) + "/api/xmltoxsd?url=" + xmlUrl).build());
 
 		// create the job
 		ClientResponse clientResponse = service.accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
@@ -101,7 +101,7 @@ public class XsdXmlJsonConvertionUtils
 		String jsonData = buildJsonSchema(xsdString);
 		return Response.ok().entity(jsonData).build();
 	}
-	
+
 	@GET
 	@Path("/xsdtojsonschema")
 	@Produces(
@@ -129,13 +129,14 @@ public class XsdXmlJsonConvertionUtils
 	@Path("/xmltojson")
 	@Produces(
 	{ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
-	public Response convertXmlToJson(@Context HttpServletRequest request, @QueryParam("url") String xmlUrl) throws Exception
+	public Response convertXmlToJson(@Context HttpServletRequest request, @QueryParam("url") String xmlUrl)
+			throws Exception
 	{
 
 		System.out.println(xmlUrl);
 
 		Client client = new Client();
-		WebResource service = client.resource(UriBuilder.fromUri(Utils.getTemplateServiceUrl(request) + "/api/xmltojson?url=" + xmlUrl).build());
+		WebResource service = client.resource(UriBuilder.fromUri(getServiceUrl(request) + "/api/xmltojson?url=" + xmlUrl).build());
 
 		// create the job
 		ClientResponse clientResponse = service.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
@@ -303,5 +304,10 @@ public class XsdXmlJsonConvertionUtils
 				}
 			}
 		}
+	}
+
+	private String getServiceUrl(HttpServletRequest request)
+	{
+		return Utils.getTemplateServiceUrl(request, "T_URL", "rpet");
 	}
 }
