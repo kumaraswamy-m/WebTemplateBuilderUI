@@ -29,6 +29,8 @@ require(
 			var $genTemplatePage = $("#generate-template-page");
 			var $loadingText = $(".docUI .loading-text");
 			
+			var defaultXmlUrl = $(document).data("default_xml_url");
+			
 			var dataSelectionPageLimit = 10;
 			var previewPageLimit = 5;
 
@@ -48,7 +50,7 @@ require(
 									"name" : "Requisite Pro",
 									"dataJson" : {
 										"title" : "hello",
-										"xmlUrl" : "http://localhost:8080/rpet/template/data/requisitepro.xml",
+										"xmlUrl" : "http://localhost:8080/tegas/data/requisitepro.xml",
 										"sections" : [
 												{
 													"title" : "Project/Requirements/PRRequirement/FullTag",
@@ -111,6 +113,8 @@ require(
 								} ]
 							} ];
 				}
+				
+				json[1].items[0].dataJson.xmlUrl = defaultXmlUrl;
 
 				populatePredefinedTemplates(json);
 				$genTemplatePage.find(".template-layout").off('click').click(handleOpenLayout);
@@ -1184,8 +1188,7 @@ require(
 			attachHandlers();
 			getPredefinedTemplates();
 
-			$genTemplatePage.find(".input-url").val(
-					'http://localhost:8080/tegas/data/requisitepro.xml ');
+			$genTemplatePage.find(".input-url").val(defaultXmlUrl);
 			// $genTemplatePage.find(".input-url").val('http://localhost:8080/tegas/data/rss.xml');
 			
 			$genTemplatePage.find(".document-title").val('Sample Requirements');

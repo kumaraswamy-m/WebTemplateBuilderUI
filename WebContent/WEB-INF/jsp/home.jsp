@@ -56,6 +56,7 @@
 
 	<script>
 		$(document).data("context_path", "${contextPath}");
+		$(document).data("default_xml_url", "${XML_URL}");
 	</script>
 
 	<script type="text/javascript" src="${contextPath}/js/home.js"></script>

@@ -65,7 +65,7 @@ public class XsdXmlJsonConvertionUtils
 			throws Exception
 	{
 		Client client = new Client();
-		WebResource service = client.resource(UriBuilder.fromUri(getServiceUrl(request) + "/api/xmltoxsd?url=" + xmlUrl).build());
+		WebResource service = client.resource(UriBuilder.fromUri(getServiceUrl(request) + "/api/utils/xmltoxsd?url=" + xmlUrl).build());
 
 		// create the job
 		ClientResponse clientResponse = service.accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
@@ -87,7 +87,7 @@ public class XsdXmlJsonConvertionUtils
 			throws Exception
 	{
 		Client client = new Client();
-		WebResource service = client.resource(UriBuilder.fromUri(getServiceUrl(request) + "/api/xmltoxsd?url=" + xmlUrl).build());
+		WebResource service = client.resource(UriBuilder.fromUri(getServiceUrl(request) + "/api/utils/xmltoxsd?url=" + xmlUrl).build());
 
 		// create the job
 		ClientResponse clientResponse = service.accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
@@ -136,7 +136,7 @@ public class XsdXmlJsonConvertionUtils
 		System.out.println(xmlUrl);
 
 		Client client = new Client();
-		WebResource service = client.resource(UriBuilder.fromUri(getServiceUrl(request) + "/api/xmltojson?url=" + xmlUrl).build());
+		WebResource service = client.resource(UriBuilder.fromUri(getServiceUrl(request) + "/api/utils/xmltojson?url=" + xmlUrl).build());
 
 		// create the job
 		ClientResponse clientResponse = service.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
@@ -308,6 +308,6 @@ public class XsdXmlJsonConvertionUtils
 
 	private String getServiceUrl(HttpServletRequest request)
 	{
-		return Utils.getTemplateServiceUrl(request, "T_URL", "rpet");
+		return Utils.getTemplateServiceUrl(request, "TEGAS_URL", "tegas");
 	}
 }

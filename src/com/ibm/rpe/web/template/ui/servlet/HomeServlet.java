@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ibm.rpe.web.template.ui.utils.Utils;
 
 public class HomeServlet extends HttpServlet
 {
@@ -23,17 +24,18 @@ public class HomeServlet extends HttpServlet
 	private static final long serialVersionUID = 1L;
 
 	private static final String JSP_ROOT = "/WEB-INF/jsp"; //$NON-NLS-1$
-	
+
 	private static final String GENERATE_PAGE_JSP = JSP_ROOT + "/generate-template.jsp"; //$NON-NLS-1$
 	private static final String JSP_HOME = JSP_ROOT + "/home.jsp"; //$NON-NLS-1$
 	private static final String HOME_PATH = "home"; //$NON-NLS-1$
-	
+
 	private static final String ACTION_GENERATE_DOCUMENTS = "action=generate"; //$NON-NLS-1$
 
 	@Override
 	public void init(ServletConfig config)
 	{
-//		config.getServletContext().setAttribute(SERVICE_URL_ATTRIBUTE, SERVICE_URL);
+		// config.getServletContext().setAttribute(SERVICE_URL_ATTRIBUTE,
+		// SERVICE_URL);
 	}
 
 	@Override
@@ -73,6 +75,14 @@ public class HomeServlet extends HttpServlet
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 			IOException
 	{
+		String defaultXmlUrl = Utils.getSystemProperty("XML_URL", null);
+		if (defaultXmlUrl == null)
+		{
+			defaultXmlUrl = Utils.getTemplateServiceUrl(request, "TEGAS_URL", "tegas") + "/data/requisitepro.xml";
+		}
+
+		request.getServletContext().setAttribute("XML_URL", defaultXmlUrl);
+
 		// If the requested URL is the context url
 		String reqUrl = request.getRequestURL().toString();
 		String contextUrl = reqUrl.substring(0, reqUrl.indexOf(request.getContextPath()) + request.getContextPath().length()) + "/"; //$NON-NLS-1$
