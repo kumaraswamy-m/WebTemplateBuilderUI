@@ -50,7 +50,7 @@ require(
 									"name" : "Requisite Pro",
 									"dataJson" : {
 										"title" : "hello",
-										"xmlUrl" : "http://localhost:8080/tegas/data/requisitepro.xml",
+										"xmlUrl" : "",
 										"sections" : [
 												{
 													"title" : "Project/Requirements/PRRequirement/FullTag",
@@ -244,7 +244,7 @@ require(
 			function handleGenerateTemplate(e) {
 				var saveLayoutData = buildSaveLayout();
 				var $saveLink = $genTemplatePage.find(".save-to-local")[0];
-				$saveLink.href = "http://localhost:8080/rpetui/api/template/generate?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
+				$saveLink.href = baseUrl + "/api/template/generate?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
 				$saveLink.click();
 			}
 			
@@ -1097,7 +1097,7 @@ require(
 			function handleSaveLayout(e){
 				var saveLayoutData = buildSaveLayout();
 				var $saveLink = $genTemplatePage.find(".save-to-local")[0];
-				$saveLink.href = "http://localhost:8080/rpetui/api/template/savelayout?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
+				$saveLink.href = baseUrl + "/api/template/savelayout?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
 				$saveLink.click();
 			}
 			
