@@ -19,6 +19,10 @@ Open issues
 - + should create container after the current one
 - title and data query should be from same parent
 - clear tree causes issue upon load layout json
+- disable select button is table or para and title is empty
+- open layout should populate toc
+- open layout display icon issue
+- 
 
 
 Fixed issues

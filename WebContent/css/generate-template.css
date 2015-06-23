@@ -113,7 +113,6 @@ a:focus {
 	font-size: 12pt;
 	height: 34px;
 	border: 1px solid #CCC;
-	border-radius: 4px;
 	text-transform: none;
 }
 
@@ -160,8 +159,8 @@ a:focus {
 }
 
 .tab-content #preview-design .section-container #display-on-hover {
-	max-height: 5px;
 	text-align: right;
+	background-color: #C8D2D3;
 }
 
 #contentPage .scroll-content {
@@ -184,7 +183,6 @@ a:focus {
 
 .btn-primary,.btn-default {
 	height: 34px;
-	border-radius: 4px;
 }
 
 #data-selection .wrapper {
@@ -245,6 +243,17 @@ a:focus {
 	text-align: center !important;
 	float: right;
 	margin-bottom: 10px;
+}
+#preview-design .select-global-menu .global-insert {
+	font-size : 12pt;
+	font-family : Arial Regular;
+	color : #00b399;
+}
+.section-container #display-on-hover .data-selection-btn{
+	background-color : #3b4b54;
+	color : #ffffff;
+	font-size : 12pt;
+	font-family: Arial Bold; 
 }
 
 #data-selection .table-data {

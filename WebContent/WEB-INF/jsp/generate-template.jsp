@@ -93,16 +93,16 @@
 					<div class="row">
 						<div class="col-xs-2 select-global-menu">
 							<select name="type" class="upload-type form-control">
-								<option value="">
+								<option value="" class="global-insert">
 									<fmt:message key="template.generator.global.insert.label" />
 								</option>
-								<option value="toc">
+								<option value="toc" class="global-insert">
 									<fmt:message key="template.generator.toc.label" />
 								</option>
-								<option value="header">
+								<option value="header" class="global-insert">
 									<fmt:message key="template.generator.header.label" />
 								</option>
-								<option value="footer">
+								<option value="footer" class="global-insert">
 									<fmt:message key="template.generator.footer.label" />
 								</option>
 							</select>
@@ -246,17 +246,7 @@
 		<input type="text"placeholder="Please add title here"
 				class="form-control input-preview-section-title"/>
 		</div>
-		<div class="alignment-left">
-			<div id="display-on-hover" class="hide">
-				<button class="data-selection-btn btn btn-primary">
-					<fmt:message key="template.generator.hover.select_data" />
-				</button>
-				<a href="#" class="clear-section"><img alt="clear section" src="${contextPath}/graphics/onHover/edit.png" title="clear section"></a>
-				<a href="#" class="add-container"><img alt="Add Section" src="${contextPath}/graphics/onHover/Add-Container.png" title="Add Section"></a>
-				<a href="#" class="delete-container"><img alt="Delete Section" src="${contextPath}/graphics/onHover/delete.png" alt="Delete Section"></a>
-			</div>
-		</div>
-		<div class="col-xs-2  alignment-left">
+		<div class="col-xs-2  alignment-left preview-select-format">
 			<select name="type" class="upload-type form-control format-preview-section selectFormat" previous-format="table">
 				<option value="">
 					<fmt:message key="template.generator.format.select" />
@@ -274,9 +264,19 @@
 		</div>
 	</div>
 <div class="row">
-	<div class="1 col-xs-12">
+	<div class="col-xs-12">
 		<div class="preview-data-selected form-control container-action"></div>
+		<div id="display-on-hover" class="hide">
+				<button class="data-selection-btn btn">
+					<fmt:message key="template.generator.hover.select_data" />
+				</button>
+				<a href="#" class="clear-section"><img alt="clear section" src="${contextPath}/graphics/onHover/edit.png" title="clear section"></a>
+				<a href="#" class="add-container"><img alt="Add Section" src="${contextPath}/graphics/onHover/Add-Container.png" title="Add Section"></a>
+				<a href="#" class="delete-container"><img alt="Delete Section" src="${contextPath}/graphics/onHover/delete.png" alt="Delete Section"></a>
+			</div>
 	</div>
+	
+	
 </div>
 </div>
 </script>

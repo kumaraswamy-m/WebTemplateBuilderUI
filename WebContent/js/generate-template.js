@@ -70,7 +70,7 @@ require(
 													"title" : "",
 													"titleQuery" : "",
 													"dataAttributes" : [{}],
-													"staticText" : "test passed",
+													"staticContent" : "test passed",
 													"format" : "static-text"
 												},
 												{
@@ -124,9 +124,10 @@ require(
 				clearMainSection();
 				$genTemplatePage.find(".section-container").remove();
 				// clearNavigationTree();
-				
+				$genTemplatePage.find(".input-toc-label").val('');
 				addContainer();
 				isLayoutDirty = false;
+				$loadingText.trigger("hide");
 			}
 				
 			function handleOpenLayout(e) {
@@ -150,13 +151,15 @@ require(
 					$genTemplatePage.find(".input-xml-go").click();
 					
 					$.each(layoutJsonObj.sections , function(index, value) {
-						addContainer();
+						addContainer(true);
 						$container = $genTemplatePage.find(".section-container").eq(($genTemplatePage.find(".section-container")).length - 1);
-						$container.attr('selected-metadata',JSON.stringify(layoutJsonObj));
+						$container.attr('selected-metadata',JSON.stringify(value));
 						populateDataPreviewSection(value.format, value ,$container);
 					});
 					
 					isLayoutDirty = false;
+				} else {
+					addContainer();
 				}
 			}	
 
@@ -322,13 +325,11 @@ require(
 			}
 
 			function hideContainerActionIcons(e) {
-				$(e.target).closest('.section-container').find('.title-query').removeClass('col-xs-7').addClass('col-xs-10');
-				$(e.target).closest('.section-container').find("#display-on-hover").addClass("hide").removeClass('col-xs-3');
+				$(e.target).closest('.section-container').find("#display-on-hover").addClass("hide");
 			}
 
 			function displayContainerActionIcons(e) {
-				$(e.target).closest('.section-container').find('.title-query').removeClass('col-xs-10').addClass('col-xs-7');
-				$(e.target).closest('.section-container').find("#display-on-hover").removeClass("hide").addClass('col-xs-3');
+				$(e.target).closest('.section-container').find("#display-on-hover").removeClass("hide");
 			}
 			
 			function handleInsertGlobal(e) {
@@ -370,11 +371,9 @@ require(
 				}
 				
 				function populateDataPreview() {
-					var format = null; // paragraph table
-					if ($genTemplatePage.find(".data-selection-paragraph-container").length > 0) {
+					var format = 'table'; // paragraph table
+					if ($genTemplatePage.find("#paragraph-format").hasClass('btn-primary')) {
 						format = 'paragraph';
-					} else if($genTemplatePage.find('.table-data-selection thead th').length > 0) {
-						format = 'table';
 					}
 					var dataSelectionJson = getSelectedMetadata(format);
 					populateDataPreviewSection(format, dataSelectionJson, $container);
@@ -424,31 +423,36 @@ require(
 				}
 				$container.find('.input-preview-section-title').val(dataSelectionJson['title']); 
 				$container.find('.input-preview-section-title').attr('title-query', dataSelectionJson['titleQuery']);
+				$container.find(".selectFormat").val(format);
+				$container.find('.selectFormat').attr('previous-format', format);
+				
 				if (format == 'paragraph') {
 					var $previewContainerData = $container.find(".preview-data-selected");
 					$previewContainerData.empty();
 					containerDisplayOnHoverAction(".paragraph-data-selection");
-					var xmlDataJson = getJSONobjByPath(dataSelectionJson.dataAttributes[0].query);;
-					// dataSelectionPageLimit
-					var limit = xmlDataJson.length;
-					if(limit > previewPageLimit){
-						limit = previewPageLimit;
-					}
-					var json = null;
-					for(var k = 0; k < limit; k++) {
-						$paragraphContainerTemplate = $('<div class="paragraph-preview-selected-data"></div><br />');
-						$previewContainerData.append($paragraphContainerTemplate);
-						$paragraphContainerTemplate = $paragraphContainerTemplate.eq(0);
-									
-						$.each(dataSelectionJson.dataAttributes, function(index, value) {
-							json = {
-								query : value.dataQuery,
-								name : value.label,
-								data : xmlDataJson[k][value.query.substring(value.query.lastIndexOf('/') + 1)]
-							};
-
-							populateParagraphPreview(json, $paragraphContainerTemplate);
-						});
+					if(dataSelectionJson && dataSelectionJson.dataAttributes && dataSelectionJson.dataAttributes.length > 0) {
+						var xmlDataJson = getJSONobjByPath(dataSelectionJson.dataAttributes[0].query);;
+						// dataSelectionPageLimit
+						var limit = xmlDataJson.length;
+						if(limit > previewPageLimit){
+							limit = previewPageLimit;
+						}
+						var json = null;
+						for(var k = 0; k < limit; k++) {
+							$paragraphContainerTemplate = $('<div class="paragraph-preview-selected-data"></div><br />');
+							$previewContainerData.append($paragraphContainerTemplate);
+							$paragraphContainerTemplate = $paragraphContainerTemplate.eq(0);
+										
+							$.each(dataSelectionJson.dataAttributes, function(index, value) {
+								json = {
+									query : value.dataQuery,
+									name : value.label,
+									data : xmlDataJson[k][value.query.substring(value.query.lastIndexOf('/') + 1)]
+								};
+	
+								populateParagraphPreview(json, $paragraphContainerTemplate);
+							});
+						}
 					}
 				} else if(format == 'table') {
 					var $previewContainerData = $container.find(".preview-data-selected");
@@ -456,31 +460,30 @@ require(
 					containerDisplayOnHoverAction(".table-data-selection");
 					$previewContainerData.html(_.template($("#preview-container-empty-template").html()));
 					
-					var xmlDataJson = getJSONobjByPath(dataSelectionJson.dataAttributes[0].query);;
-					var limit = xmlDataJson.length;
-					if(limit > previewPageLimit){
-						limit = previewPageLimit;
+					if(dataSelectionJson && dataSelectionJson.dataAttributes && dataSelectionJson.dataAttributes.length > 0) {
+						var xmlDataJson = getJSONobjByPath(dataSelectionJson.dataAttributes[0].query);;
+						var limit = xmlDataJson.length;
+						if(limit > previewPageLimit){
+							limit = previewPageLimit;
+						}
+						var json = null;
+						$.each(dataSelectionJson.dataAttributes, function(index, value) {
+							
+							json = {
+								query : value.dataQuery,
+								name : value.label,
+							};
+							populateHeaderCell(json,'#preview-header-column-template',$previewContainerData.find('.preview-container-table'));
+						});
+						populateDataRowsPreview(dataSelectionJson , $previewContainerData.find('.preview-container-table'));
 					}
-					var json = null;
-					$.each(dataSelectionJson.dataAttributes, function(index, value) {
-						
-						json = {
-							query : value.dataQuery,
-							name : value.label,
-						};
-						populateHeaderCell(json,'#preview-header-column-template',$previewContainerData.find('.preview-container-table'));
-					});
-					populateDataRowsPreview(dataSelectionJson , $previewContainerData.find('.preview-container-table'));
 				} else if(format == 'static-text'){
 					var $previewContainerData = $container.find(".preview-data-selected");
 					$previewContainerData.empty();
 					containerDisplayOnHoverAction(".preview-data-selected");
 					$previewContainerData.attr('contenteditable' , "true");
-					$previewContainerData.text(dataSelectionJson.staticText);
+					$previewContainerData.text(dataSelectionJson['staticContent']);
 				}
-				
-				$container.find(".selectFormat").val(format);
-				$container.find('.selectFormat').attr('previous-format', format);
 			}
 			
 			function populateDataRowsPreview(dataSelectionJson , $containerTable) {
@@ -1122,7 +1125,7 @@ require(
 							container = jQuery.parseJSON(container);
 						} else {
 							container['title'] = $(this).find('.input-preview-section-title').val();
-							container['staticText'] = $(this).find('preview-data-selected').text();
+							container['staticContent'] = $(this).find('preview-data-selected').text();
 						}
 						container['format'] = $(this).find('.selectFormat').val();
 						sections.push(container);
