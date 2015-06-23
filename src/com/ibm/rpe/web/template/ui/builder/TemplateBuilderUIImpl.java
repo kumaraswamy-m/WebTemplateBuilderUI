@@ -121,8 +121,6 @@ public class TemplateBuilderUIImpl
 		fos.flush();
 		fos.close();
 
-		System.out.println("Template path: \n" + templatePath);
-
 		return templatePath;
 	}
 
@@ -204,25 +202,24 @@ public class TemplateBuilderUIImpl
 		return templateJson;
 	}
 
-	private String buildSection(String topContainerId, TemplateUISection section, String templateJson) throws Exception
+	private String buildSection(String parentId, TemplateUISection section, String templateJson) throws Exception
 	{
 		if (FORMAT_TABLE.equals(section.getFormat()))
 		{
-			return buildTableSection(topContainerId, section, templateJson);
+			return buildTableSection(parentId, section, templateJson);
 		}
 		else if (FORMAT_PARAGPRAH.equals(section.getFormat()))
 		{
-			return buildParagraphSection(topContainerId, section, templateJson);
+			return buildParagraphSection(parentId, section, templateJson);
 		}
 		else if (FORMAT_STATIC_CONTENT.equals(section.getFormat()))
 		{
-			return buildStaticContentSection(topContainerId, section, templateJson);
+			return buildStaticContentSection(parentId, section, templateJson);
 		}
 		return templateJson;
 	}
 
-	private String buildTableSection(String topContainerId, TemplateUISection section, String templateJson)
-			throws Exception
+	private String buildTableSection(String parentId, TemplateUISection section, String templateJson) throws Exception
 	{
 		boolean isQueryAdded = false;
 		String tableContainerId = null;
@@ -237,7 +234,7 @@ public class TemplateBuilderUIImpl
 			containerElement.setSchema(schemaName);
 		}
 
-		templateJson = addElement(containerElement, TemplateConstants.OPERATION_ADD, topContainerId, TemplateConstants.LOCATION_CHILD, templateJson);
+		templateJson = addElement(containerElement, TemplateConstants.OPERATION_ADD, parentId, TemplateConstants.LOCATION_CHILD, templateJson);
 		Template template = (Template) JSONUtils.readValue(templateJson, Template.class);
 		tableContainerId = template.getLastActedElement().getId();
 
@@ -334,7 +331,7 @@ public class TemplateBuilderUIImpl
 		return templateJson;
 	}
 
-	private String buildParagraphSection(String topContainerId, TemplateUISection section, String templateJson)
+	private String buildParagraphSection(String parentId, TemplateUISection section, String templateJson)
 			throws Exception
 	{
 		boolean isQueryAdded = false;
@@ -350,7 +347,7 @@ public class TemplateBuilderUIImpl
 			containerElement.setSchema(schemaName);
 		}
 
-		templateJson = addElement(containerElement, TemplateConstants.OPERATION_ADD, topContainerId, TemplateConstants.LOCATION_CHILD, templateJson);
+		templateJson = addElement(containerElement, TemplateConstants.OPERATION_ADD, parentId, TemplateConstants.LOCATION_CHILD, templateJson);
 		Template template = (Template) JSONUtils.readValue(templateJson, Template.class);
 		paraContainerId = template.getLastActedElement().getId();
 
@@ -386,7 +383,7 @@ public class TemplateBuilderUIImpl
 			String paraAttrContainerId = paraContainerId;
 			if (!isQueryAdded)
 			{
-				TemplateElement paraAttrContainerElement = buildElement(null, TemplateConstants.ELEMENT_PARAGPRAPH, null, null, getExceptLastSegment(section.getDataAttributesList().get(0).get(ATTRIBUTE_QUERY), QUERY_DELIMITER), null, schemaName, null, true);
+				TemplateElement paraAttrContainerElement = buildElement(null, TemplateConstants.ELEMENT_CONTAINER, null, null, getExceptLastSegment(section.getDataAttributesList().get(0).get(ATTRIBUTE_QUERY), QUERY_DELIMITER), null, schemaName, null, true);
 				templateJson = addElement(paraAttrContainerElement, TemplateConstants.OPERATION_ADD, paraContainerId, TemplateConstants.LOCATION_CHILD, templateJson);
 				template = (Template) JSONUtils.readValue(templateJson, Template.class);
 				paraAttrContainerId = template.getLastActedElement().getId();
@@ -404,7 +401,7 @@ public class TemplateBuilderUIImpl
 
 				String paraId = template.getLastActedElement().getId();
 
-				TemplateElement textElement = buildElement(null, TemplateConstants.ELEMENT_TEXT, null, null, null, dataAttributes.get(ATTRIBUTE_LABEL) + " ", null, properties, true);
+				TemplateElement textElement = buildElement(null, TemplateConstants.ELEMENT_TEXT, null, null, null, dataAttributes.get(ATTRIBUTE_LABEL) + " ", null, properties, true); //$NON-NLS-1$
 				templateJson = addElement(textElement, TemplateConstants.OPERATION_ADD, paraId, TemplateConstants.LOCATION_CHILD, templateJson);
 
 				textElement = buildElement(null, TemplateConstants.ELEMENT_TEXT, null, contextId, null, dataAttributes.get(ATTRIBUTE_QUERY), null, null, true);
@@ -418,8 +415,40 @@ public class TemplateBuilderUIImpl
 		return templateJson;
 	}
 
-	private String buildStaticContentSection(String topContainerId, TemplateUISection section, String templateJson)
+	private String buildStaticContentSection(String parentId, TemplateUISection section, String templateJson)
+			throws Exception
 	{
+		String staticContainerId = null;
+
+		TemplateElement containerElement = buildElement(null, TemplateConstants.ELEMENT_CONTAINER, null, null, null, null, null, null, true);
+
+		templateJson = addElement(containerElement, TemplateConstants.OPERATION_ADD, parentId, TemplateConstants.LOCATION_CHILD, templateJson);
+		Template template = (Template) JSONUtils.readValue(templateJson, Template.class);
+		staticContainerId = template.getLastActedElement().getId();
+
+		// add title
+		Map<String, String> properties = new HashMap<String, String>();
+		if (!CommonUtils.isNullOrEmpty(section.getTitle()))
+		{
+			properties.put(TemplateConstants.STYLE_NAME, SECTION_HEADER_STYLE);
+			TemplateElement paragraphElement = buildElement(null, TemplateConstants.ELEMENT_PARAGPRAPH, null, null, null, null, null, properties, true);
+			templateJson = addElement(paragraphElement, TemplateConstants.OPERATION_ADD, staticContainerId, TemplateConstants.LOCATION_CHILD, templateJson);
+			template = (Template) JSONUtils.readValue(templateJson, Template.class);
+
+			TemplateElement textElement = buildElement(null, TemplateConstants.ELEMENT_TEXT, null, null, null, section.getTitle(), null, null, true);
+			templateJson = addElement(textElement, TemplateConstants.OPERATION_ADD, template.getLastActedElement().getId(), TemplateConstants.LOCATION_CHILD, templateJson);
+		}
+
+		// add static content
+		if (!CommonUtils.isNullOrEmpty(section.getStaticContent()))
+		{
+			TemplateElement paragraphElement = buildElement(null, TemplateConstants.ELEMENT_PARAGPRAPH, null, null, null, null, null, null, true);
+			templateJson = addElement(paragraphElement, TemplateConstants.OPERATION_ADD, staticContainerId, TemplateConstants.LOCATION_CHILD, templateJson);
+			template = (Template) JSONUtils.readValue(templateJson, Template.class);
+
+			TemplateElement textElement = buildElement(null, TemplateConstants.ELEMENT_TEXT, null, null, null, section.getStaticContent(), null, null, true);
+			templateJson = addElement(textElement, TemplateConstants.OPERATION_ADD, template.getLastActedElement().getId(), TemplateConstants.LOCATION_CHILD, templateJson);
+		}
 
 		return templateJson;
 	}
