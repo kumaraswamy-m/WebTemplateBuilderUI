@@ -238,7 +238,10 @@ require(
 			}
 			
 			function handleGenerateTemplate(e) {
-				alert('yet to be implemented - generate');
+				var saveLayoutData = buildSaveLayout();
+				var $saveLink = $genTemplatePage.find(".save-to-local")[0];
+				$saveLink.href = "http://localhost:8080/rpetui/api/template/generate?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
+				$saveLink.click();
 			}
 			
 			function handleCancelPreview(e) {
@@ -348,6 +351,8 @@ require(
 
 			function handleDataSelection(e) {
 				var $container = $(e.target).closest('div.section-container');
+				var format = $container.find('.selectFormat').val();
+				$genTemplatePage.find('#' + format + '-format').click();
 				var url = $genTemplatePage.find(".input-url").val();
 				if (url == '' || ($('.navigation-tree .data-selection-tree').is(':empty'))) {
 					$genTemplatePage.find('.input-url').focus();
@@ -1086,6 +1091,13 @@ require(
 			}
 			
 			function handleSaveLayout(e){
+				var saveLayoutData = buildSaveLayout();
+				var $saveLink = $genTemplatePage.find(".save-to-local")[0];
+				$saveLink.href = "http://localhost:8080/rpetui/api/template/savelayout?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
+				$saveLink.click();
+			}
+			
+			function buildSaveLayout() {
 				var saveLayoutData = {};
 				saveLayoutData['title'] = $genTemplatePage.find(".document-title").val();
 				saveLayoutData['xmlUrl'] = $genTemplatePage.find(".input-url").val();
@@ -1112,9 +1124,8 @@ require(
 						sections.push(container);
 					}
 				});
-				var $saveLink = $genTemplatePage.find(".save-to-local")[0];
-				$saveLink.href = "http://localhost:8080/rpetui/api/savejson?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
-				$saveLink.click();
+				
+				return saveLayoutData;
 			}
 			
 			function clearMainSection() {
@@ -1174,8 +1185,8 @@ require(
 			getPredefinedTemplates();
 
 			$genTemplatePage.find(".input-url").val(
-					'http://localhost:8080/rpet/template/data/requisitepro.xml');
-			// $genTemplatePage.find(".input-url").val('http://localhost:8080/rpet/template/data/rss.xml');
+					'http://localhost:8080/tegas/data/requisitepro.xml ');
+			// $genTemplatePage.find(".input-url").val('http://localhost:8080/tegas/data/rss.xml');
 			
 			$genTemplatePage.find(".document-title").val('Sample Requirements');
 			$genTemplatePage.find(".document-title").focus();
