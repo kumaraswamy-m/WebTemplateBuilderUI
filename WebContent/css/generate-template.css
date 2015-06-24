@@ -322,9 +322,9 @@ a:focus {
 	margin: 2px;
 }
 
-.preview-data-selected .preview-container-table {
+#preview-design .preview-data-selected .preview-container-table , #data-selection .selected-content .table-data-selection {
 	border-collapse: separate !important;
-	border-spacing: 2px;
+	border-spacing: 4px;
 }
 #docUIContainer {
 	width: 100%;

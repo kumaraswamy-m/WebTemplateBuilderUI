@@ -159,7 +159,6 @@ require(
 				
 				$loadingText.trigger("show", {
 					text: 'opening layout...',
-					persist: true
 				});
 				
 				clearAllSections();
@@ -177,7 +176,7 @@ require(
 						$genTemplatePage.find('#preview-main-content').prepend(_.template($("#table-of-contents-template").html()));
 						$genTemplatePage.find(".input-toc-label").val(layoutJsonObj.tocLabel);
 					}
-
+					
 					$genTemplatePage.find(".input-xml-go").click();
 					
 					$.each(layoutJsonObj.sections , function(index, value) {
@@ -195,6 +194,7 @@ require(
 				$loadingText.trigger("show", {
 					text: 'opened layout'
 				});
+				$genTemplatePage.find(".delete-toc").off('click').click(deleteTableOfContents);
 			}	
 
 			function populatePredefinedTemplates(json) {
@@ -284,8 +284,7 @@ require(
 				var $saveLink = $genTemplatePage.find(".save-to-local")[0];
 				$saveLink.href = baseUrl + "/api/template/generate?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
 				$loadingText.trigger("show", {
-					text: 'Generating template. This might take a while. Pleas wait...',
-					persist: true
+					text: 'Generating template. This might take a while. Please wait...',
 				});
 				$saveLink.click();
 			}
@@ -410,18 +409,23 @@ require(
 				}
 				
 				function populateDataPreview() {
-					var format = 'table'; // paragraph table
-					if ($genTemplatePage.find("#paragraph-format").hasClass('btn-primary')) {
-						format = 'paragraph';
+					if($genTemplatePage.find(".input-ds-title").val()!='' || ($genTemplatePage.find(".selected-content .header-label").length > 0)){
+						var format = 'table'; // paragraph table
+						if ($genTemplatePage.find("#paragraph-format").hasClass('btn-primary')) {
+							format = 'paragraph';
+						}
+						
+						var dataSelectionJson = getSelectedMetadata(format);
+						populateDataPreviewSection(format, dataSelectionJson, $container);
+						
+						$container.attr('selected-metadata', JSON.stringify(dataSelectionJson));
+						
+						enableDisableTab('#data-selection', '');
+						enableDisableTab('#preview-design', 'tab');
+						toggleTab('#preview-design', 'show');
+					} else {
+						alert("No data to select");
 					}
-					var dataSelectionJson = getSelectedMetadata(format);
-					populateDataPreviewSection(format, dataSelectionJson, $container);
-					
-					$container.attr('selected-metadata', JSON.stringify(dataSelectionJson));
-					
-					enableDisableTab('#data-selection', '');
-					enableDisableTab('#preview-design', 'tab');
-					toggleTab('#preview-design', 'show');
 				}
 			}
 			
@@ -674,23 +678,41 @@ require(
 						var newContext = json.query;
 						var existingContext = null;
 
-						$.each($genTemplatePage.find(".table-data-selection thead th"), function(index, value) {
-							existingContext = $(this).attr('data-query');
-						});
-
+						if($genTemplatePage.find(".table-data-selection thead th").length > 0) {
+							existingContext = $genTemplatePage.find(".table-data-selection thead th").first().attr('data-query');
+						}
+						
+						if (newContext.indexOf('/') != -1) {
+							newContext = newContext.substring(0, newContext.lastIndexOf('/'));
+						}
+						
+						// check for same parent while selecting data
 						if (existingContext != null) {
 							if (existingContext.indexOf('/') != -1) {
 								existingContext = existingContext.substring(0, existingContext.lastIndexOf('/'));
 							}
-
-							if (newContext.indexOf('/') != -1) {
-								newContext = newContext.substring(0, newContext.lastIndexOf('/'));
-							}
-
+							
 							if (existingContext != newContext) {
 								$node.click();
 								alert(messages.treeItem_differentContext);
 								return;
+							}
+						}
+						
+						// check for same parent between title and table data
+						if($genTemplatePage.find(".input-ds-title").val() != ''){
+							var titleContext = $genTemplatePage.find(".input-ds-title").attr('data-query');
+							if(titleContext) {
+								if (titleContext.indexOf('/') != -1) {
+									titleContext = titleContext.substring(0, titleContext.lastIndexOf('/'));
+								}
+								if(newContext != titleContext){
+									$genTemplatePage.find(".input-ds-title").val('');
+									$genTemplatePage.find(".input-ds-title").attr('data-query','');
+									$node.click();
+									alert(messages.treeItem_differentContext);
+									return;
+								}
 							}
 						}
 
@@ -1106,14 +1128,23 @@ require(
 									var t = $(data.event.target);
 									if (!t.closest('.jstree').length) {
 										if (t.closest('.drop').length) {
-											var path = getSelectElementXPath($(
-													data.element).parent());
-
-											path += '/'
-													+ $(data.element)[0].text;
+											var path = getSelectElementXPath($(data.element).parent());
+											var context = null;
+											if($genTemplatePage.find('.table-data-selection thead th').length > 0) {
+												context = $genTemplatePage.find('.table-data-selection thead th').first().attr('data-query');
+												if (context.indexOf('/') != -1) {
+													context = context.substring(0, context.lastIndexOf('/'));
+												}
+												
+												if(path != context) {
+													alert(messages.treeItem_differentContext);
+													return;
+												}
+											}
+											
+											path += '/' + $(data.element)[0].text;
 											t.closest('.drop').val(path);
-											t.closest('.drop').attr(
-													'data-query', path);
+											t.closest('.drop').attr('data-query', path);
 										}
 									}
 								});
