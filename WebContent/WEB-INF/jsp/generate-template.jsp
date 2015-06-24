@@ -313,26 +313,17 @@
 <script type="text/template" id="navigator-tree-div-template">
 	<div class="data-selection-tree"></div>
 </script>
-<script type="text/template" id="data-selection-paragraph-div-template">
-				<div class="row data-selection-paragraph">
-					<div class="col-xs-2 header-label" data-query="<@= query@>">
-						<span class="alignment title"><@= name @></span>
-					</div>
-					<div class="col-xs-8">
-						<span class="data"><@= data @></span>
-					</div>
-				</div>
-</script>
+
 <script type="text/template" id="data-selection-paragraph-edit-div-template">
-<div class="row data-selection-paragraph">
-					<div class="col-xs-2 header-label" data-query="<@= query@>">
-						<a class="no-edit-title" href="#"><img alt="edit" src="${contextPath}/graphics/edit.png" title="edit">
-						</a><span class="alignment title"><@= name @></span>
-					</div>
-					<div class="col-xs-8">
-						<span class="data"><@= data @></span>
-					</div>
-				</div>
+	<div class="row data-selection-paragraph">
+		<div class="col-xs-2 header-label" data-query="<@= query@>">
+			<a class="no-edit-title" href="#"><img alt="edit" src="${contextPath}/graphics/edit.png" title="edit">
+			</a><span class="alignment title"><@= name @></span>
+		</div>
+		<div class="col-xs-8">
+			<span class="data"><@= data @></span>
+		</div>
+	</div>
 </script>
 <script type="text/template" id="preview-paragraph-row-template">
 	<div class="row preview-paragraph">

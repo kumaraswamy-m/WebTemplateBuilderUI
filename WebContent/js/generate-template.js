@@ -183,7 +183,7 @@ require(
 						addContainer(true);
 						$container = $genTemplatePage.find(".section-container").eq(($genTemplatePage.find(".section-container")).length - 1);
 						$container.attr('selected-metadata',JSON.stringify(value));
-						populateDataPreviewSection(value.format, value ,$container);
+						populatePreviewSection(value.format, value, $container);
 					});
 					
 					isLayoutDirty = false;
@@ -315,10 +315,10 @@ require(
 			}
 			
 			function handleClearDataSelection(e) {
-				clearDataSelectionPage();
+				clearDataSelectionPage(true);
 			}
 			
-			function handleChangingFormat(e) {
+			function handleSectionFormatChange(e) {
 				var oldFormat = $(e.target).closest('div.section-container').find('.selectFormat').attr('previous-format');
 				var newFormat = $(e.target).val();
 				
@@ -347,7 +347,7 @@ require(
 				} else {
 					var dataSelectionJson = $container.attr('selected-metadata');
 					if(dataSelectionJson) {
-						populateDataPreviewSection(newFormat, jQuery.parseJSON(dataSelectionJson), $container);
+						populatePreviewSection(newFormat, jQuery.parseJSON(dataSelectionJson), $container);
 					}
 				}
 				
@@ -401,7 +401,7 @@ require(
 					$genTemplatePage.find('.input-url').focus();
 				} else {
 					$genTemplatePage.find(".btn-select-data").off('click').click(populateDataPreview);
-					clearDataSelectionPage();
+					clearDataSelectionPage(true);
 					removeCheckboxFromParentNode();
 					enableDisableTab('#data-selection', 'tab');
 					enableDisableTab('#preview-design', '');
@@ -416,7 +416,7 @@ require(
 						}
 						
 						var dataSelectionJson = getSelectedMetadata(format);
-						populateDataPreviewSection(format, dataSelectionJson, $container);
+						populatePreviewSection(format, dataSelectionJson, $container);
 						
 						$container.attr('selected-metadata', JSON.stringify(dataSelectionJson));
 						
@@ -434,8 +434,9 @@ require(
 				data['title'] = $genTemplatePage.find('.selected-content .input-ds-title').val();
 				data['titleQuery'] = $genTemplatePage.find('.selected-content .input-ds-title').attr('data-query');
 				
+				var selectedItems = data['dataAttributes'] = [];
+				
 				if (format == 'paragraph') {
-					var selectedItems = data['dataAttributes'] = [];
 					if($genTemplatePage.find('.data-selection-paragraph-container').length > 0) {
 						var $oneParaContainer = $genTemplatePage.find('.data-selection-paragraph-container').first();
 						$.each($oneParaContainer.find('.data-selection-paragraph .header-label'), function(index, value) {
@@ -447,7 +448,6 @@ require(
 					}
 					
 				} else if (format == 'table') {
-					var selectedItems = data['dataAttributes'] = [];
 					if($genTemplatePage.find('.table-data-selection thead th').length > 0) {
 						$.each($genTemplatePage.find('.table-data-selection thead th.header-label'), function(index, value) {
 							var selectedItem = {};
@@ -460,7 +460,7 @@ require(
 				return data;
 			}
 			
-			function populateDataPreviewSection(format, dataSelectionJson, $container) {
+			function populatePreviewSection(format, dataSelectionJson, $container) {
 				if(!dataSelectionJson) {
 					return;
 				}
@@ -474,28 +474,7 @@ require(
 					$previewContainerData.empty();
 					containerDisplayOnHoverAction(".paragraph-data-selection");
 					if(dataSelectionJson && dataSelectionJson.dataAttributes && dataSelectionJson.dataAttributes.length > 0) {
-						var xmlDataJson = getJSONobjByPath(dataSelectionJson.dataAttributes[0].query);;
-						// dataSelectionPageLimit
-						var limit = xmlDataJson.length;
-						if(limit > previewPageLimit){
-							limit = previewPageLimit;
-						}
-						var json = null;
-						for(var k = 0; k < limit; k++) {
-							$paragraphContainerTemplate = $('<div class="paragraph-preview-selected-data"></div><br />');
-							$previewContainerData.append($paragraphContainerTemplate);
-							$paragraphContainerTemplate = $paragraphContainerTemplate.eq(0);
-										
-							$.each(dataSelectionJson.dataAttributes, function(index, value) {
-								json = {
-									query : value.dataQuery,
-									name : value.label,
-									data : xmlDataJson[k][value.query.substring(value.query.lastIndexOf('/') + 1)]
-								};
-	
-								populateParagraphPreview(json, $paragraphContainerTemplate);
-							});
-						}
+						populateParagraphSection(dataSelectionJson, 'paragraph-preview-selected-data', $previewContainerData, 'preview-paragraph-row-template');
 					}
 				} else if(format == 'table') {
 					var $previewContainerData = $container.find(".preview-data-selected");
@@ -504,21 +483,8 @@ require(
 					$previewContainerData.html(_.template($("#preview-container-empty-template").html()));
 					
 					if(dataSelectionJson && dataSelectionJson.dataAttributes && dataSelectionJson.dataAttributes.length > 0) {
-						var xmlDataJson = getJSONobjByPath(dataSelectionJson.dataAttributes[0].query);;
-						var limit = xmlDataJson.length;
-						if(limit > previewPageLimit){
-							limit = previewPageLimit;
-						}
-						var json = null;
-						$.each(dataSelectionJson.dataAttributes, function(index, value) {
-							
-							json = {
-								query : value.dataQuery,
-								name : value.label,
-							};
-							populateHeaderCell(json,'#preview-header-column-template',$previewContainerData.find('.preview-container-table'));
-						});
-						populateDataRowsPreview(dataSelectionJson , $previewContainerData.find('.preview-container-table'));
+						populateTableHeaderRow(dataSelectionJson.dataAttributes, '#preview-header-column-template', $previewContainerData.find('.preview-container-table'));
+						populateTableDataRows(dataSelectionJson , $previewContainerData.find('.preview-container-table'));
 					}
 				} else if(format == 'static-text'){
 					var $previewContainerData = $container.find(".preview-data-selected");
@@ -529,7 +495,7 @@ require(
 				}
 			}
 			
-			function populateDataRowsPreview(dataSelectionJson , $containerTable) {
+			function populateTableDataRows(dataSelectionJson , $containerTable) {
 				var selectedTreeItems = [];
 				var xpath = null;
 				$.each(dataSelectionJson.dataAttributes, function(index, value) {
@@ -578,25 +544,27 @@ require(
 				return jsonObj;
 			}
 
-			function populateParagraphPreview(data, $containerTable) {
-				var rowTemplate = _.template($('#preview-paragraph-row-template').html());
+			function populateParagraphPreview(data, $containerTable, templateName) {
+				var rowTemplate = _.template($('#' + templateName).html());
 				$containerTable.append(rowTemplate(data));
 			}
 			
-			function clearDataSelectionPage() {
+			function clearDataSelectionPage(clearTree) {
 				$(".table-data-selection thead").empty();
 				$(".table-data-selection tbody").empty();
-				$(".input-ds-title").val('');
-				$(".input-ds-title").attr('data-query','');
 				$(".paragraph-data-selection").empty();
 				
-				$.each($genTemplatePage.find(".navigation-tree .data-selection-tree .jstree-clicked"),function(index, value) {
-					$(this).click();
-				});
-				
-				$.each($genTemplatePage.find(".navigation-tree .data-selection-tree .jstree-node.jstree-open"),function(index, value) {
-					$(this).find('.jstree-icon.jstree-ocl')[0].click();
-				});
+				if(clearTree) {
+					$(".input-ds-title").val('');
+					$(".input-ds-title").attr('data-query','');
+					$.each($genTemplatePage.find(".navigation-tree .data-selection-tree .jstree-clicked"),function(index, value) {
+						$(this).click();
+					});
+					
+					$.each($genTemplatePage.find(".navigation-tree .data-selection-tree .jstree-node.jstree-open"),function(index, value) {
+						$(this).find('.jstree-icon.jstree-ocl')[0].click();
+					});
+				}
 			}
 
 			function updateHeaderLabel(e) {
@@ -666,6 +634,12 @@ require(
 			function handleTreeNodeCheck(e) {
 				var $node = $(e.target);
 				var selectedElement = $node;
+				
+				var format = 'table'; // paragraph table
+				if ($genTemplatePage.find("#paragraph-format").hasClass('btn-primary')) {
+					format = 'paragraph';
+				}
+				
 				if($node.prop('tagName') != 'A') {
 					selectedElement = $node.parent();
 				}
@@ -677,11 +651,13 @@ require(
 						};
 						var newContext = json.query;
 						var existingContext = null;
-
-						if($genTemplatePage.find(".table-data-selection thead th").length > 0) {
-							existingContext = $genTemplatePage.find(".table-data-selection thead th").first().attr('data-query');
-						}
 						
+						var dataSelectionJson = getSelectedMetadata(format);
+						
+						if(dataSelectionJson && dataSelectionJson.dataAttributes && dataSelectionJson.dataAttributes.length > 0) {
+							existingContext = dataSelectionJson.dataAttributes[0].query;
+						}
+
 						if (newContext.indexOf('/') != -1) {
 							newContext = newContext.substring(0, newContext.lastIndexOf('/'));
 						}
@@ -715,11 +691,34 @@ require(
 								}
 							}
 						}
-
-						populateHeaderCell(json, '#data-selection-header-column-template', $genTemplatePage.find('.table-data-selection'));
-						$genTemplatePage.find(".no-edit-title").off('click') .click(handleEditTitle);
-
-						populateDataRows($genTemplatePage.find('.table-data-selection'));
+						
+						var newDataAttribute = {
+							label: json.name,
+							query: json.query
+						};
+						dataSelectionJson.dataAttributes.push(newDataAttribute);
+						populateDataSelectionSection(format, dataSelectionJson);
+						
+						/*if(format == 'table') {
+							populateTableHeaderRow(dataSelectionJson.dataAttributes, '#data-selection-header-column-template', $genTemplatePage.find('.table-data-selection'));
+							populateTableDataRows(dataSelectionJson , $genTemplatePage.find('.table-data-selection'));
+						} else if(format = 'paragraph') {
+							var $paraSectionContiner = $genTemplatePage.find(".paragraph-data-selection");
+							$paraSectionContiner.empty();
+							
+							populateParagraphSection(dataSelectionJson, 'data-selection-paragraph-container', $paraSectionContiner, 'data-selection-paragraph-edit-div-template');
+							
+							// remove edit icon from all expect for first
+							var count = 0;
+							$.each($paraSectionContiner.find('.data-selection-paragraph-container'), function(ind, val) {
+								if(count > 0) {
+									$(this).find('.no-edit-title').remove();
+								}
+								count += 1;
+							});
+						}
+						
+						$genTemplatePage.find(".no-edit-title").off('click').click(handleEditTitle);*/
 					} else {
 						$node.click();
 						alert(messages.warning_parentNodeSelected);
@@ -728,23 +727,88 @@ require(
 					if (selectedElement.closest('li').hasClass('jstree-leaf')) {
 						var xPath = getSelectElementXPath(selectedElement);
 
-						// remove all table headrs
-						var headerIndex = null;
-						$.each($genTemplatePage.find(".table-data-selection thead th"),
-							function(index, value) {
-								if (xPath == $(this).attr('data-query')) {
-									$(this).remove();
-									headerIndex = index;
-								}
+						if(format == 'table') {
+							// remove all table headers
+							var headerIndex = null;
+							$.each($genTemplatePage.find(".table-data-selection thead th"),
+								function(index, value) {
+									if (xPath == $(this).attr('data-query')) {
+										$(this).remove();
+										headerIndex = index;
+									}
+								});
+	
+							// remove all table body rows
+							$.each($genTemplatePage.find(".table-data-selection tbody tr"), function(index, value) {
+									$.each($(this).find('td'), function(ind, val) {
+										if (ind == headerIndex) {
+											$(this).remove();
+										}
+									});
 							});
-
-						// remove all table body rows
-						$.each($genTemplatePage.find(".table-data-selection tbody tr"), function(index, value) {
-								$.each($(this).find('td'), function(ind, val) {
-									if (ind == headerIndex) {
+						} else if(format == 'paragraph') {
+							$.each($genTemplatePage.find(".data-selection-paragraph"),
+								function(index, value) {
+									if (xPath == $(this).find(".header-label")
+											.attr('data-query')) {
 										$(this).remove();
 									}
 								});
+						}
+					}
+				}
+				
+				/*if ($genTemplatePage.find(".paragraph-data-selection .data-selection-paragraph").length == 0) {
+					$genTemplatePage.find(".paragraph-data-selection").empty();
+				}*/
+			}
+			
+			function populateDataSelectionSection(format, dataSelectionJson) {
+				if(format == 'table') {
+					populateTableHeaderRow(dataSelectionJson.dataAttributes, '#data-selection-header-column-template', $genTemplatePage.find('.table-data-selection'));
+					populateTableDataRows(dataSelectionJson , $genTemplatePage.find('.table-data-selection'));
+				} else if(format = 'paragraph') {
+					var $paraSectionContiner = $genTemplatePage.find(".paragraph-data-selection");
+					$paraSectionContiner.empty();
+					
+					populateParagraphSection(dataSelectionJson, 'data-selection-paragraph-container', $paraSectionContiner, 'data-selection-paragraph-edit-div-template');
+					
+					// remove edit icon from all expect for first
+					var count = 0;
+					$.each($paraSectionContiner.find('.data-selection-paragraph-container'), function(ind, val) {
+						if(count > 0) {
+							$(this).find('.no-edit-title').remove();
+						}
+						count += 1;
+					});
+				}
+				
+				$genTemplatePage.find(".no-edit-title").off('click').click(handleEditTitle);
+			}
+			
+			function populateParagraphSection(dataSelectionJson, paraContainerClassName, $container, rowTemplateName) {
+				if(dataSelectionJson && dataSelectionJson.dataAttributes && dataSelectionJson.dataAttributes.length > 0) {
+					var xmlDataJson = getJSONobjByPath(dataSelectionJson.dataAttributes[0].query);;
+					// dataSelectionPageLimit
+					var limit = xmlDataJson.length;
+					if(limit > previewPageLimit){
+						limit = previewPageLimit;
+					}
+					
+					var json = null;
+					for(var k = 0; k < limit; k++) {
+						$paragraphContainerTemplate = $('<div class="' + paraContainerClassName + '"></div><br />');
+						$container.append($paragraphContainerTemplate);
+						$paragraphContainerTemplate = $paragraphContainerTemplate.eq(0);
+									
+						$.each(dataSelectionJson.dataAttributes, function(index, value) {
+							json = {
+								query : value.query,
+								name : value.label,
+								data : xmlDataJson[k][value.query.substring(value.query.lastIndexOf('/') + 1)]
+							};
+
+							populateParagraphPreview(json, $paragraphContainerTemplate, rowTemplateName);
 						});
 					}
 				}
@@ -793,130 +857,29 @@ require(
 					});
 				}
 			}
-
-			function populateHeaderCell(data, templateName, $containerTable) {
+			
+			function populateTableHeaderRow(attributes, templateName, $table) {
+				$table.find('thead').empty();
 				var columnHeaderTemplate = _.template($(templateName).html());
-				$containerTable.find("thead")
-						.append(columnHeaderTemplate(data));
+				$.each(attributes, function(index, value) {
+					var json = {
+						query : value.query,
+						name : value.label,
+					};
+					
+					$table.find("thead").append(columnHeaderTemplate(json));
+				});
 			}
 
-			function populateDataSelectionParagraph(e) {
-				var $node = $(e.target);
-				var selectedElement = $node;
-				if($node.prop('tagName') != 'A') {
-					selectedElement = $node.parent();
-				}
-				if (selectedElement.hasClass('jstree-clicked')) {
-					if (selectedElement.closest('li').hasClass('jstree-leaf')) {
-						var json = {
-							name : selectedElement.closest('a').text(),
-							query : getSelectElementXPath(selectedElement)
-						};
-
-						var xpath = null;
-						var isNewParagraphContainer = true;
-						if ($genTemplatePage
-								.find("div.paragraph-data-selection .data-selection-paragraph").length > 0) {
-							isNewParagraphContainer = false;
-						}
-
-						xpath = json.query;
-
-						pathArray = xpath.split('/');
-						var jsonObj = null;
-						for ( var i = 0; i < pathArray.length - 1; i++) {
-							if (jsonObj == null) {
-								jsonObj = jQuery.parseJSON($genTemplatePage
-										.find('.xml-as-json').attr(
-												'data-xmljson'))[pathArray[i]];
-							} else {
-								jsonObj = jsonObj[pathArray[i]];
-							}
-						}
-
-						var jsonData;
-						var dataLength = jsonObj.length;
-						if (dataLength > dataSelectionPageLimit) {
-							dataLength = dataSelectionPageLimit;
-						}
-
-						for ( var k = 0; k < dataLength; k++) {
-							var dataRow = jsonObj[k];
-							jsonData = {
-								name : json.name,
-								query : json.query,
-								data : dataRow[json.name]
-							};
-
-							var $paragraphConatinerTemplate = null;
-							var addEdit = false;
-							if (isNewParagraphContainer) {
-								$paragraphConatinerTemplate = $('<div class="data-selection-paragraph-container"></div><br />');
-								$genTemplatePage.find(".paragraph-data-selection").append($paragraphConatinerTemplate);
-								$paragraphConatinerTemplate = $paragraphConatinerTemplate.eq(0);
-							} else {
-								$paragraphConatinerTemplate = $genTemplatePage.find(".data-selection-paragraph-container").eq(k);
-							}
-
-							if (k == 0) {
-								addEdit = true;
-							} else {
-								addEdit = false;
-							}
-
-							populateParagraph(jsonData, $paragraphConatinerTemplate, addEdit);
-						}
-
-						var newContext = json.query;
-						var existingContext = null;
-
-						$.each($genTemplatePage.find(".data-selection-paragraph div"), function(index, value) {
-							existingContext = $(this).attr('data-query');
-						});
-
-						if (existingContext != null) {
-							if (existingContext.indexOf('/') != -1) {
-								existingContext = existingContext.substring(0, existingContext.lastIndexOf('/'));
-							}
-
-							if (newContext.indexOf('/') != -1) {
-								newContext = newContext.substring(0, newContext.lastIndexOf('/'));
-							}
-
-							if (existingContext != newContext) {
-								$node.click();
-								alert(messages.treeItem_differentContext);
-								return;
-							}
-						}
-
-						$genTemplatePage.find(".no-edit-title").off('click').click(handleEditTitle);
-					} else {
-						$node.click();
-						alert(messages.warning_parentNodeSelected);
-					}
-				} else if (selectedElement.closest('li').hasClass('jstree-leaf')) {
-					var xPath = getSelectElementXPath(selectedElement);
-					$.each($genTemplatePage.find(".data-selection-paragraph"),
-						function(index, value) {
-							if (xPath == $(this).find(".header-label")
-									.attr('data-query')) {
-								$(this).remove();
-							}
-						});
-				}
-
-				if ($genTemplatePage.find(".paragraph-data-selection .data-selection-paragraph").length == 0) {
-					$genTemplatePage.find(".paragraph-data-selection").empty();
-				}
-			}
 			function populateParagraph(data, $paraContainer, addEdit) {
 				var paragraphTemplate = null;
+				
 				if (addEdit) {
 					paragraphTemplate = _.template($("#data-selection-paragraph-edit-div-template").html());
 				} else {
 					paragraphTemplate = _.template($("#data-selection-paragraph-div-template").html());
 				}
+				
 				$paraContainer.append(paragraphTemplate(data));
 			}
 
@@ -929,7 +892,7 @@ require(
 				$genTemplatePage.find(".clear-section").off('click').click(handleClearSection);
 
 				containerDisplayOnHoverAction(".section-container");
-				$genTemplatePage.find(".selectFormat").off('change').change(handleChangingFormat);
+				$genTemplatePage.find(".selectFormat").off('change').change(handleSectionFormatChange);
 				
 				$genTemplatePage.find(".input-preview-section-title").off('keyup kewdown cut paste').on('keyup kewdown cut paste', handleEditSectionTitle);
 				
@@ -1157,17 +1120,28 @@ require(
 				});
 			}
 			
-			function handleFormatDataSelection(e){
+			function handleFormatDataSelection(e) {
+				var format = null;
+				var oldFormat = null;
 				if($(e.target).attr('id') == 'table-format') {
+					oldFormat = 'paragraph';
+					format = 'table';
 					$genTemplatePage.find("#paragraph-format").removeClass("btn-primary").addClass("btn-default");
 					$(e.target).addClass("btn-primary").removeClass("btn-default");
-					$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", handleTreeNodeCheck);
 				} else if($(e.target).attr('id') == 'paragraph-format') {
+					oldFormat = 'table';
+					format = 'paragraph';
 					$genTemplatePage.find("#table-format").removeClass("btn-primary").addClass("btn-default");
 					$(e.target).addClass("btn-primary").removeClass("btn-default");
-					$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", populateDataSelectionParagraph);
 				}
-				clearDataSelectionPage();
+				
+				$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", handleTreeNodeCheck);
+				
+				var dataSelectionJson = getSelectedMetadata(oldFormat);
+				
+				clearDataSelectionPage(false);
+				
+				populateDataSelectionSection(format, dataSelectionJson);
 			}
 			
 			function handleSaveLayout(e){
