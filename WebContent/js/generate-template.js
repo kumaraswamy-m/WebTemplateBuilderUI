@@ -641,8 +641,11 @@ require(
 			
 			function toggleBackground(e) {
 				e.preventDefault();
-				$genTemplatePage.find(".selectedItem").removeClass("mouseIn").addClass("mouseOut");
-				$(e).removeClass("mouseOut mouseIn selectedItem").addClass("mouseIn selectedItem");
+				$genTemplatePage.find("li.tree-item.selected .navLabel").removeClass('selected-item');
+				$genTemplatePage.find("li.tree-item").removeClass('selected');
+				$(e.target).closest('li.tree-item').addClass('selected');
+				$(e.target).closest('li.tree-item').find('.navLabel').addClass('selected-item');
+				
 			}
 			
 			function togglePredefinedTemplateTree(e) {

@@ -20,6 +20,6 @@ JAR Files :
 4. json.jar
 
 
-Jstree download link : https://codeload.github.com/vakata/jstree/legacy.zip/3.0.4
+5. jstree.js and style.css download link : https://codeload.github.com/vakata/jstree/legacy.zip/3.0.4
 
-website : http://plugins.jquery.com/jstree/
+   website : http://plugins.jquery.com/jstree/

@@ -19,7 +19,7 @@
 	basename="com.ibm.rpe.web.template.ui.messages.UIMessages" />
 
 <link rel="stylesheet" href="${contextPath}/css/generate-template.css">
-<link rel="stylesheet" href="${contextPath}/css/style3.0.css" />
+<link rel="stylesheet" href="${contextPath}/css/style.css" />
 
 <div class="dijitContentPane dijitContentPaneSingleChild"
 	id="leftNavPane" role="navigation">
@@ -190,7 +190,7 @@
 
 <script type="text/template" id="nav-tree-item-default-template">
 	<li class="tree-item selected" data-json='<@= dataJson @>' >
-		<a href="#" class="template-layout"><span class="navLabel default"><@= name @></span></a>
+		<a href="#" class="template-layout"><span class="navLabel selected-item"><@= name @></span></a>
 	</li>
 </script>
 
@@ -251,13 +251,13 @@
 				<option value="">
 					<fmt:message key="template.generator.format.select" />
 				</option>
-				<option value="table">
+				<option value="table" class="select-preview-format">
 					<fmt:message key="template.generator.format.table" />
 				</option>
-				<option value="paragraph">
+				<option value="paragraph" class="select-preview-format">
 					<fmt:message key="template.generator.format.paragraph" />
 				</option>
-				<option value="static-text">
+				<option value="static-text" class="select-preview-format">
 					<fmt:message key="template.generator.format.static-text" />
 				</option>
 			</select>

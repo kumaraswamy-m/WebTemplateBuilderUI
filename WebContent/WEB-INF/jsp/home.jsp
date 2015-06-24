@@ -29,9 +29,8 @@
 <link rel="shortcut icon" href="${contextPath}/graphics/RPE_24.png">
 <link rel="stylesheet" href="${contextPath}/css/base.css">
 <link rel="stylesheet" href="${contextPath}/css/home.css">
-<link rel="stylesheet" href="${contextPath}/css/docUI.new.css">
-<link rel="stylesheet" href="${contextPath}/css/header.new.css">
-<link rel="stylesheet" href="${contextPath}/css/home.new.css">
+<link rel="stylesheet" href="${contextPath}/css/docUI.css">
+<link rel="stylesheet" href="${contextPath}/css/header.css">
 
 </head>
 <body class="docUI mblBackground">

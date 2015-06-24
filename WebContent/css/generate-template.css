@@ -8,28 +8,18 @@
 }
 
 .nav li.selected {
-	background-color: #202c36;
+	background-color: #202c36 !important;
+	color : #ffffff !important;
 }
 
 .nav li .unselected {
 	background-color: #94a3ab;
 }
 
-.nav li .default {
-	color: #00B299 !important;
+.nav li .selected-item {
+	color: #ffffff !important;
 }
 
-.mouseIn {
-	background-color: #202c36;
-}
-
-.mouseOut {
-	background-color: #26343f;
-}
-
-/* .nav>li>a:focus {
-	background-color: #202c36;
-} */
 .nav .active-trial li {
 	background: #26343f;
 }
@@ -39,9 +29,8 @@
 }
 
 #contentPage .goButton {
-	font-size: 14pt;
 	color: #ffffff;
-	background-color: #01b399;
+	background-color: #00b399;
 	font-family: Arial Bold;
 }
 
@@ -61,6 +50,11 @@
 
 #contentPage .titleContent .row {
 	margin-top: 10px;
+}
+
+#contentPage .loading-text {
+	margin : 0px;
+	padding : 0px;
 }
 
 #contentPage .tab-content .row {
@@ -146,8 +140,8 @@ a:focus {
 	width: 82%;
 }
 
-#contentPage .alignment-left-icon{
-	padding-left : 60px;
+#contentPage .alignment-left-icon {
+	padding-left: 60px;
 }
 
 #contentPage .alignment-right {
@@ -170,15 +164,32 @@ a:focus {
 }
 
 .docUI #contentPage {
-	min-width: 1250px;
 	width: 100%;
 }
 
 #contentPage .footer-bar {
 	text-align: right;
-	padding-top: 10px;
+	padding-top: 8px;
 	padding-right: 20px;
 	width: 100%;
+}
+
+.footer-bar .save-layout {
+	color: #3b3c3c;
+	font-size: 12pt;
+	font-family: Arial Regular;
+}
+
+.footer-bar .generate-template-btn {
+	font-family: Arial Bold;
+	color: #ffffff;
+	background-color: #00b399;
+}
+
+.footer-bar .preview-cancel-btn {
+	font-family: Arial Bold;
+	color: #ffffff;
+	background-color: #808287;
 }
 
 .btn-primary,.btn-default {
@@ -244,16 +255,19 @@ a:focus {
 	float: right;
 	margin-bottom: 10px;
 }
-#preview-design .select-global-menu .global-insert {
-	font-size : 12pt;
-	font-family : Arial Regular;
-	color : #00b399;
+
+#preview-design .select-global-menu .global-insert,.preview-select-format .selectFormat .select-preview-format
+	{
+	font-size: 12pt;
+	font-family: Arial Regular;
+	color: #00b399;
 }
-.section-container #display-on-hover .data-selection-btn{
-	background-color : #3b4b54;
-	color : #ffffff;
-	font-size : 12pt;
-	font-family: Arial Bold; 
+
+.section-container #display-on-hover .data-selection-btn {
+	background-color: #3b4b54;
+	color: #ffffff;
+	font-size: 12pt;
+	font-family: Arial Bold;
 }
 
 #data-selection .table-data {
@@ -302,7 +316,118 @@ a:focus {
 .jstree-default .jstree-leaf>.jstree-ocl {
 	background-position: -68px -4px;
 }
+
 .preview-paragraph .preview-header {
-	background-color : #f1f3f2;
-	margin : 2px;
+	background-color: #f1f3f2;
+	margin: 2px;
+}
+
+.preview-data-selected .preview-container-table {
+	border-collapse: separate !important;
+	border-spacing: 2px;
+}
+#docUIContainer {
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+}
+
+#topNavPane {
+	padding: 0px;
+	margin: 0px;
+	left: 0px;
+	top: 0px;
+	position: absolute;
+	width: 1768px;
+}
+
+#leftNavPane {
+	width: 275px;
+	left: 0px;
+	top: 51px;
+	position: absolute;
+	height: 700px;
+}
+
+#docUINav {
+	visibility: inherit;
+	overflow: hidden;
+	top: 0px;
+	height: 533px;
+}
+
+#div1 {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	transform: translate3d(0px, 0px, 0px);
+}
+
+#dojox_mobile_ListItem_0 {
+	display: block;
+}
+
+#scrollBarWrapper {
+	position: absolute;
+	overflow: hidden;
+	right: 2px;
+	width: 5px;
+	top: 4px;
+	height: 525px;
+}
+
+#scrollableFadeScrollBar {
+	opacity: 0;
+	position: absolute;
+	xbackground-color: rgb(96, 96, 96);
+	font-size: 1px;
+	z-index: 2147483647;
+	border-radius: 2px;
+	transform-origin: 0px 0px 0px;
+	width: 5px;
+	height: 486px;
+}
+
+svg {
+	position: absolute;
+	pointer-events: none;
+	opacity: 1;
+	z-index: 2147483647;
+	height: 525;
+	width: 5;
+}
+
+#leftNavPane_splitter {
+	left: 275px;
+	top: 51px;
+	position: absolute;
+	height: 533px;
+}
+
+#mainContentPane {
+	left: 275px;
+	top: 51px;
+	position: absolute;
+	width: calc(100% - 275px);
+	height: 533px;
+	background: white;
+}
+
+#mainStackContainer {
+	xwidth: 1493px;
+	height: 600px;
+}
+
+#mainPage {
+	left: 0px;
+	top: 0px;
+	xwidth: 1493px;
+	height: 533px;
+}
+
+#detailPage {
+	left: 0px;
+	top: 0px;
+	width: 1512px;
+	height: 533px;
 }
