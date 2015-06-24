@@ -236,6 +236,7 @@ require(
 							category = category.replace("%NAV_TREE_ITEMS%", treeItems);
 						}
 						$genTemplatePage.find("#docUINav .nav-parent").append(category);
+						$genTemplatePage.find("#docUINav .nav-parent").append(navDividerTemplate());
 					});
 
 					attachItemHandlers();

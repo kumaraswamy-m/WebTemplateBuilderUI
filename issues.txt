@@ -1,22 +1,36 @@
 Open issues
 -----------------------
-- checking parent tree element after few items were selected screws up the table
-- alt/title attribute for icons... like delete icon should show delete on hover on the icon
-- handle ajax error
 
-- select data should retain preview contents in data selection page
-- changing XML URL should clean up everything
-- don't store entire xml json
-- test on firefox as well
-- styling for predefined layouts
-- Add icon should create container after the current one
-- title and data query should be from same parent
-- clear tree causes issue upon load layout json
-- disable select button is table or para and title is empty
-- open layout display icon issue
-- testing end to end
+- general
+  - alt/title attribute for icons... like delete icon should show delete on hover on the icon
+  - handle ajax errors
 
+- Navigation tree
+  - title and data query should be from same parent
+  - checking parent tree element after few items were selected screws up the table
+  - upon loading layout json, clear nav tree and load sections in deffered mode
+      
+- Main doc section
+  - changing XML URL should clean up everything
 
+- Preview sections
+  - table header spacing
+  - Add icon should create container after the current one
+  - open layout display-on-hover icon issue... like not able to select icons
+  
+- Data selection
+  - disable select button is table or para and title is empty
+  - select data should retain preview contents in data selection page
+  - don't store entire xml json
+  
+- predefined layout
+  - selected tree node should have background class
+  - delete toc doesn't work after adding predefined layout template
+  
+- Testing
+  - testing end to end	  
+  - test on firefox as well
+  
 Fixed issues
 -----------------------
 - table of contents delete
@@ -49,3 +63,4 @@ Fixed issues
 - clear toc
 - req pro layout as per the ootb template
 - open layout should populate toc
+- styling for predefined layouts
