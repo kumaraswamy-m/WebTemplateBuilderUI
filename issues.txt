@@ -12,14 +12,12 @@ Open issues
   - [LP] tree collapse before "select" to preview page retains the tree checkbox selection upon back to DS page
       
 - Main doc section
-  - changing XML URL should clean up everything
+ 	- cancel should move to default
 
 - Preview sections
-  - Add icon should create container after the current one
-  - open layout display-on-hover icon issue... like not able to select icons
+  - display on hover visibility
   
 - Data selection
-  - disable generate button if section data or title bar is empty --
   - select data should retain preview contents in data selection page
   - don't store entire xml json
   
@@ -67,3 +65,7 @@ Fixed issues
   table header spacing
   disable select button if table or para and title is empty
  - title and data query should be from same parent
+ - open layout display-on-hover icon issue... like not able to select icons
+ - changing XML URL should clean up everything
+ - Add icon should create container after the current one
+ - disable generate button if section data or title bar is empty

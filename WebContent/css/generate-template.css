@@ -126,9 +126,7 @@ a:focus {
 }
 
 #contentPage .tab-content #preview-design .section-container {
-	xborder: 1px solid #CCC;
 	padding: 5px;
-	margin-bottom: 5px;
 }
 
 #contentPage .align-right {
@@ -155,6 +153,14 @@ a:focus {
 .tab-content #preview-design .section-container #display-on-hover {
 	text-align: right;
 	background-color: #C8D2D3;
+}
+
+#display-on-hover.visibility-visible {
+	visibility: visible;
+}
+
+#display-on-hover.visibility-hidden {
+	visibility: hidden;
 }
 
 #contentPage .scroll-content {
@@ -264,10 +270,11 @@ a:focus {
 }
 
 .section-container #display-on-hover .data-selection-btn {
-	background-color: #3b4b54;
-	color: #ffffff;
+	color: #3b4b54;
 	font-size: 12pt;
 	font-family: Arial Bold;
+	cursor : pointer;
+	margin-right : 5px;
 }
 
 #data-selection .table-data {
@@ -430,4 +437,19 @@ svg {
 	top: 0px;
 	width: 1512px;
 	height: 533px;
+}
+#display-on-hover .width-20 {
+	width : 20px;
+	margin-right : 5px;
+	margin-left : 5px;
+}
+#display-on-hover .width-16 {
+	width : 16px;
+	margin-right : 5px;
+	margin-left : 5px;
+}
+#display-on-hover .width-24 {
+	width : 24px;
+	padding-right : 5px;
+	padding-left : 5px;
 }

@@ -266,13 +266,13 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="preview-data-selected form-control container-action"></div>
-		<div id="display-on-hover" class="hide">
-				<button class="data-selection-btn btn">
+		<div id="display-on-hover" class="visibility-hidden">
+				<a class="data-selection-btn">
 					<fmt:message key="template.generator.hover.select_data" />
-				</button>
-				<a href="#" class="clear-section"><img alt="clear section" src="${contextPath}/graphics/onHover/edit.png" title="clear section"></a>
-				<a href="#" class="add-container"><img alt="Add Section" src="${contextPath}/graphics/onHover/Add-Container.png" title="Add Section"></a>
-				<a href="#" class="delete-container"><img alt="Delete Section" src="${contextPath}/graphics/onHover/delete.png" alt="Delete Section"></a>
+				</a>
+				<a href="#" class="clear-section"><img alt="clear section" class="width-20" src="${contextPath}/graphics/onHover/edit.png" title="clear section"></a>
+				<a href="#" class="add-container"><img alt="Add Section" class="width-20" src="${contextPath}/graphics/onHover/Add-Container.png" title="Add Section"></a>
+				<a href="#" class="delete-container"><img alt="Delete Section" class="width-16" src="${contextPath}/graphics/onHover/delete.png" alt="Delete Section"></a>
 			</div>
 	</div>
 	

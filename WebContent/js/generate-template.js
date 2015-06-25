@@ -163,29 +163,43 @@ require(
 				
 				clearAllSections();
 				
-				$genTemplatePage.find(".section-container").remove();
-				
 				var layoutJson = $(e.target).closest("li").attr('data-json');
-				if(layoutJson && layoutJson.length > 0) {
+				if(layoutJson && layoutJson != '') {
 					var layoutJsonObj = jQuery.parseJSON(layoutJson);
 					
 					$genTemplatePage.find(".document-title").val(layoutJsonObj.title);
 					$genTemplatePage.find(".input-url").val(layoutJsonObj.xmlUrl);
+					
+					handleSelectionTree();
 					
 					if(layoutJsonObj.hasToc) {
 						$genTemplatePage.find('#preview-main-content').prepend(_.template($("#table-of-contents-template").html()));
 						$genTemplatePage.find(".input-toc-label").val(layoutJsonObj.tocLabel);
 					}
 					
-					$genTemplatePage.find(".input-xml-go").click();
-					
 					$.each(layoutJsonObj.sections , function(index, value) {
-						addContainer(true);
+						if(index == 0) {
+							if($genTemplatePage.find(".section-container").length == 0) {
+								addContainer(false);
+							}
+						} else {
+							addContainer(true);
+						}
 						$container = $genTemplatePage.find(".section-container").eq(($genTemplatePage.find(".section-container")).length - 1);
-						$container.attr('selected-metadata',JSON.stringify(value));
+						$container.attr('selected-metadata', JSON.stringify(value));
 						populatePreviewSection(value.format, value, $container);
 					});
 					
+					// $genTemplatePage.find(".input-xml-go").click();
+					
+					
+					/*$(".data-selection-tree").on('_loaded.jstree',function (event, data) {
+						alert("tree populated");
+					});*/
+//					$(".navigation-tree").bind("loaded.jstree", function (event, data) {
+//						alert("tree populated");
+//					});
+//					
 					isLayoutDirty = false;
 				} else {
 					addContainer();
@@ -280,13 +294,23 @@ require(
 			}
 			
 			function handleGenerateTemplate(e) {
-				var saveLayoutData = buildSaveLayout();
-				var $saveLink = $genTemplatePage.find(".save-to-local")[0];
-				$saveLink.href = baseUrl + "/api/template/generate?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
-				$loadingText.trigger("show", {
-					text: 'Generating template. This might take a while. Please wait...',
-				});
-				$saveLink.click();
+				var url = $genTemplatePage.find(".input-url").val();
+				if (url == '' || ($('.navigation-tree .data-selection-tree').is(':empty'))) { 
+					$genTemplatePage.find('.input-url').focus();
+				}else if($genTemplatePage.find('.section-container').find('.preview-data-selected').children().length > 0 ){
+					var saveLayoutData = buildSaveLayout();
+					var $saveLink = $genTemplatePage.find(".save-to-local")[0];
+					$saveLink.href = baseUrl + "/api/template/generate?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
+					$loadingText.trigger("show", {
+						text: 'Generating template. This might take a while. Please wait...',
+					});
+					$saveLink.click();
+				}else { 
+					$loadingText.trigger("show", {
+						text : "select data to generate template"
+					});
+				}
+				
 			}
 			
 			function handleCancelPreview(e) {
@@ -351,9 +375,9 @@ require(
 					}
 				}
 				
-				if(newFormat == 'table' || newFormat == 'paragraph') {
-					$genTemplatePage.find('#' + newFormat + '-format').click();
-				}
+//				if(newFormat == 'table' || newFormat == 'paragraph') {
+//					$genTemplatePage.find('#' + newFormat + '-format').click();
+//				}
 			}
 			
 			function clearSectionContainer($sectionContainer){
@@ -363,11 +387,13 @@ require(
 			}
 
 			function hideContainerActionIcons(e) {
-				$(e.target).closest('.section-container').find("#display-on-hover").addClass("hide");
+				//$(e.target).closest('.section-container').find("#display-on-hover").hide();
+				$(e.target).closest('.section-container').find("#display-on-hover").removeClass("visibility-visible").addClass("visibility-hidden");
 			}
 
 			function displayContainerActionIcons(e) {
-				$(e.target).closest('.section-container').find("#display-on-hover").removeClass("hide");
+				//$(e.target).closest('.section-container').find("#display-on-hover").show();
+				$(e.target).closest('.section-container').find("#display-on-hover").removeClass("visibility-hidden").addClass("visibility-visible");
 			}
 			
 			function handleInsertGlobal(e) {
@@ -528,7 +554,6 @@ require(
 						populateDataCell($row, jsonData);
 					});
 				}
-				
 			}
 			
 			function getJSONobjByPath(xpath) {
@@ -564,6 +589,8 @@ require(
 					$.each($genTemplatePage.find(".navigation-tree .data-selection-tree .jstree-node.jstree-open"),function(index, value) {
 						$(this).find('.jstree-icon.jstree-ocl')[0].click();
 					});
+					
+					// $genTemplatePage.find('.navigation-tree .data-selection-tree').jstree('refresh'); 
 				}
 			}
 
@@ -698,27 +725,6 @@ require(
 						};
 						dataSelectionJson.dataAttributes.push(newDataAttribute);
 						populateDataSelectionSection(format, dataSelectionJson);
-						
-						/*if(format == 'table') {
-							populateTableHeaderRow(dataSelectionJson.dataAttributes, '#data-selection-header-column-template', $genTemplatePage.find('.table-data-selection'));
-							populateTableDataRows(dataSelectionJson , $genTemplatePage.find('.table-data-selection'));
-						} else if(format = 'paragraph') {
-							var $paraSectionContiner = $genTemplatePage.find(".paragraph-data-selection");
-							$paraSectionContiner.empty();
-							
-							populateParagraphSection(dataSelectionJson, 'data-selection-paragraph-container', $paraSectionContiner, 'data-selection-paragraph-edit-div-template');
-							
-							// remove edit icon from all expect for first
-							var count = 0;
-							$.each($paraSectionContiner.find('.data-selection-paragraph-container'), function(ind, val) {
-								if(count > 0) {
-									$(this).find('.no-edit-title').remove();
-								}
-								count += 1;
-							});
-						}
-						
-						$genTemplatePage.find(".no-edit-title").off('click').click(handleEditTitle);*/
 					} else {
 						$node.click();
 						alert(messages.warning_parentNodeSelected);
@@ -765,22 +771,23 @@ require(
 			
 			function populateDataSelectionSection(format, dataSelectionJson) {
 				if(format == 'table') {
-					populateTableHeaderRow(dataSelectionJson.dataAttributes, '#data-selection-header-column-template', $genTemplatePage.find('.table-data-selection'));
-					populateTableDataRows(dataSelectionJson , $genTemplatePage.find('.table-data-selection'));
+					if(dataSelectionJson && dataSelectionJson.dataAttributes && dataSelectionJson.dataAttributes.length > 0) {
+						populateTableHeaderRow(dataSelectionJson.dataAttributes, '#data-selection-header-column-template', $genTemplatePage.find('.table-data-selection'));
+						populateTableDataRows(dataSelectionJson , $genTemplatePage.find('.table-data-selection'));
+					}
 				} else if(format = 'paragraph') {
 					var $paraSectionContiner = $genTemplatePage.find(".paragraph-data-selection");
 					$paraSectionContiner.empty();
-					
-					populateParagraphSection(dataSelectionJson, 'data-selection-paragraph-container', $paraSectionContiner, 'data-selection-paragraph-edit-div-template');
-					
-					// remove edit icon from all expect for first
-					var count = 0;
-					$.each($paraSectionContiner.find('.data-selection-paragraph-container'), function(ind, val) {
-						if(count > 0) {
-							$(this).find('.no-edit-title').remove();
-						}
-						count += 1;
-					});
+					if(dataSelectionJson && dataSelectionJson.dataAttributes && dataSelectionJson.dataAttributes.length > 0) {
+						populateParagraphSection(dataSelectionJson, 'data-selection-paragraph-container', $paraSectionContiner, 'data-selection-paragraph-edit-div-template');
+						
+						// remove edit icon from all expect for first
+						$.each($paraSectionContiner.find('.data-selection-paragraph-container'), function(ind, val) {
+							if(ind > 0) {
+								$(this).find('.no-edit-title').remove();
+							}
+						});
+					}
 				}
 				
 				$genTemplatePage.find(".no-edit-title").off('click').click(handleEditTitle);
@@ -814,50 +821,6 @@ require(
 				}
 			}
 
-			function populateDataRows($containerTable) {
-				var selectedTreeItems = [];
-				var xpath = null;
-				$.each($genTemplatePage.find('.table-data-selection thead th'),
-					function(index, value) {
-						var tableHeader = $(this).attr('data-query');
-						if (xpath == null) {
-							xpath = tableHeader;
-						}
-						selectedTreeItems.push(tableHeader.substring(tableHeader.lastIndexOf('/') + 1));
-					});
-
-				pathArray = xpath.split('/');
-				var jsonObj = null;
-				for ( var i = 0; i < pathArray.length - 1; i++) {
-					if (jsonObj == null) {
-						jsonObj = jQuery.parseJSON($genTemplatePage.find(
-								'.xml-as-json').attr('data-xmljson'))[pathArray[i]];
-					} else {
-						jsonObj = jsonObj[pathArray[i]];
-					}
-				}
-
-				$containerTable.find("tbody").empty();
-
-				var jsonData;
-				var dataLength = jsonObj.length;
-				if (dataLength > dataSelectionPageLimit) {
-					dataLength = dataSelectionPageLimit;
-				}
-
-				for ( var k = 0; k < dataLength; k++) {
-					var $row = $('<tr></tr>');
-					$containerTable.find("tbody").append($row);
-					var dataRow = jsonObj[k];
-					$.each(selectedTreeItems, function(index, value) {
-						jsonData = {
-							data : dataRow[value]
-						};
-						populateDataCell($row, jsonData);
-					});
-				}
-			}
-			
 			function populateTableHeaderRow(attributes, templateName, $table) {
 				$table.find('thead').empty();
 				var columnHeaderTemplate = _.template($(templateName).html());
@@ -885,7 +848,15 @@ require(
 
 			function addContainer(e) {
 				var containerTemplate = _.template($("#preview-design-format-container-template").html());
-				$genTemplatePage.find(".scroll-content").append(containerTemplate());
+
+				if (e && e.target !== undefined) {
+					if ($genTemplatePage.find(".section-container").length > 0) {
+						$(e.target).closest(".section-container").after(
+								containerTemplate());
+					}
+				} else {
+					$genTemplatePage.find(".scroll-content").append(containerTemplate());
+				}
 				$genTemplatePage.find(".add-container").off('click').click(addContainer);
 				$genTemplatePage.find(".delete-container").off('click').click(deleteContainer);
 				$genTemplatePage.find(".data-selection-btn").off('click').click(handleDataSelection);
@@ -895,7 +866,6 @@ require(
 				$genTemplatePage.find(".selectFormat").off('change').change(handleSectionFormatChange);
 				
 				$genTemplatePage.find(".input-preview-section-title").off('keyup kewdown cut paste').on('keyup kewdown cut paste', handleEditSectionTitle);
-				
 				if(e) {
 					$genTemplatePage.find(".delete-container").removeClass("hide");
 				} else {
@@ -948,7 +918,16 @@ require(
 				});
 			}
 
-			function handleSelectionTree(e) {
+			function handleSelectionTree(e, callback) {
+				if($genTemplatePage.find('#preview-main-content .toc').length > 0) {
+					$genTemplatePage.find('#preview-main-content .toc').remove();
+				} 
+				$genTemplatePage.find(".section-container").remove();
+				$genTemplatePage.find(".input-toc-label").val('');
+				addContainer(false);
+				isLayoutDirty = false;
+				$loadingText.trigger("hide");
+				
 				var urlInput = $genTemplatePage.find(".input-url").val();
 				if(urlInput == '') {
 					alert('URL is mandatory');
@@ -963,6 +942,9 @@ require(
 					method : 'GET',
 					success : function(result) {
 						populateTree(result);
+						if(typeof callback === 'function') {
+							callback();
+						}
 					},
 					error: function(xhr, error) {
 						$loadingText.trigger("show", {
@@ -1238,7 +1220,7 @@ require(
 				});
 			}
 
-			addContainer();
+			addContainer(false);
 			getPredefinedTemplates();
 			attachHandlers();
 			$loadingText.trigger("show", {
