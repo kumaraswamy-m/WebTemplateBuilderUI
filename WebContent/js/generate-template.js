@@ -32,7 +32,9 @@ require(
 			var defaultXmlUrl = $(document).data("default_xml_url");
 			
 			var dataSelectionPageLimit = 10;
-			var previewPageLimit = 5;
+			var previewPageLimit = 10;
+			
+			var jsonToXmlLoadingStatus = null;
 
 			function getPredefinedTemplates(json) {
 				if (!json) {
@@ -142,7 +144,7 @@ require(
 			function clearAllSections(){
 				clearMainSection();
 				$genTemplatePage.find(".section-container").remove();
-				// clearNavigationTree();
+				clearNavigationTree();
 				$genTemplatePage.find(".input-toc-label").val('');
 				addContainer();
 				isLayoutDirty = false;
@@ -170,27 +172,47 @@ require(
 					$genTemplatePage.find(".document-title").val(layoutJsonObj.title);
 					$genTemplatePage.find(".input-url").val(layoutJsonObj.xmlUrl);
 					
-					handleSelectionTree();
-					
 					if(layoutJsonObj.hasToc) {
 						$genTemplatePage.find('#preview-main-content').prepend(_.template($("#table-of-contents-template").html()));
 						$genTemplatePage.find(".input-toc-label").val(layoutJsonObj.tocLabel);
 					}
 					
-					$.each(layoutJsonObj.sections , function(index, value) {
-						if(index == 0) {
-							if($genTemplatePage.find(".section-container").length == 0) {
-								addContainer(false);
-							}
-						} else {
-							addContainer(true);
-						}
-						$container = $genTemplatePage.find(".section-container").eq(($genTemplatePage.find(".section-container")).length - 1);
-						$container.attr('selected-metadata', JSON.stringify(value));
-						populatePreviewSection(value.format, value, $container);
-					});
+					jsonToXmlLoadingStatus = 'loading';
+					if(layoutJsonObj.xmlUrl && layoutJsonObj.xmlUrl != '') {
+						$genTemplatePage.find(".input-xml-go").click();
+					} else {
+						jsonToXmlLoadingStatus = 'loaded';
+					}
 					
-					// $genTemplatePage.find(".input-xml-go").click();
+					var tryLoadSection = 100; // milliseconds
+					
+					setTimeout(loadSections, tryLoadSection);
+					
+					function loadSections() {
+						if(jsonToXmlLoadingStatus == 'loaded') {
+							$.each(layoutJsonObj.sections , function(index, value) {
+								if(index == 0) {
+									if($genTemplatePage.find(".section-container").length == 0) {
+										addContainer(false);
+									}
+								} else {
+									addContainer(true);
+								}
+								$container = $genTemplatePage.find(".section-container").eq(($genTemplatePage.find(".section-container")).length - 1);
+								$container.attr('selected-metadata', JSON.stringify(value));
+								populatePreviewSection(value.format, value, $container);
+								
+								$loadingText.trigger("show", {
+									text: 'opened layout'
+								});
+							});
+						} else if(jsonToXmlLoadingStatus == 'loading') {
+							setTimeout(loadSections, tryLoadSection);
+							/*$loadingText.trigger("show", {
+								text: 'opening layout...',
+							});*/
+						}
+					}
 					
 					
 					/*$(".data-selection-tree").on('_loaded.jstree',function (event, data) {
@@ -199,15 +221,11 @@ require(
 //					$(".navigation-tree").bind("loaded.jstree", function (event, data) {
 //						alert("tree populated");
 //					});
-//					
 					isLayoutDirty = false;
 				} else {
 					addContainer();
 				}
 				
-				$loadingText.trigger("show", {
-					text: 'opened layout'
-				});
 				$genTemplatePage.find(".delete-toc").off('click').click(deleteTableOfContents);
 			}	
 
@@ -918,7 +936,7 @@ require(
 				});
 			}
 
-			function handleSelectionTree(e, callback) {
+			function handleSelectionTree(e) {
 				if($genTemplatePage.find('#preview-main-content .toc').length > 0) {
 					$genTemplatePage.find('#preview-main-content .toc').remove();
 				} 
@@ -931,6 +949,7 @@ require(
 				var urlInput = $genTemplatePage.find(".input-url").val();
 				if(urlInput == '') {
 					alert('URL is mandatory');
+					jsonToXmlLoadingStatus = 'failed';
 					return;
 				}
 				isLayoutDirty = true;
@@ -942,11 +961,9 @@ require(
 					method : 'GET',
 					success : function(result) {
 						populateTree(result);
-						if(typeof callback === 'function') {
-							callback();
-						}
 					},
 					error: function(xhr, error) {
+						jsonToXmlLoadingStatus = 'failed';
 						$loadingText.trigger("show", {
 							text : xhr.responseText
 						});
@@ -969,31 +986,35 @@ require(
 				}
 				return path;
 			}
-
-			function populateTree(jsonTreeData) {
-				clearNavigationTree();
-
-				// ajax call to xmltojson
-				var urlInput = $genTemplatePage.find(".input-url").val();
+			
+			function convertXmlToJson(url) {
 				$.ajax({
 					url : baseUrl + "/api/utils/xmltojson",
 					data : {
-						url : urlInput
+						url : url
 					},
 					method : 'GET',
 					success : function(result) {
-						$(".xml-as-json").attr('data-xmlJson',
-								JSON.stringify(result));
+						$(".xml-as-json").attr('data-xmlJson', JSON.stringify(result));
+						jsonToXmlLoadingStatus = 'loaded';
 					},
 					error: function(xhr, error) {
+						jsonToXmlLoadingStatus = 'failed';
 						$loadingText.trigger("show", {
 							text : xhr.responseText
 						});
 					}
 				});
+			}
 
-				$genTemplatePage
-						.find('.navigation-tree .data-selection-tree')
+			function populateTree(jsonTreeData) {
+				clearNavigationTree();
+
+				// ajax call get json for the xml
+				var urlInput = $genTemplatePage.find(".input-url").val();
+				convertXmlToJson(urlInput);
+
+				$genTemplatePage.find('.navigation-tree .data-selection-tree')
 						.jstree(
 								{
 									'plugins' : [ 'dnd', 'checkbox' ],
@@ -1217,6 +1238,33 @@ require(
 
 				$loadingText.on("hide", function(event) {
 					$loadingText.addClass("hide");
+				});
+			}
+			
+			function makeAjaxDeferredCall(ajaxOptions) {
+				if(typeof ajaxOptions.cache == 'undefined') {
+					ajaxOptions.cache = false;
+				}
+				if(typeof ajaxOptions.contentType == 'undefined') {
+					ajaxOptions.contentType = false;
+				}
+				if(typeof ajaxOptions.processData == 'undefined') {
+					ajaxOptions.processData = false;
+				}
+				if(typeof ajaxOptions.type == 'undefined') {
+					ajaxOptions.type = 'GET';
+				}
+				if(typeof ajaxOptions.params == 'undefined') {
+					ajaxOptions.params = {};
+				}
+				
+				return $.ajax({
+					url: ajaxOptions.url,
+					data: ajaxOptions.params,
+					type: ajaxOptions.type,
+					async: ajaxOptions.async,
+					cache: ajaxOptions.cache,
+					contentType: ajaxOptions.contentType
 				});
 			}
 

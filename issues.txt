@@ -13,6 +13,8 @@ Open issues
       
 - Main doc section
  	- cancel should move to default
+ 	- generate template gives undefined.dta
+ 	- UI blocker upon generate template
 
 - Preview sections
   - display on hover visibility
