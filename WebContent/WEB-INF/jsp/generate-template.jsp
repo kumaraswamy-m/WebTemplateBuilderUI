@@ -267,7 +267,7 @@
 	<div class="col-xs-12">
 		<div class="preview-data-selected form-control container-action"></div>
 		<div id="display-on-hover" class="visibility-hidden">
-				<a class="data-selection-btn">
+				<a class="section-select-data-btn">
 					<fmt:message key="template.generator.hover.select_data" />
 				</a>
 				<a href="#" class="clear-section"><img alt="clear section" class="width-20" src="${contextPath}/graphics/onHover/edit.png" title="clear section"></a>
