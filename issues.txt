@@ -7,9 +7,6 @@ Open issues
   - add comments to code
 
 - Navigation tree
-  - checking parent tree element after few items were selected screws up the table
-  - upon loading layout json, clear nav tree and load sections in deferred mode
-  - [LP] tree collapse before "select" to preview page retains the tree checkbox selection upon back to DS page
       
 - Main doc section
  	- cancel should move to default
@@ -71,3 +68,6 @@ Fixed issues
  - changing XML URL should clean up everything
  - Add icon should create container after the current one
  - disable generate button if section data or title bar is empty
+ - checking parent tree element after few items were selected screws up the table
+ - upon loading layout json, clear nav tree and load sections in deferred mode
+ - tree collapse before "select" to preview page retains the tree checkbox selection upon back to DS page

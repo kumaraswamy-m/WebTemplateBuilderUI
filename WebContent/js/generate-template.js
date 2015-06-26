@@ -446,7 +446,6 @@ require(
 				} else {
 					$genTemplatePage.find(".btn-select-data").off('click').click(populateDataPreview);
 					clearDataSelectionPage(true);
-					removeCheckboxFromParentNode();
 					enableDisableTab('#data-selection', 'tab');
 					enableDisableTab('#preview-design', '');
 					toggleTab('#data-selection', 'show');
@@ -607,8 +606,7 @@ require(
 					$.each($genTemplatePage.find(".navigation-tree .data-selection-tree .jstree-node.jstree-open"),function(index, value) {
 						$(this).find('.jstree-icon.jstree-ocl')[0].click();
 					});
-					
-					// $genTemplatePage.find('.navigation-tree .data-selection-tree').jstree('refresh'); 
+					$genTemplatePage.find('.navigation-tree .data-selection-tree').jstree(true).deselect_all();
 				}
 			}
 
@@ -1013,8 +1011,22 @@ require(
 				// ajax call get json for the xml
 				var urlInput = $genTemplatePage.find(".input-url").val();
 				convertXmlToJson(urlInput);
-
+				var node = null;
 				$genTemplatePage.find('.navigation-tree .data-selection-tree')
+				.on("select_node.jstree deselect_node.jstree", function (e, data) {
+					    if(data.node.children.length) {
+					            e.preventDefault(); // may not be necessary
+					            e.stopImmediatePropagation();
+					            // uncomment below if you wish to have the parent item open/close the tree when double clicked
+					            //return data.instance.toggle_node(data.node);
+					        }
+					    })
+					   /* .on('loaded.jstree', function (e, data) {
+					        $(e).find('li.jstree-open > a.jstree-anchor > i.jstree-checkbox, li.jstree-closed > a.jstree-anchor > i.jstree-checkbox').hide();
+					    })
+					    */.on('open_node.jstree close_node.jstree', function (e, data) {
+					        $(e).find('li.jstree-open > a.jstree-anchor > i.jstree-checkbox, li.jstree-closed > a.jstree-anchor > i.jstree-checkbox').hide();
+					    })
 						.jstree(
 								{
 									'plugins' : [ 'dnd', 'checkbox' ],
@@ -1025,7 +1037,7 @@ require(
 										},
 									},
 									"checkbox" : {
-										"keep_selected_style" : false
+										"keep_selected_style" : false,
 									},
 									'core' : {
 										'check_callback' : function(operation,
@@ -1116,7 +1128,6 @@ require(
 								});
 				
 				$genTemplatePage.off("click.jstree", ".jstree-anchor").on("click.jstree", ".jstree-anchor", handleTreeNodeCheck);
-				$genTemplatePage.off("click.jstree", "i.jstree-icon.jstree-ocl").on("click.jstree", "i.jstree-icon.jstree-ocl", removeCheckboxFromParentNode);
 				
 				$loadingText.trigger("show", {
 					text: messages.navigatorTreeLoaded
@@ -1199,12 +1210,6 @@ require(
 				$genTemplatePage.find('.navigation-tree .data-selection-tree').remove();
 
 				$genTemplatePage.find('.navigation-tree').append(_.template($("#navigator-tree-div-template").html()));
-			}
-			
-			function removeCheckboxFromParentNode(e) {
-				$.each($genTemplatePage.find('.navigation-tree .jstree li[aria-expanded]').not('.jstree-leaf'), function(ind, val) {
-					$(this).children().first().next().find('.jstree-icon.jstree-checkbox').addClass('hide');
-				});
 			}
 			
 			function initializeLoadingText() {
