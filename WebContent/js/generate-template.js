@@ -445,28 +445,23 @@ require(
 				} else {
 					$genTemplatePage.find(".btn-select-data").off('click').click(populateDataPreview);
 					clearDataSelectionPage(true);
-					// $genTemplatePage.find('#' + format + '-format').click();
 					switchFormatToPrimaryInDS(format);
 					var jsonData = null;
-					if($container.attr('selected-metadata') != null) {
+					if($container.attr('selected-metadata') && $container.attr('selected-metadata') != '') {
 						$genTemplatePage.find('.navigation-tree .data-selection-tree').jstree("open_all");
 						jsonData = jQuery.parseJSON($container.attr('selected-metadata'));
 						var query = jsonData.dataAttributes[0].query; // query of the first element in preview table
 						var path = query.substring(0, query.lastIndexOf('/')); // path of one of the element in preview table
 						$.each(jsonData.dataAttributes , function(ind , val) {
 							previewQuery = val.query;
-							$.each($genTemplatePage.find('.navigation-tree .data-selection-tree').find('ul.jstree-children .jstree-leaf a.jstree-anchor') ,function(index, value){
-									var jstreeNodePath = $genTemplatePage.find('.navigation-tree .data-selection-tree').jstree().get_path(value.closest('li'));
-									jstreeNodePath = jstreeNodePath.join('/');
-									jstreeNodePath = jstreeNodePath.substring(0, jstreeNodePath.lastIndexOf('/'));
-									console.debug(jstreeNodePath);
-									previewQuery = previewQuery.substring(previewQuery.lastIndexOf('/') + 1);
-									if(jstreeNodePath == path && value.text == previewQuery) {
-										value.click();
-									}
-							//alert(jstree.get_path(value));
-						});
-						
+							$.each($genTemplatePage.find('.navigation-tree .data-selection-tree').find('ul.jstree-children .jstree-leaf a.jstree-anchor'), function(index, value){
+								var jstreeNodePath = getSelectElementXPath($(this));
+								jstreeNodePath = jstreeNodePath.substring(0, jstreeNodePath.lastIndexOf('/'));
+								previewQuery = previewQuery.substring(previewQuery.lastIndexOf('/') + 1);
+								if(jstreeNodePath == path && value.text == previewQuery) {
+									value.click();
+								}
+							});
 						});
 					}
 					
@@ -1307,7 +1302,6 @@ require(
 			});
 			
 			$genTemplatePage.find(".input-url").val(defaultXmlUrl);
-			// $genTemplatePage.find(".input-url").val('http://localhost:8080/tegas/data/rss.xml');
 			
 			$genTemplatePage.find(".document-title").val('Sample Requirements');
 			$genTemplatePage.find(".document-title").focus();
