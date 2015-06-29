@@ -2,24 +2,21 @@
  Open issues
 -----------------------
 - general
-  - alt/title attribute for icons... like delete icon should show delete on hover on the icon
   - handle ajax errors (HP)
   - add comments to code (HP)
 
 - Navigation tree
       
 - Main doc section
- 	- cancel should move to default (HP)
  	- generate template gives undefined.dta (HP)
  	- UI blocker upon generate template
  	- open layout from DS page  (HP)
 
 - Preview sections
-	- delete icon alt/title
+
   
 - Data selection
   - don't store entire xml json (MP)
-  - title and titleQuery not populate from preview page (HP)
   
 - Testing
   - testing end to end (HP)
@@ -73,4 +70,7 @@ Fixed issues
  - tree collapse before "select" to preview page retains the tree checkbox selection upon back to DS page
  - select data should retain preview contents in data selection page
  - display on hover visibility
- 
+ - title and titleQuery not populate from preview page (HP)
+ - alt/title attribute for icons... like delete icon should show delete on hover on the icon
+ - cancel should move to default (HP)
+ - delete icon alt/title

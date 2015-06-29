@@ -7,19 +7,6 @@
 	background-color: #3b4b54;
 }
 
-.nav li.selected {
-	background-color: #202c36 !important;
-	color : #ffffff !important;
-}
-
-.nav li .unselected {
-	background-color: #94a3ab;
-}
-
-.nav li .selected-item {
-	color: #ffffff !important;
-}
-
 .nav .active-trial li {
 	background: #26343f;
 }
@@ -39,13 +26,11 @@
 }
 
 .selected {
-	xborder-bottom: 3px solid #00b299;
-	color: #152935;
+	background-color: #202c36 !important;
 }
 
-.unselected {
-	border-bottom: 3px solid #ecf0f2;
-	color: #94a3ab;
+.selected-item {
+	color: #ffffff !important;
 }
 
 #contentPage .titleContent .row {

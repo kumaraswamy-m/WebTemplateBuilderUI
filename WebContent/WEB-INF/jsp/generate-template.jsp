@@ -189,8 +189,8 @@
 </script>
 
 <script type="text/template" id="nav-tree-item-default-template">
-	<li class="tree-item selected" data-json='<@= dataJson @>' >
-		<a href="#" class="template-layout"><span class="navLabel selected-item"><@= name @></span></a>
+	<li class="tree-item selected default" data-json='<@= dataJson @>' >
+		<a href="#" class="template-layout"><span class="navLabel navSubLabel selected-item"><@= name @></span></a>
 	</li>
 </script>
 
@@ -272,7 +272,7 @@
 				</a>
 				<a href="#" class="clear-section"><img alt="clear section" class="width-20" src="${contextPath}/graphics/onHover/edit.png" title="clear section"></a>
 				<a href="#" class="add-container"><img alt="Add Section" class="width-20" src="${contextPath}/graphics/onHover/Add-Container.png" title="Add Section"></a>
-				<a href="#" class="delete-container"><img alt="Delete Section" class="width-16" src="${contextPath}/graphics/onHover/delete.png" alt="Delete Section"></a>
+				<a href="#" class="delete-container"><img alt="Delete Section" class="width-16" src="${contextPath}/graphics/onHover/delete.png" alt="Delete Section" title="Delete Section"></a>
 			</div>
 	</div>
 	

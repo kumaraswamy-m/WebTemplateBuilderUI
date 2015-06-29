@@ -166,8 +166,9 @@ require(
 				clearAllSections();
 				
 				var layoutJson = $(e.target).closest("li").attr('data-json');
+				var layoutJsonObj = jQuery.parseJSON(layoutJson);
 				if(layoutJson && layoutJson != '') {
-					var layoutJsonObj = jQuery.parseJSON(layoutJson);
+					// var layoutJsonObj = jQuery.parseJSON(layoutJson);
 					
 					$genTemplatePage.find(".document-title").val(layoutJsonObj.title);
 					$genTemplatePage.find(".input-url").val(layoutJsonObj.xmlUrl);
@@ -333,6 +334,11 @@ require(
 				if (clear) {
 					clearAllSections();
 				}
+				$genTemplatePage.find("li.tree-item.selected .navLabel").removeClass('selected-item');
+				$genTemplatePage.find("li.tree-item.selected").removeClass('selected');
+				$genTemplatePage.find("li.default").addClass('selected');
+				$genTemplatePage.find("li.default").find('.navLabel').addClass('selected-item');
+				
 			}
 			
 			function handleCancelDataSelection(e) {
@@ -450,6 +456,8 @@ require(
 					if($container.attr('selected-metadata') && $container.attr('selected-metadata') != '') {
 						$genTemplatePage.find('.navigation-tree .data-selection-tree').jstree("open_all");
 						jsonData = jQuery.parseJSON($container.attr('selected-metadata'));
+						$genTemplatePage.find(".input-ds-title").val(jsonData.title);
+						$genTemplatePage.find(".input-ds-title").attr('data-query', jsonData.titleQuery);
 						var query = jsonData.dataAttributes[0].query; // query of the first element in preview table
 						var path = query.substring(0, query.lastIndexOf('/')); // path of one of the element in preview table
 						$.each(jsonData.dataAttributes , function(ind , val) {
