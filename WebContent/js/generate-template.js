@@ -36,6 +36,7 @@ require(
 			
 			var jsonToXmlLoadingStatus = null;
 
+			// saved layout json
 			function getPredefinedTemplates(json) {
 				if (!json) {
 					json = [
@@ -150,18 +151,31 @@ require(
 				isLayoutDirty = false;
 				$loadingText.trigger("hide");
 			}
-				
+			
+			//Opening layout through UI left navigation pane.
 			function handleOpenLayout(e) {
+				// opening layout from data selection tab
+				if($genTemplatePage.find(".data-selection-tab.active").length != 0){
+					var switchTab = confirm("The current template layout changes would be lost. Do you want to leave this page?");
+					if (!switchTab) {
+						return;
+					}
+					toggleTab('#preview-design', 'show');
+					enableDisableTab('#data-selection', '');
+				}
+				//opening layout from preview tab
+				else{
 				if(isLayoutDirty) {
 					var clear = confirm("The current template layout changes would be lost. Do you want to continue?");
 					if (!clear) {
 						return;
 					}
 				}
-				
+			}	
 				$loadingText.trigger("show", {
-					text: 'opening layout...',
+					text: 'Opening the layout...',
 				});
+				
 				
 				clearAllSections();
 				
@@ -197,25 +211,15 @@ require(
 								populatePreviewSection(value.format, value, $container);
 								
 								$loadingText.trigger("show", {
-									text: 'opened layout'
+									text: 'Opened the layout'
 								});
 							});
 						} else if(jsonToXmlLoadingStatus == 'loading') {
 							setTimeout(loadSections, tryLoadSection);
-							/*$loadingText.trigger("show", {
-								text: 'opening layout...',
-							});*/
 						}
 					}
 					
 					setTimeout(loadSections, tryLoadSection);
-					
-					/*$(".data-selection-tree").on('_loaded.jstree',function (event, data) {
-						alert("tree populated");
-					});*/
-//					$(".navigation-tree").bind("loaded.jstree", function (event, data) {
-//						alert("tree populated");
-//					});
 					isLayoutDirty = false;
 				} else {
 					addContainer();
@@ -227,6 +231,7 @@ require(
 				$genTemplatePage.find(".delete-toc").off('click').click(deleteTableOfContents);
 			}	
 
+			// populating the left navigation pane dynamically
 			function populatePredefinedTemplates(json) {
 				$genTemplatePage.find("#docUINav .nav-parent").empty();
 				if (json.length > 0) {
@@ -282,9 +287,6 @@ require(
 			}
 
 			function attachHandlers() {
-				// $genTemplatePage.find(".tab").off('click').click(toggleUnderlineColor);
-				// $genTemplatePage.find(".highlight").off('click').click(toggleColor);
-
 				$genTemplatePage.find(".input-xml-go").click(handleSelectionTree);
 				$genTemplatePage.on('blur', 'input.editable', updateHeaderLabel);
 				$genTemplatePage.find(".select-global-menu").off('change').change(handleInsertGlobal);
@@ -302,6 +304,7 @@ require(
 				initializeLoadingText();
 			}
 			
+			// clear the respective section in preview tab through clear-section icon
 			function handleClearSection(e) {
 				$(e.target).closest('.section-container').find('.preview-data-selected').empty();
 				$(e.target).closest('.section-container').find('.input-preview-section-title').val('');
@@ -309,6 +312,7 @@ require(
 				$(e.target).closest('.section-container').attr('selected-metadata', '');
 			}
 			
+			// generating a dta from the layout
 			function handleGenerateTemplate(e) {
 				var url = $genTemplatePage.find(".input-url").val();
 				if (url == '' || ($('.navigation-tree .data-selection-tree').is(':empty'))) { 
@@ -316,7 +320,7 @@ require(
 				}else if($genTemplatePage.find('.section-container').find('.preview-data-selected').children().length > 0 ){
 					var saveLayoutData = buildSaveLayout();
 					var $saveLink = $genTemplatePage.find(".save-to-local")[0];
-					$saveLink.href = baseUrl + "/api/template/generate?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
+					$saveLink.href = baseUrl + "/api/template/generate?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['title'];
 					$loadingText.trigger("show", {
 						text: 'Generating template. This might take a while. Please wait...',
 					});
@@ -370,6 +374,7 @@ require(
 				clearDataSelectionPage(true);
 			}
 			
+			// changing format in the preview tab
 			function handleSectionFormatChange(e) {
 				var oldFormat = $(e.target).closest('div.section-container').find('.selectFormat').attr('previous-format');
 				var newFormat = $(e.target).val();
@@ -404,22 +409,23 @@ require(
 				}
 			}
 			
+			// empty the present contents of the section in the preview tab.
 			function clearSectionContainer($sectionContainer){
 				$sectionContainer.find(".title").empty();
 				$sectionContainer.find(".preview-data-selected").empty();
 				$sectionContainer.attr('selected-metadata','');
 			}
 
+			// section container footer icons
 			function hideContainerActionIcons(e) {
-				//$(e.target).closest('.section-container').find("#display-on-hover").hide();
 				$(e.target).closest('.section-container').find("#display-on-hover").removeClass("visibility-visible").addClass("visibility-hidden");
 			}
-
+			// section container footer icons
 			function displayContainerActionIcons(e) {
-				//$(e.target).closest('.section-container').find("#display-on-hover").show();
 				$(e.target).closest('.section-container').find("#display-on-hover").removeClass("visibility-hidden").addClass("visibility-visible");
 			}
 			
+			// Inserting table of contents in the preview tab
 			function handleInsertGlobal(e) {
 				if ($(e.target).val() == 'toc') {
 					if ($genTemplatePage.find('#preview-main-content .toc').length > 0) {
@@ -442,6 +448,7 @@ require(
 				}
 			}
 
+			// population of data within a section in preview tab
 			function handleSectionSelectData(e) {
 				var $container = $(e.target).closest('div.section-container');
 				var format = $container.find('.selectFormat').val();
@@ -476,10 +483,9 @@ require(
 					enableDisableTab('#data-selection', 'tab');
 					enableDisableTab('#preview-design', '');
 					toggleTab('#data-selection', 'show');
-					// $genTemplatePage.find('.navigation-tree .data-selection-tree').find(".jstree-icon .jstree-ocl").click();
-					// $genTemplatePage.find('.navigation-tree .data-selection-tree').find(".jstree-icon .jstree-ocl").click();
 				}
 				
+				// populating data in preview tab using data in data selection tab
 				function populateDataPreview() {
 					if($genTemplatePage.find(".input-ds-title").val()!='' || ($genTemplatePage.find(".selected-content .header-label").length > 0)){
 						var format = 'table'; // paragraph table
@@ -532,6 +538,7 @@ require(
 				return data;
 			}
 			
+			//populating each section within the preview tab with data in data selection tab 
 			function populatePreviewSection(format, dataSelectionJson, $container) {
 				if(!dataSelectionJson) {
 					return;
@@ -566,7 +573,7 @@ require(
 					$previewContainerData.text(dataSelectionJson['staticContent']);
 				}
 			}
-			
+			// populate rows in the table with data in preview and data selection tabs
 			function populateTableDataRows(dataSelectionJson , $containerTable) {
 				var selectedTreeItems = [];
 				var xpath = null;
@@ -605,6 +612,7 @@ require(
 				}
 			}
 			
+			// Given the xpath of the tree node, json object is returned
 			function getJSONobjByPath(xpath) {
 				var pathArray = xpath.split('/');
 				var jsonObj = null;
@@ -623,6 +631,7 @@ require(
 				$containerTable.append(rowTemplate(data));
 			}
 			
+			// Clearing the data selection tab
 			function clearDataSelectionPage(clearTree) {
 				$(".table-data-selection thead").empty();
 				$(".table-data-selection tbody").empty();
@@ -635,6 +644,7 @@ require(
 				}
 			}
 
+			// To change the title for the header in data selection tab on blur event(clicking out of the input box)
 			function updateHeaderLabel(e) {
 				var $th = null;
 				var label = $genTemplatePage.find("input.editable").val();
@@ -655,6 +665,8 @@ require(
 				});
 			}
 
+			// To handle editing the header in table and paragraphs in data selection tab
+			// by creating input box to type in new header label
 			function handleEditTitle(e) {
 				var $th = $(e.target).closest(".header-label");
 				var input = $('<input />', {
@@ -668,17 +680,7 @@ require(
 				input.focus();
 			}
 
-			function toggleColor(e) {
-				e.preventDefault();
-				$genTemplatePage.find(".highlight").removeClass("btn-primary btn-default").addClass("btn-default");
-				$(e.target).removeClass("btn-default btn-primary").addClass("btn-primary");
-			}
-			function toggleUnderlineColor(e) {
-				e.preventDefault();
-				$genTemplatePage.find(".label").removeClass("selected unselected").addClass("unselected");
-				$(e.target).removeClass("unselected selected").addClass("selected");
-			}
-			
+			// change the background color of the left navigation pane upon selection
 			function toggleBackground(e) {
 				e.preventDefault();
 				$genTemplatePage.find("li.tree-item.selected .navLabel").removeClass('selected-item');
@@ -699,6 +701,8 @@ require(
 				$tree.parent().children('ul.tree').toggle(200);
 			}
 			
+			// selecting data from the tree in the data selection tab and 
+			// checking for same context
 			function handleTreeNodeCheck(e) {
 				var $node = $(e.target);
 				var selectedElement = $node;
@@ -743,7 +747,7 @@ require(
 							}
 						}
 						
-						// check for same parent between title and table data
+						// check for same parent between title and table or paragraph data
 						if($genTemplatePage.find(".input-ds-title").val() != ''){
 							var titleContext = $genTemplatePage.find(".input-ds-title").attr('data-query');
 							if(titleContext) {
@@ -804,12 +808,9 @@ require(
 						}
 					}
 				}
-				
-				/*if ($genTemplatePage.find(".paragraph-data-selection .data-selection-paragraph").length == 0) {
-					$genTemplatePage.find(".paragraph-data-selection").empty();
-				}*/
 			}
 			
+			// 
 			function populateDataSelectionSection(format, dataSelectionJson) {
 				if(format == 'table') {
 					if(dataSelectionJson && dataSelectionJson.dataAttributes && dataSelectionJson.dataAttributes.length > 0) {
@@ -1190,7 +1191,7 @@ require(
 			function handleSaveLayout(e){
 				var saveLayoutData = buildSaveLayout();
 				var $saveLink = $genTemplatePage.find(".save-to-local")[0];
-				$saveLink.href = baseUrl + "/api/template/savelayout?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['docName'];
+				$saveLink.href = baseUrl + "/api/template/savelayout?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['title'];
 				$saveLink.click();
 			}
 			
@@ -1306,7 +1307,7 @@ require(
 			getPredefinedTemplates();
 			attachHandlers();
 			$loadingText.trigger("show", {
-				text: 'loading...'
+				text: 'Loading...'
 			});
 			
 			$genTemplatePage.find(".input-url").val(defaultXmlUrl);

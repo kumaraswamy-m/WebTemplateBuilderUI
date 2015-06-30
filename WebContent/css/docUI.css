@@ -19,11 +19,11 @@ body {
 	font: 12px Myriad, Helvetica, Tahoma, Arial, clean, sans-serif;
 }
 
-body { #
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; #
-	font-size: 14px; #
+body { 
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+	font-size: 14px; 
 	line-height: 1.42857;
-	color: #333; #
+	color: #333; 
 	background-color: #FFF;
 }
 
@@ -116,7 +116,7 @@ docUI .docUIBannerDiv header {
 	text-decoration: none;
 }
 
-.docUI #leftNavPane,.docUI #docUINav,.docUI #leftNavPane .mblRoundRectList .mblListItem,.docUI #leftNavPane .mblRoundRectList,.docUI #leftNavPane .mblScrollableViewContainer,.docUI #leftNavPane .mblView
+.docUI #leftNavPane,.docUI #docUINav,.docUI #leftNavPane .mblScrollableViewContainer,.docUI #leftNavPane .mblView
 	{
 	background-color: #22333F;
 }
@@ -132,28 +132,6 @@ docUI .docUIBannerDiv header {
 
 .dijitContentPaneSingleChild {
 	overflow: hidden;
-}
-
-.docUI #docUIContainer .idxSplitterLeftCollapsed,.docUI #docUIContainer .idxSplitterLeftNormal
-	{
-	display: none;
-}
-
-.dijitSplitterV {
-	width: 7px;
-	border-left: 1px none;
-	border-right: 1px none;
-	cursor: col-resize;
-}
-
-.dijitSplitter {
-	position: absolute;
-	overflow: hidden;
-	z-index: 10;
-	background-color: #FFF;
-	border-color: #808080;
-	border-style: solid;
-	border-width: 0px;
 }
 
 .docUI #mainContentPane,.docUI #mainStackContainer,.docUI #mainPage,.docUI #detailPage,.docUI #searchPage,.docUI #contentPage
@@ -184,38 +162,6 @@ docUI .docUIBannerDiv header {
 	height: 45px;
 }
 
-.docUI #leftNavPane #docUINav .mblRoundRectList .mblListItem .mblListItemLabel
-	{
-	min-height: 51px;
-}
-
-.docUI #leftNavPane .mblRoundRectList .mblListItem .mblListItemLabel {
-	min-height: 41px;
-}
-
-.docUI #leftNavPane .mblListItemLabel {
-	position: relative;
-	overflow: visible;
-	white-space: normal;
-	text-overflow: inherit;
-	height: 100%;
-	display: table !important;
-}
-
-.docUI #leftNavPane .mblListItemLabel {
-	font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman",
-		"HelveticaNeue-Roman", "Helvetica Neue Roman", "TeXGyreHerosRegular",
-		"Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-}
-
-.mblListItemLabel {
-	position: relative;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	height: 100%;
-}
-
 .docUI #leftNavPane .navImg {
 	padding: 0px 20px 0px 0px;
 	width: 20px;
@@ -237,62 +183,39 @@ img {
 	border: 0px none;
 }
 
-.docUI #leftNavPane #docUINav .mblRoundRectList .mblListItem .mblListItemLabel .navLabel
-	{
-	padding: 15px 0px 10px 6px;
-}
 
 .docUI #leftNavPane .navLabel {
-	font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman",
-		"HelveticaNeue-Roman", "Helvetica Neue Roman", "TeXGyreHerosRegular",
-		"Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+	font-family: "Arial Bold";
 	font-size: 14px;
-	xfont-weight: bold;
 	line-height: 20px;
 	padding: 0px 0px 12px 6px;
 	color: #94a3ab;
+	font-weight: bold;
+}
+
+.docUI #leftNavPane .navSubLabel {
+	font-family: "Arial Regular";
+	font-size: 14px;
+	line-height: 20px;
+	padding: 0px 0px 12px 6px;
+	color: #94a3ab;
+	font-weight: normal;
 }
 
 .docUI #leftNavPane .navLabelHeader {
-	font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman",
-		"HelveticaNeue-Roman", "Helvetica Neue Roman", "TeXGyreHerosRegular",
-		"Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-	font-size: 18px;
+	font-family: "Arial Bold";
+	font-size: 14px;
 	font-weight: bold;
 	line-height: 20px;
 	padding: 0px 0px 12px 6px;
 	color: #94a3ab;
 }
 
-.docUI #leftNavPane .navSubLabel {
-	color: #00B299;
-}
-
 .docUI #leftNavPane .sidePanelHeader {
 	line-height: 20px;
 	padding: 10px 0px 10px 6px;
-	background-color: #26343f;
-}
-
-.docUI #leftNavPane .mblListItemLabel .navLabel {
-	display: table-cell;
-	width: 200px;
-	line-height: 1.5em;
-}
-
-.docUI #leftNavPane .mblRoundRectList .mblListItem {
-	border-width: medium medium medium 4px;
-	border-style: none none none solid;
-	border-color: -moz-use-text-color -moz-use-text-color
-		-moz-use-text-color transparent;
-	-moz-border-top-colors: none;
-	-moz-border-right-colors: none;
-	-moz-border-bottom-colors: none;
-	-moz-border-left-colors: none;
-	border-image: none;
-	color: #DFE6EB;
-	cursor: pointer;
-	outline: medium none;
+	background-color: #12202A;
+	text-align: center;
 }
 
 .docUI #leftNavPane .mblListItem {
@@ -321,7 +244,7 @@ ol li,ul li {
 	margin-top: 9.5px;
 }
 
-.mblListItemRightIcon,.mblListItemRightIcon2,.mblListItemUncheckIcon {
+.mblListItemRightIcon{
 	position: relative;
 	float: right;
 	line-height: normal;
@@ -332,9 +255,7 @@ ol li,ul li {
 .docUI #docUINav {
 	color: #DFE6EB;
 	font-weight: 400;
-	font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman",
-		"HelveticaNeue-Roman", "Helvetica Neue Roman", "TeXGyreHerosRegular",
-		"Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+	font-family: "Arial Bold";
 }
 
 .docUI #mainStackContainer {
@@ -345,94 +266,11 @@ ol li,ul li {
 	display: block !important;
 	position: relative;
 }
-
-.docUI .docUIMainDiv {
-	background-color: #3B4B54;
-	color: #FFF;
-	font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman",
-		"HelveticaNeue-Roman", "Helvetica Neue Roman", "TeXGyreHerosRegular",
-		"Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-	font-size: 1em;
-	font-stretch: normal;
-	font-weight: 400;
-	height: 100%;
-	margin: 0px;
-	display: inline-block;
-	width: 100%;
-}
-
-.bluemixHome {
-	margin: 0px;
-	padding: 0px;
-	border: 0px none;
-	font-style: inherit;
-	font-variant: inherit;
-	font-size-adjust: inherit;
-	font-stretch: inherit;
-	-moz-font-feature-settings: inherit;
-	-moz-font-language-override: inherit;
-	font-size: 100%;
-	vertical-align: baseline;
-	line-height: 1.45em;
-	font-family: "Helvetica Neue", "HelveticaNeue", "Helvetica", "Segoe UI",
-		"Segoe", "Calibri", "Roboto", "Droid Sans", "Arial Unicode MS", Arial,
-		sans-serif;
-	font-weight: 400;
-}
-
-.docUI .docUIMainDiv section:after {
-	clear: both;
-}
-
-.docUI .docUIMainDiv section:before,.docUI .docUIMainDiv section:after {
-	content: "";
-	display: table;
-}
-
 *:before,*:after {
 	box-sizing: border-box;
 }
 
-.docUI .docUIMainDiv .serviceDiv {
-	background-color: #FFF;
-	color: #1B252D;
-}
 
-.docUI .docUIMainDiv .serviceDiv .sectionHeader {
-	padding: 35px 30px 65px;
-}
-
-.docUI .docUIMainDiv .sectionHeader {
-	padding: 40px 30px 45px;
-}
-
-.docUI .docUIMainDiv .serviceDiv .subContent {
-	padding-left: 0px;
-	padding-bottom: 20px;
-}
-
-.docUI .docUIMainDiv .subContent {
-	padding-left: 50px;
-	clear: both;
-}
-
-.docUI .docUIMainDiv .descContentDiv,.docUI .docUIMainDiv .runTimeContentDiv,.docUI .docUIMainDiv .serviceContentDiv,.docUI .docUIMainDiv .articleContentDiv
-	{
-	min-height: 160px;
-}
-
-.docUI .docUIMainDiv .serviceDiv .sectionName,.docUI .docUIMainDiv .serviceDiv .tileName.textWithEllipsis
-	{
-	color: #1B252D;
-}
-
-.docUI .docUIMainDiv .sectionName {
-	float: left;
-	padding-right: 20px;
-	padding-left: 20px;
-	font-size: 24px;
-	color: #DFE6EB;
-}
 
 caption,th {
 	text-align: left;
@@ -448,12 +286,7 @@ address,caption,cite,code,dfn,th,var {
 	background-color: #f9f9f9;
 	color: #152935;
 	font-family: "Arial-bold";
-	font-size: 14pt;
-	xcolor: #3A4A6C;
-	xfont-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman",
-		"HelveticaNeue-Roman", "Helvetica Neue Roman", "TeXGyreHerosRegular",
-		"Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-	xfont-size: 1em;
+	font-size: 12pt;
 	font-stretch: normal;
 	font-weight: 400;
 	height: 100%;
@@ -461,9 +294,6 @@ address,caption,cite,code,dfn,th,var {
 	display: block;
 	width: 100%;
 	min-height: 680px;
-	xmin-width: 1100px;
-	xmax-width: 1100px;
-	xoverflow-y: auto !important;
 	overflow-x: auto;
 	height: 100%;
 }
@@ -490,64 +320,15 @@ address,caption,cite,code,dfn,th,var {
 	top: 18px;
 }
 
-.docUI .docUIMainDiv .serviceDiv .btn-primary {
-	margin: 20px 0px 30px;
-	padding: 10px 20px;
-	color: #FFF;
-	font-size: 14px;
-}
-
-.docUI .docUIMainDiv .btn-primary {
-	background-color: #00b399;
-	color: #FFF;
-	padding: 10px 50px;
-	margin-bottom: 10px;
-	height: 45px;
-	font-size: 14px;
-}
-
-.docUI .docUIMainDiv .btn {
-	-moz-user-select: none;
-	background-image: none;
-	border: 2px solid transparent;
-	cursor: pointer;
-	display: inline-block;
-	font-family: "HelveticaNeueBold", "HelveticaNeue-Bold",
-		"Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue",
-		"TeXGyreHerosBold", "Helvetica", "Tahoma", "Geneva", "Arial",
-		sans-serif;
-	font-size: 0.875em;
-	font-stretch: normal;
-	font-weight: bold;
-	line-height: 1.42857;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	padding: 6px 12px;
-	text-align: center;
-	vertical-align: middle;
-	white-space: nowrap;
-}
-
-.docUI .docUIMainDiv button {
-	box-sizing: border-box;
-	background-color: #00B299;
-	color: #FFF;
-	display: inline-block;
-	padding: 5px;
-}
-
 .btn-primary {
 	color: #FFF;
 	background-color: #00B299;
 }
 
 .btn {
-	font-family: "HelveticaNeueBold", "HelveticaNeue-Bold",
-		"Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue",
-		"TeXGyreHerosBold", "Helvetica", "Tahoma", "Geneva", "Arial",
-		sans-serif;
+	
 	font-stretch: normal;
-	font-size: 0.875em;
+	font-size: 12pt;
 	display: inline-block;
 	padding: 6px 12px;
 	margin-bottom: 0px;
@@ -578,9 +359,6 @@ address,caption,cite,code,dfn,th,var {
 	height: 100%;
 }
 
-.docUI #docUINav,.docUI #leftNavPane .mblRoundRectList {
-	overflow-y: visible !important;
-}
 
 .docUI #docUINav {
 	background-color: #22333F;
@@ -603,51 +381,6 @@ address,caption,cite,code,dfn,th,var {
 	transform: none !important;
 }
 
-.mblRoundRectList {
-	margin: 7px 9px 16px;
-	padding: 0px;
-	border: 1px solid #ADAAAD;
-	border-radius: 8px;
-	background-color: #FFF;
-}
-
-.docUI #leftNavPane .mblRoundRectList {
-	background-color: transparent;
-	border: medium none;
-}
-
-.docUI #leftNavPane .mblRoundRectList {
-	margin: 0px;
-}
-
-.docUI #leftNavPane .mblRoundRectList .mblListItem.navItemIsDocHome {
-	background-color: #3B4B54 !important;
-	min-height: 51px;
-	border-left: 4px solid transparent;
-}
-
-.docUI #leftNavPane .mblRoundRectList .mblListItem.listItemSelected {
-	background-color: #2C485F;
-	border-left: 4px solid #5AAAFA;
-}
-
-.docUI #leftNavPane .mblRoundRectList .mblListItem:first-child,.docUI #leftNavPane .mblRoundRectList .mblEdgeToEdgeCategory:first-child
-	{
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
-}
-
-.mblRoundRectList .mblListItem:first-child,.mblRoundRectList .mblEdgeToEdgeCategory:first-child
-	{
-	border-top-left-radius: 8px;
-	border-top-right-radius: 8px;
-}
-
-.docUI #leftNavPane .mblRoundRectList .mblListItem.navItemIsDocHome .navImgEmpty
-	{
-	padding: 0px 0px 0px 5px;
-}
-
 .docUI #leftNavPane .navImgEmpty {
 	padding: 0px 20px;
 }
@@ -666,7 +399,7 @@ svg:not (:root ) {
 	transform-origin: 0px 0px 0px;
 }
 
-.docUI #leftNavPane .mblListItemRightIcon,.mblListItemRightIcon2,.mblListItemUncheckIcon
+.docUI #leftNavPane .mblListItemRightIcon
 	{
 	margin-top: 7.5px;
 }
@@ -677,13 +410,8 @@ svg:not (:root ) {
 	height: 29px;
 }
 
-.mblListItemRightIcon,.mblListItemRightIcon2,.mblListItemUncheckIcon {
+.mblListItemRightIcon {
 	line-height: normal;
-}
-
-.docUI #leftNavPane .mblRoundRectList .mblListItem {
-	color: #DFE6EB;
-	cursor: pointer;
 }
 
 .mblDomButtonArrow>div {

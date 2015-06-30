@@ -11,7 +11,7 @@ define("nls/messages", [],  {
 		"rpe": "RPE",
 		"generatePageTitle": "Document Template Generation",
 		"navigatorTreeLoaded": "Ready for data selection",
-		"warning_parentNodeSelected": "Please select only the child elements",
+		"warning_parentNodeSelected": "Select only the child elements",
 		"title_sample_value": "Sample value: ",
 		"treeItem_differentContext": "You cannot select from different parent."
 	}

@@ -2,15 +2,12 @@
  Open issues
 -----------------------
 - general
-  - handle ajax errors (HP)
   - add comments to code (HP)
 
 - Navigation tree
       
 - Main doc section
  	- generate template gives undefined.dta (HP)
- 	- UI blocker upon generate template
- 	- open layout from DS page  (HP)
 
 - Preview sections
 
@@ -74,3 +71,5 @@ Fixed issues
  - alt/title attribute for icons... like delete icon should show delete on hover on the icon
  - cancel should move to default (HP)
  - delete icon alt/title
+ - open layout from DS page  (HP)
+ - handle ajax errors (HP)

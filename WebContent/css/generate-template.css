@@ -1,6 +1,7 @@
 /* overrides */
 .nav>li>a {
 	padding: 2px 15px;
+	font-size: 12pt;
 }
 
 .nav .nav-divider {
@@ -38,8 +39,8 @@
 }
 
 #contentPage .loading-text {
-	margin : 0px;
-	padding : 0px;
+	margin: 0px;
+	padding: 0px;
 }
 
 #contentPage .tab-content .row {
@@ -57,7 +58,7 @@
 }
 
 .nav-tabs>li.active>a:focus {
-	font-size: 14pt;
+	font-size: 12pt;
 	color: #152935;
 	border: 0px none;
 	border-bottom: 3px solid #00b299;
@@ -73,7 +74,6 @@
 
 .nav-tabs>li>a {
 	margin-right: 15px;
-	border: 0px none;
 	border-bottom: 3px solid #ecf0f2;
 }
 
@@ -81,14 +81,23 @@
 	border-bottom: 3px solid #00b299;
 }
 
+.nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus
+	{
+	color: #555555;
+	border-left: none !important;
+	border-right: none !important;
+	border-top: none !important;
+	cursor: pointer;
+}
+
 a:focus {
 	outline: none;
 }
 
 .btn-default {
-	background-color: #ffffff;
-	color: #8f9fa9;
-	font-family: Arial Regular;
+	color: #ffffff;
+	background-color: #808287;
+	font-family: Arial Bold;
 	font-size: 12pt;
 	height: 34px;
 	border: 1px solid #CCC;
@@ -121,6 +130,7 @@ a:focus {
 
 #contentPage .alignment {
 	width: 82%;
+	vertical-align: -webkit-baseline-middle;;
 }
 
 #contentPage .alignment-left-icon {
@@ -209,14 +219,18 @@ a:focus {
 }
 
 #data-selection .navigation-tree {
-	min-height: 425px;
-	max-height: 425px;
-	overflow: auto;
 	background-color: #f7f7f7;
 	border: 1px solid #c8d2d3;
 }
 
+#data-selection .data-selection-tree {
+	min-height: 393px;
+	max-height: 393px;
+	overflow: auto;
+}
+
 #data-selection .navigation-tree .navigation-top-bar {
+	padding-top: 5px;
 	background-color: #c8d2d3;
 	color: #5a5a5a;
 	text-align: center;
@@ -251,15 +265,19 @@ a:focus {
 	{
 	font-size: 12pt;
 	font-family: Arial Regular;
-	color: #00b399;
 }
 
 .section-container #display-on-hover .section-select-data-btn {
-	color: #3b4b54;
+	color: #ffffff;
 	font-size: 12pt;
 	font-family: Arial Bold;
-	cursor : pointer;
-	margin-right : 5px;
+	cursor: pointer;
+	border: 1px solid transparent;
+	font-weight: normal;
+	font-stretch: normal;
+	margin-right: 5px;
+	height: inherit !important;
+	background-color: #3b4b54;
 }
 
 #data-selection .table-data {
@@ -314,10 +332,12 @@ a:focus {
 	margin: 2px;
 }
 
-#preview-design .preview-data-selected .preview-container-table , #data-selection .selected-content .table-data-selection {
+#preview-design .preview-data-selected .preview-container-table,#data-selection .selected-content .table-data-selection
+	{
 	border-collapse: separate !important;
 	border-spacing: 4px;
 }
+
 #docUIContainer {
 	width: 100%;
 	height: 100%;
@@ -400,7 +420,7 @@ svg {
 	left: 275px;
 	top: 51px;
 	position: absolute;
-	width: calc(100% - 275px);
+	width: calc(100% -       275px);
 	height: 533px;
 	background: white;
 }
@@ -423,18 +443,21 @@ svg {
 	width: 1512px;
 	height: 533px;
 }
+
 #display-on-hover .width-20 {
-	width : 20px;
-	margin-right : 5px;
-	margin-left : 5px;
+	width: 20px;
+	margin-right: 5px;
+	margin-left: 5px;
 }
+
 #display-on-hover .width-16 {
-	width : 16px;
-	margin-right : 5px;
-	margin-left : 5px;
+	width: 16px;
+	margin-right: 5px;
+	margin-left: 5px;
 }
+
 #display-on-hover .width-24 {
-	width : 24px;
-	padding-right : 5px;
-	padding-left : 5px;
+	width: 24px;
+	padding-right: 5px;
+	padding-left: 5px;
 }

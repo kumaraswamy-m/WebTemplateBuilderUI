@@ -248,7 +248,7 @@
 		</div>
 		<div class="col-xs-2  alignment-left preview-select-format">
 			<select name="type" class="upload-type form-control format-preview-section selectFormat" previous-format="table">
-				<option value="">
+				<option value="" class="select-preview-format">
 					<fmt:message key="template.generator.format.select" />
 				</option>
 				<option value="table" class="select-preview-format">
@@ -267,9 +267,9 @@
 	<div class="col-xs-12">
 		<div class="preview-data-selected form-control container-action"></div>
 		<div id="display-on-hover" class="visibility-hidden">
-				<a class="section-select-data-btn">
+				<button class="section-select-data-btn">
 					<fmt:message key="template.generator.hover.select_data" />
-				</a>
+				</button>
 				<a href="#" class="clear-section"><img alt="clear section" class="width-20" src="${contextPath}/graphics/onHover/edit.png" title="clear section"></a>
 				<a href="#" class="add-container"><img alt="Add Section" class="width-20" src="${contextPath}/graphics/onHover/Add-Container.png" title="Add Section"></a>
 				<a href="#" class="delete-container"><img alt="Delete Section" class="width-16" src="${contextPath}/graphics/onHover/delete.png" alt="Delete Section" title="Delete Section"></a>
