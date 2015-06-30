@@ -44,6 +44,8 @@
 					<button type="button" class="btn btn-link close-loading-text hide">X</button>
 				</span>
 			</div>
+	<div class= "col-xs-12">
+		<div>
 			<div class="titleContent col-xs-12">
 				<div class="row">
 					<div class="col-xs-2">
@@ -71,6 +73,8 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>		
 
 			<div role="tabpanel" class="design-tabs">
 
@@ -99,19 +103,13 @@
 								<option value="toc" class="global-insert">
 									<fmt:message key="template.generator.toc.label" />
 								</option>
-								<option value="header" class="global-insert">
-									<fmt:message key="template.generator.header.label" />
-								</option>
-								<option value="footer" class="global-insert">
-									<fmt:message key="template.generator.footer.label" />
-								</option>
 							</select>
 						</div>
 					</div>
 					<div id="preview-main-content" class="scroll-content"></div>
 					<div class="footer-bar">
 						<a href="#" class="save-to-local hide"></a>
-						<a href="#" class="save-layout"><span><fmt:message
+						<a href="#" class="save-layout hide"><span><fmt:message
 									key="template.generator.button.save_layout" /></span></a>&nbsp;
 						<button class="btn btn-primary generate-template-btn">
 							<fmt:message key="template.generator.button.generate" />
@@ -148,12 +146,14 @@
 								</div>
 							</div>
 							<div class="paragraph-data-selection"></div>
-							<table class="table-data-selection">
-								<thead>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
+							<div id="table-data-selection">
+								<table class="table-data-selection">
+									<thead>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
 						</div>
 						<div class="col-xs-3 schema-tree">
 							<!-- navigation tree -->
@@ -243,7 +243,7 @@
 <div class="row section-container">
 	<div class="row">
 		<div class="col-xs-10 title-query alignment-right">
-		<input type="text"placeholder="Please add title here"
+		<input type="text"placeholder="Add title here"
 				class="form-control input-preview-section-title"/>
 		</div>
 		<div class="col-xs-2  alignment-left preview-select-format">
@@ -270,7 +270,7 @@
 				<button class="section-select-data-btn">
 					<fmt:message key="template.generator.hover.select_data" />
 				</button>
-				<a href="#" class="clear-section"><img alt="clear section" class="width-20" src="${contextPath}/graphics/onHover/edit.png" title="clear section"></a>
+				<a href="#" class="clear-section"><img alt="Clear section" class="width-20" src="${contextPath}/graphics/onHover/edit.png" title="Clear section"></a>
 				<a href="#" class="add-container"><img alt="Add Section" class="width-20" src="${contextPath}/graphics/onHover/Add-Container.png" title="Add Section"></a>
 				<a href="#" class="delete-container"><img alt="Delete Section" class="width-16" src="${contextPath}/graphics/onHover/delete.png" alt="Delete Section" title="Delete Section"></a>
 			</div>
