@@ -5,12 +5,33 @@
   - add comments to code (HP)
 
 - Navigation tree
-      
+
+
+- Pre Defined Templates
+ - left side vertical blue bar for selected item
+ - rotation of icon for category
+
+
 - Main doc section
- 	- generate template gives undefined.dta (HP)
+ 	- Insert menu should be at the top. The idea is to have a single point of entry
+ 	  - The menu will have toc, header, footer, table, paragraph, static text, etc
+ 	- 
 
 - Preview sections
-   
+   - message upon XML url is empty or navigation tree not populate
+   - placeholder text for sections
+      - Table
+        - select format (if format is empty)
+        - Hover and select data for the section (if paragraph or table contents are empty)
+      - Paragraph
+        - 
+      - Static text
+        - Type to enter static text
+
+   - select data should be a icon
+   - Format change shouldn't be allowed if the data is not empty
+   - reorder sections
+   - paragraph and table title shouldn't be query. It should be plain text
   
 - Data selection
   - don't store entire xml json (MP)
@@ -73,3 +94,4 @@ Fixed issues
  - delete icon alt/title
  - open layout from DS page  (HP)
  - handle ajax errors (HP)
+ - generate template gives undefined.dta (HP)
