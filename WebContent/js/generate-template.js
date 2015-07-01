@@ -285,7 +285,18 @@ require(
 				$genTemplatePage.find(".data-select-buttons .ds-clear-btn").off('click').click(handleClearDataSelection);
 				$genTemplatePage.find(".clear-section").off('click').click(handleClearSection);
 				
+				$genTemplatePage.find(".mblDomButtonArrow").closest('li').off('click').click(handleRotateIcon);
 				initializeLoadingText();
+			}
+			
+			function handleRotateIcon(e){
+				if($genTemplatePage.find(".mblDomButtonArrow").closest('li').hasClass('collapsed')){
+					$genTemplatePage.find(".mblDomButtonArrow").closest('li').addClass('expanded').removeClass('collapsed');
+					$genTemplatePage.find(".mblDomButtonArrow").removeClass("mblDomButtonArrow").addClass("mblDomButtonArrowOpen");
+				}else {
+					$genTemplatePage.find(".mblDomButtonArrowOpen").closest('li').addClass('collapsed').removeClass('expanded');
+					$genTemplatePage.find(".mblDomButtonArrowOpen").removeClass("mblDomButtonArrowOpen").addClass("mblDomButtonArrow");
+				}
 			}
 			
 			// clear the respective section in preview tab through clear-section icon
@@ -304,14 +315,12 @@ require(
 			// generating a dta from the layout
 			function handleGenerateTemplate(e) {
 				var url = $genTemplatePage.find(".input-url").val();
-				if (url == '' || ($('.navigation-tree .data-selection-tree').is(':empty'))) { 
-					$genTemplatePage.find('.input-url').focus();
-				}else if($genTemplatePage.find('.section-container').find('.preview-data-selected').children().length > 0 ){
+				if($genTemplatePage.find('.section-container').find('.preview-data-selected').children().length > 0 ){
 					var saveLayoutData = buildSaveLayout();
 					var $saveLink = $genTemplatePage.find(".save-to-local")[0];
 					$saveLink.href = baseUrl + "/api/template/generate?layoutjson="+JSON.stringify(saveLayoutData)+"&title="+saveLayoutData['title'];
 					$loadingText.trigger("show", {
-						text: 'Generating template. This might take a while. Please wait...',
+						text: messages.generatingTemplate
 					});
 					$saveLink.click();
 				}else { 
@@ -452,7 +461,10 @@ require(
 				var format = $container.find('.selectFormat').val();
 				var url = $genTemplatePage.find(".input-url").val();
 				if (url == '' || ($('.navigation-tree .data-selection-tree').is(':empty'))) {
-					$genTemplatePage.find('.input-url').focus();
+						$genTemplatePage.find('.input-url').focus();
+						$loadingText.trigger("show", {
+							text: messages.url_mandatory_warning
+						});
 				} else {
 					$genTemplatePage.find(".btn-select-data").off('click').click(populateDataPreview);
 					clearDataSelectionPage(true);

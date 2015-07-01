@@ -416,7 +416,19 @@ svg:not (:root ) {
 
 .mblDomButtonArrow>div {
 	position: absolute;
-	top: 1px;
+	top: 0px;
+	left: 6px;
+	width: 6px;
+	height: 6px;
+	font-size: 1px;
+	transform: rotate(45deg);
+	border-width: 3px 3px 0px 0px;
+	border-style: solid;
+	border-color: #808080;
+}
+.mblDomButtonArrowOpen {
+	position: absolute;
+	top: 2px;
 	left: 6px;
 	width: 6px;
 	height: 6px;

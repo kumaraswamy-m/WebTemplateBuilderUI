@@ -28,6 +28,7 @@
 
 .selected {
 	background-color: #202c36 !important;
+	border-left: 3px solid #00b299;
 }
 
 .selected-item {
@@ -211,6 +212,8 @@ a:focus {
 	background-color: #f9f9f9 !important;
 	padding-right: 0px;
 	border: 1px solid #c8d2d3;
+	max-height: 425px;
+	min-height: 425px;
 }
 #data-selection .selected-content .paragraph-data-selection , #data-selection .selected-content #table-data-selection {
 	min-height: 0px;

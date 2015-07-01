@@ -24,6 +24,8 @@ define("nls/messages", [],  {
 		"toc_alreadyExists" : "Table of contents is already added.",
 		"noDataToSelect" : "No data to select",
 		"url_mandatory" : "URL is mandatory",
-		"clearSection_warning" : "Are you sure you want to clear this section data?"
+		"clearSection_warning" : "Are you sure you want to clear this section data?",
+		"generatingTemplate" : "Generating template. This might take a while. Please wait...",
+		"url_mandatory_warning" : "Enter the URL and click Go"
 	}
 });

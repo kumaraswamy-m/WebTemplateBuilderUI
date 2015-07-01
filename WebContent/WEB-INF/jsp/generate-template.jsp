@@ -201,7 +201,7 @@
 </script>
 
 <script type="text/template" id="nav-tree-category-template">
-	<li>
+	<li class="collapsed">
 		<div class="tree-toggler">
 			<label class="nav-header"><span class="navLabel"><@= name @></span></label>
 			<div class="mblListItemRightIcon">
